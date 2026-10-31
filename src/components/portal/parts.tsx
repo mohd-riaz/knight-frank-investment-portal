@@ -21,6 +21,13 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import {
   examplePrompts,
   income,
   interpret,
@@ -42,7 +49,6 @@ import {
   Eye,
   EyeOff,
   Globe2,
-  Info,
   LockKeyhole,
   MapPin,
   Scale,
@@ -54,13 +60,15 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 const formatNumber = (n: number) => n.toLocaleString("en-GB");
-export function Brand() {
+export function Brand({ iconOnly = false }: { iconOnly?: boolean }) {
   return (
     <Image
-      className="brand-logo"
-      src="/assets/knight-frank.svg"
-      width="105"
-      height="40"
+      className={iconOnly ? "brand-icon" : "brand-logo"}
+      src={
+        iconOnly ? "/assets/knight-frank-icon.svg" : "/assets/knight-frank.svg"
+      }
+      width={iconOnly ? 40 : 105}
+      height={40}
       alt="Knight Frank"
     />
   );
@@ -86,7 +94,11 @@ export function FieldSelect({
         <SelectTrigger id={id}>
           <SelectValue />
         </SelectTrigger>
-        <SelectContent>
+        <SelectContent
+          side="bottom"
+          avoidCollisions={false}
+          collisionPadding={8}
+        >
           {options.map((v) => (
             <SelectItem key={v} value={v}>
               {v}
@@ -107,20 +119,7 @@ export function Metric({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function SampleNotice({ compact = false }: { compact?: boolean }) {
-  return (
-    <div className={"sample-note od-row " + (compact ? "compact" : "")}>
-      <Info size={16} />
-      <span>
-        {compact
-          ? "Sample investment data"
-          : "Demonstration portfolio. All opportunities and financial information are sample data; photography is illustrative."}
-      </span>
-    </div>
-  );
-}
-
-export function Login() {
+export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
   const router = useRouter();
   const [email, setEmail] = useState("investor@example.com"),
     [password, setPassword] = useState("KnightFrank2026!"),
@@ -153,7 +152,7 @@ export function Login() {
       });
       if (result.error)
         throw new Error(result.error.message || "Unable to sign in.");
-      router.replace("/overview");
+      router.replace(returnTo);
       router.refresh();
     } catch (error) {
       setErrors({
@@ -287,20 +286,6 @@ export function Login() {
                 />
               )}
             </form>
-            <div className="demo-access">
-              <div className="od-row">
-                <span className="demo-dot" />
-                <strong>Explore the demonstration</strong>
-              </div>
-              <p>
-                Credentials are filled in for you. This is a local prototype
-                with sample investment data.
-              </p>
-              <div className="demo-credentials">
-                <span>investor@example.com</span>
-                <code>KnightFrank2026!</code>
-              </div>
-            </div>
             <p className="login-bottom">
               Exceptional property. Personal service.
             </p>
@@ -308,33 +293,26 @@ export function Login() {
         </section>
       </main>
       <footer className="login-footer">
-        <span>
-          © {new Date().getFullYear()} Knight Frank · Design demonstration
-        </span>
         <span>Independent thinking. Global expertise.</span>
       </footer>
       <Dialog open={help} onOpenChange={setHelp}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Access the demonstration</DialogTitle>
+            <DialogTitle>Help signing in</DialogTitle>
             <DialogDescription>
-              No account registration is needed for this prototype.
+              Access to the portal is by invitation.
             </DialogDescription>
           </DialogHeader>
           <p>
-            Use <strong>investor@example.com</strong> with password{" "}
-            <strong>KnightFrank2026!</strong>. Password recovery and live
-            account services are not connected.
+            Contact your portal administrator if you need an account or help
+            accessing your existing account.
           </p>
           <Button
             onClick={() => {
-              setEmail("investor@example.com");
-              setPassword("KnightFrank2026!");
-              setErrors({});
               setHelp(false);
             }}
           >
-            Fill demo credentials
+            Back to sign in
           </Button>
         </DialogContent>
       </Dialog>
@@ -370,7 +348,7 @@ export function PropertyCard({
             src={`/assets/images/${p.image}.jpg`}
             width="1000"
             height={p.image === "tower" ? 668 : 667}
-            alt={`Illustrative ${shortAsset(p.asset).toLowerCase()} photography`}
+            alt={`${shortAsset(p.asset)} property`}
             loading="lazy"
           />
         </button>
@@ -450,16 +428,22 @@ export function PropertyDetail({
 }) {
   return (
     <div className="page-content detail-page">
-      <Button variant="link" onClick={onBack} className="back-button">
-        <ArrowLeft /> Back to results
-      </Button>
       <div className="detail-heading">
         <div>
-          <div className="od-cluster">
+          <div className="detail-kicker">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={onBack}
+              className="detail-back-button"
+              aria-label="Back to results"
+              title="Back to results"
+            >
+              <ArrowLeft />
+            </Button>
             <span className="eyebrow">
               {shortAsset(p.asset)} / {p.region}
             </span>
-            <Badge variant="outline">Sample opportunity</Badge>
           </div>
           <h1>{p.name}</h1>
           <p className="muted od-row">
@@ -486,11 +470,8 @@ export function PropertyDetail({
               src={`/assets/images/${p.image}.jpg`}
               width="1000"
               height={p.image === "tower" ? 668 : 667}
-              alt={`Illustrative photography for the sample ${p.name} opportunity`}
+              alt={p.name}
             />
-            <figcaption>
-              Illustrative photography · Sample opportunity
-            </figcaption>
           </figure>
           <Tabs defaultValue="overview">
             <TabsList className="detail-tabs">
@@ -525,7 +506,7 @@ export function PropertyDetail({
                 {[
                   ["Asking price", money(p)],
                   ["Net annual income", income(p)],
-                  ["Illustrative net yield", p.yield.toFixed(1) + "%"],
+                  ["Net yield", p.yield.toFixed(1) + "%"],
                   ["Net lettable area", formatNumber(p.area) + " m²"],
                   [
                     "Price per m²",
@@ -540,16 +521,13 @@ export function PropertyDetail({
                 ))}
               </dl>
               <p className="muted">
-                For this sample, income is derived from asking price × yield.
-                These illustrative figures are not an appraisal or an investment
-                recommendation.
+                Net annual income is calculated from asking price × net yield.
               </p>
             </TabsContent>
             <TabsContent value="documents">
               <h2>Continue your due diligence.</h2>
               <p className="muted">
-                Investment materials would be shared through your advisory team
-                following an access review.
+                Request access to investment materials for your due diligence.
               </p>
               <div className="document-row">
                 <div className="document-icon">
@@ -557,16 +535,12 @@ export function PropertyDetail({
                 </div>
                 <div className="od-field od-fill">
                   <strong>Investment memorandum</strong>
-                  <span>Access request · Demonstration only</span>
+                  <span>Access required</span>
                 </div>
                 <Button variant="outline" onClick={() => onAction("access")}>
                   Request access <ArrowUpRight />
                 </Button>
               </div>
-              <p className="muted">
-                No memorandum or legal NDA is supplied with this prototype. The
-                request flow demonstrates the intended experience.
-              </p>
             </TabsContent>
           </Tabs>
         </div>
@@ -599,13 +573,8 @@ export function PropertyDetail({
               <span>Knight Frank · {p.region}</span>
             </div>
           </div>
-          <p className="disclosure">
-            This is a sample opportunity. Requests stay in this prototype and
-            are not sent to Knight Frank.
-          </p>
         </aside>
       </div>
-      <SampleNotice />
     </div>
   );
 }
@@ -646,7 +615,7 @@ export function Assistant({
           role: "assistant",
           text:
             result.error ||
-            `${result.results?.length || 0} matching ${result.results?.length === 1 ? "opportunity" : "opportunities"} in the sample portfolio.`,
+            `${result.results?.length || 0} matching ${result.results?.length === 1 ? "opportunity" : "opportunities"}.`,
           result,
         },
       ]);
@@ -654,21 +623,21 @@ export function Assistant({
     }, 500);
   };
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="assistant-dialog">
-        <DialogHeader className="assistant-header">
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent side="right" className="assistant-dialog">
+        <SheetHeader className="assistant-header">
           <div className="od-row">
             <span className="assistant-symbol">
               <Sparkles size={20} />
             </span>
             <div>
-              <DialogTitle>Investment assistant</DialogTitle>
-              <DialogDescription>
+              <SheetTitle>Investment assistant</SheetTitle>
+              <SheetDescription>
                 Discover opportunities in your own words.
-              </DialogDescription>
+              </SheetDescription>
             </div>
           </div>
-        </DialogHeader>
+        </SheetHeader>
         <div className="assistant-body">
           <div className="assistant-intro">
             <span className="eyebrow">A MORE PERSONAL SEARCH</span>
@@ -761,7 +730,7 @@ export function Assistant({
           ))}
           {busy && (
             <div className="assistant-loading" role="status">
-              <span>Searching the sample portfolio…</span>
+              <span>Searching opportunities…</span>
               <div className="loading-line" />
             </div>
           )}
@@ -792,13 +761,9 @@ export function Assistant({
               <Send />
             </Button>
           </div>
-          <p>
-            <Info size={12} /> Rule-based search · Sample data · No live AI
-            connection
-          </p>
         </form>
-      </DialogContent>
-    </Dialog>
+      </SheetContent>
+    </Sheet>
   );
 }
 
@@ -892,9 +857,6 @@ export function ActionDialog({
               Your request has been saved with the contact address{" "}
               <strong>{email}</strong>.
             </p>
-            <p className="sample-note">
-              This demonstration has not sent an email or executed an NDA.
-            </p>
             <Button onClick={onClose}>
               Return to the opportunity <ArrowRight />
             </Button>
@@ -908,7 +870,7 @@ export function ActionDialog({
                 {errors.email && <a href="#request-email">Email address</a>}
                 {errors.message && <a href="#request-message">Your enquiry</a>}
                 {errors.consent && (
-                  <a href="#request-consent">Demonstration acknowledgement</a>
+                  <a href="#request-consent">Access acknowledgement</a>
                 )}
               </div>
             )}
@@ -931,8 +893,8 @@ export function ActionDialog({
                   <div>
                     <h3>Confidential information, considered access.</h3>
                     <p>
-                      A live portal would request an NDA and verify your access
-                      before sharing investment materials.
+                      Submit your interest in accessing the investment
+                      materials.
                     </p>
                   </div>
                 </div>
@@ -943,8 +905,7 @@ export function ActionDialog({
                     onCheckedChange={(v) => setConsent(v === true)}
                   />
                   <span>
-                    I understand this is a simulated access request, not a
-                    legally binding NDA.
+                    I would like to request access to the investment materials.
                   </span>
                 </label>
                 {errors.consent && (
@@ -968,10 +929,6 @@ export function ActionDialog({
                 )}
               </div>
             )}
-            <p className="muted">
-              Your request is saved in the local portal. No email is sent
-              externally.
-            </p>
             <Button type="submit" disabled={busy}>
               {busy
                 ? "Recording your request…"

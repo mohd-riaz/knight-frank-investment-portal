@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Knight Frank",
   },
   description:
-    "Explore global real estate investment opportunities with Knight Frank. Local demonstration portfolio.",
+    "Explore global real estate investment opportunities with Knight Frank.",
   robots: { index: false, follow: false },
 };
 

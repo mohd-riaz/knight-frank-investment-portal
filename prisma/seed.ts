@@ -23,7 +23,7 @@ async function main() {
     ).toLowerCase();
     const user = await tx.user.upsert({
       where: { email },
-      create: { email, name: "Demo investor", emailVerified: true },
+      create: { email, name: "Investor", emailVerified: true },
       update: {},
     });
     const existing = await tx.account.findFirst({

@@ -4,7 +4,12 @@ export { db } from "./prisma";
 import type { Property } from "@/data";
 export async function getProperties(): Promise<Property[]> {
   const rows = await db.property.findMany({ orderBy: { position: "asc" } });
-  return rows;
+  return rows.map((property) => ({
+    ...property,
+    summary: property.summary
+      .replace(/\b(sample|illustrative)\s+/gi, "")
+      .replace(/^An (?=[^aeiou])/i, "A "),
+  }));
 }
 export async function getShortlist(userId: string): Promise<string[]> {
   const rows = await db.shortlist.findMany({

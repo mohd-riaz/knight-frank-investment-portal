@@ -10,15 +10,20 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { api } from "@/lib/client-api";
 import type { Investor } from "@/lib/session";
+import { useComparison } from "@/hooks/use-comparison";
+import { COMPARISON_LIMIT } from "@/lib/comparison";
+import { useFilters } from "@/hooks/use-filters";
+import { isListingPath } from "@/lib/filters";
+import { FilterMultiSelect } from "@/components/portal/filter-multi-select";
 import {
   ArrowRight,
   ArrowUpRight,
   Bookmark,
   Building2,
+  ChevronsUpDown,
   CheckCircle2,
   Globe2,
   LogOut,
-  Menu,
   Scale,
   SlidersHorizontal,
   Sparkles,
@@ -42,6 +47,27 @@ import {
 } from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
+import { Avatar, AvatarFallback } from "./components/ui/avatar";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "./components/ui/dropdown-menu";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+  SidebarTrigger,
+  useSidebar,
+} from "./components/ui/sidebar";
 import {
   assetClasses,
   emptyFilters,
@@ -50,6 +76,7 @@ import {
   type Filters,
   type Property,
 } from "./data";
+import { cn } from "./lib/utils";
 
 type PortalContextValue = {
   properties: Property[];
@@ -66,10 +93,11 @@ type PortalContextValue = {
   setFilterOpen: React.Dispatch<React.SetStateAction<boolean>>;
   setAdvanced: React.Dispatch<React.SetStateAction<boolean>>;
   setCompared: React.Dispatch<React.SetStateAction<string[]>>;
+  copyComparisonLink: () => Promise<void>;
   navigate: (next: string) => void;
   browseRegion: (region: string) => void;
   card: (property: Property) => React.ReactNode;
-  setFilter: (key: keyof Filters, value: string) => void;
+  setFilter: <K extends keyof Filters>(key: K, value: Filters[K]) => void;
   filterControls: React.ReactNode;
   applied: (keyof Filters)[];
   results: Property[];
@@ -106,14 +134,15 @@ export default function Portal({
   const router = useRouter(),
     pathname = usePathname();
   const route = pathname === "/shortlist" ? "saved" : pathname.slice(1);
+  const { open, openMobile, isMobile, setOpenMobile } = useSidebar();
+  const compactSidebar = !isMobile && !open;
   const pendingSaves = useRef(new Set<string>());
-  const [filters, setFilters] = useState<Filters>({ ...emptyFilters }),
-    [saved, setSaved] = useState<string[]>(initialSaved),
-    [compared, setCompared] = useState<string[]>([]),
+  const [compared, setCompared] = useComparison(user.id, properties);
+  const [filters, setFilters, listingHref] = useFilters(properties);
+  const [saved, setSaved] = useState<string[]>(initialSaved),
     [view, setView] = useState("grid"),
     [sort, setSort] = useState("Recommended"),
     [chatOpen, setChatOpen] = useState(false),
-    [menuOpen, setMenuOpen] = useState(false),
     [filterOpen, setFilterOpen] = useState(false),
     [advanced, setAdvanced] = useState(false),
     [toast, setToast] = useState(""),
@@ -128,10 +157,19 @@ export default function Portal({
     clearTimeout(toastTimer.current);
     toastTimer.current = setTimeout(() => setToast(""), 4000);
   };
+  const copyComparisonLink = async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      notify("Comparison link copied.");
+    } catch {
+      notify("Unable to copy the link. You can copy it from the address bar.");
+    }
+  };
   const navigate = (next: string) => {
-    setMenuOpen(false);
+    setOpenMobile(false);
+    const path = next === "saved" ? "/shortlist" : "/" + next;
     if (next === route) window.scrollTo({ top: 0, behavior: "auto" });
-    else router.push(next === "saved" ? "/shortlist" : "/" + next);
+    else router.push(isListingPath(path) ? listingHref(path) : path);
   };
   useEffect(() => () => clearTimeout(toastTimer.current), []);
   const openProperty = (p: Property) => {
@@ -169,7 +207,7 @@ export default function Portal({
       setCompared((v) => v.filter((id) => id !== p.id));
       return;
     }
-    if (compared.length === 3) {
+    if (compared.length >= COMPARISON_LIMIT) {
       notify(
         "You can compare up to three opportunities. Remove one to add another.",
       );
@@ -177,17 +215,16 @@ export default function Portal({
     }
     setCompared((v) => [...v, p.id]);
   };
-  const setFilter = (key: keyof Filters, value: string) =>
+  const setFilter = <K extends keyof Filters>(key: K, value: Filters[K]) =>
     setFilters((f) => ({
       ...f,
       [key]: value,
-      ...(key === "region" ? { country: "All countries" } : {}),
       ...(key === "currency" && value === "All currencies"
         ? { min: "", max: "" }
         : {}),
     }));
   const browseRegion = (r: string) => {
-    setFilters({ ...emptyFilters, region: r });
+    setFilters({ ...emptyFilters, region: [r] });
     navigate("opportunities");
   };
   const logout = async () => {
@@ -215,57 +252,114 @@ export default function Portal({
       : route;
   const navContent = (
     <>
-      <div className="nav-label">YOUR INVESTMENT WORLD</div>
-      <nav aria-label="Main navigation">
-        {nav.map((n) => (
-          <Button
-            key={n.id}
-            variant="ghost"
-            className={"nav-item " + (activeNav === n.id ? "active" : "")}
-            aria-current={activeNav === n.id ? "page" : undefined}
-            onClick={() => navigate(n.id)}
-          >
-            <n.icon size={19} />
-            <span>{n.label}</span>
-            {n.id === "saved" && (
-              <span className="nav-count">{saved.length}</span>
-            )}
-          </Button>
-        ))}
-      </nav>
-      <div className="sidebar-bottom">
-        <div className="sidebar-assistant">
-          <span className="assistant-symbol">
-            <Sparkles size={20} />
-          </span>
-          <h3>A different way to search.</h3>
-          <p>Tell us what you’re looking for.</p>
-          <Button
-            variant="outline"
-            onClick={() => {
-              setMenuOpen(false);
-              setChatOpen(true);
-            }}
-          >
-            Ask the assistant <ArrowUpRight />
-          </Button>
-        </div>
-        <div className="sidebar-account">
-          <span className="avatar">DI</span>
-          <div className="od-field od-fill">
-            <strong>{user.name}</strong>
-            <span>Private client</span>
+      <SidebarContent className="portal-sidebar-content">
+        <nav aria-label="Main navigation">
+          <SidebarMenu>
+            {nav.map((n) => (
+              <SidebarMenuItem key={n.id}>
+                <SidebarMenuButton
+                  className={"nav-item " + (activeNav === n.id ? "active" : "")}
+                  isActive={activeNav === n.id}
+                  tooltip={
+                    n.id === "saved" ? `${n.label} (${saved.length})` : n.label
+                  }
+                  aria-label={
+                    n.id === "saved" ? `${n.label} (${saved.length})` : n.label
+                  }
+                  aria-current={activeNav === n.id ? "page" : undefined}
+                  onClick={() => navigate(n.id)}
+                >
+                  <n.icon size={19} />
+                  <span className="nav-text">{n.label}</span>
+                  {n.id === "saved" && (
+                    <span className="nav-count">{saved.length}</span>
+                  )}
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </nav>
+      </SidebarContent>
+      <SidebarFooter className="sidebar-bottom">
+        {compactSidebar ? (
+          <SidebarMenu className="sidebar-assistant-compact">
+            <SidebarMenuItem>
+              <SidebarMenuButton
+                className="nav-item"
+                tooltip="Ask the assistant"
+                aria-label="Ask the assistant"
+                onClick={() => setChatOpen(true)}
+              >
+                <Sparkles />
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          </SidebarMenu>
+        ) : (
+          <div className="sidebar-assistant">
+            <span className="assistant-symbol">
+              <Sparkles size={20} />
+            </span>
+            <h3>A different way to search.</h3>
+            <p>Tell us what you’re looking for.</p>
+            <Button
+              variant="outline"
+              onClick={() => {
+                setOpenMobile(false);
+                setChatOpen(true);
+              }}
+            >
+              Ask the assistant <ArrowUpRight />
+            </Button>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={logout}
-            aria-label="Sign out"
-          >
-            <LogOut />
-          </Button>
+        )}
+        <div className="sidebar-account">
+          <SidebarMenu>
+            <SidebarMenuItem>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <SidebarMenuButton
+                    size="lg"
+                    className="sidebar-account-button"
+                    aria-label="Open account menu"
+                  >
+                    <Avatar className="avatar">
+                      <AvatarFallback>
+                        {user.name
+                          .split(" ")
+                          .map((part) => part[0])
+                          .slice(0, 2)
+                          .join("")}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div className="od-field od-fill sidebar-account-copy">
+                      <strong>{user.name}</strong>
+                      <span>Private client</span>
+                    </div>
+                    <ChevronsUpDown className="sidebar-account-chevron" />
+                  </SidebarMenuButton>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent
+                  side={isMobile ? "top" : "right"}
+                  align="end"
+                  sideOffset={8}
+                  className="min-w-56"
+                >
+                  <DropdownMenuLabel>
+                    <div>{user.name}</div>
+                    <div className="text-xs font-normal text-muted-foreground">
+                      {user.email}
+                    </div>
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem onSelect={() => void logout()}>
+                    <LogOut className="mr-2 size-4" /> Sign out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </SidebarMenuItem>
+          </SidebarMenu>
         </div>
-      </div>
+      </SidebarFooter>
     </>
   );
 
@@ -290,39 +384,37 @@ export default function Portal({
   );
   const filterControls = (
     <div className="filter-fields">
-      <FieldSelect
+      <FilterMultiSelect
         id="region"
-        label="Region"
+        label="Regions"
         value={filters.region}
         onChange={(v) => setFilter("region", v)}
-        options={["All regions", ...regions]}
+        options={regions}
       />
-      <FieldSelect
+      <FilterMultiSelect
         id="country"
-        label="Country"
+        label="Countries"
         value={filters.country}
         onChange={(v) => setFilter("country", v)}
         options={[
-          "All countries",
           ...Array.from(
             new Set(
               properties
                 .filter(
                   (p) =>
-                    filters.region === "All regions" ||
-                    p.region === filters.region,
+                    !filters.region.length || filters.region.includes(p.region),
                 )
                 .map((p) => p.country),
             ),
           ),
         ]}
       />
-      <FieldSelect
+      <FilterMultiSelect
         id="asset"
-        label="Asset class"
+        label="Asset classes"
         value={filters.asset}
         onChange={(v) => setFilter("asset", v)}
-        options={assetClasses}
+        options={assetClasses.slice(1)}
       />
       <div className="filter-more">
         <Button
@@ -404,8 +496,10 @@ export default function Portal({
       )}
     </div>
   );
-  const applied = (Object.keys(filters) as (keyof Filters)[]).filter(
-    (k) => filters[k] !== emptyFilters[k] && filters[k],
+  const applied = (Object.keys(filters) as (keyof Filters)[]).filter((k) =>
+    Array.isArray(filters[k])
+      ? filters[k].length > 0
+      : filters[k] !== emptyFilters[k] && !!filters[k],
   );
   return (
     <PortalContext.Provider
@@ -424,6 +518,7 @@ export default function Portal({
         setFilterOpen,
         setAdvanced,
         setCompared,
+        copyComparisonLink,
         navigate,
         browseRegion,
         card,
@@ -440,7 +535,7 @@ export default function Portal({
         openProperty,
       }}
     >
-      <div className="app-shell">
+      <>
         <a
           className="skip-link"
           href="#main-content"
@@ -451,35 +546,63 @@ export default function Portal({
         >
           Skip to content
         </a>
-        <aside className="sidebar">
-          <button
-            className="sidebar-brand"
-            onClick={() => navigate("overview")}
-            aria-label="Knight Frank global overview"
+        <Sidebar className="portal-sidebar" collapsible="icon">
+          <aside
+            className="sidebar"
+            aria-label="Investor navigation"
+            id="investor-navigation"
+            data-compact={compactSidebar}
           >
-            <Brand />
-            <span>GLOBAL INVESTMENT</span>
-          </button>
-          {navContent}
-        </aside>
+            <SidebarHeader className="portal-sidebar-header">
+              <button
+                className={cn(
+                  "w-fit h-fit",
+                  compactSidebar
+                    ? "sidebar-brand sidebar-brand-compact"
+                    : "sidebar-brand",
+                )}
+                onClick={() => navigate("overview")}
+                aria-label="Knight Frank global overview"
+              >
+                <Brand iconOnly={compactSidebar} />
+              </button>
+            </SidebarHeader>
+            {navContent}
+          </aside>
+          <SidebarRail />
+        </Sidebar>
         <div className={"app-body " + (compared.length ? "has-compare" : "")}>
           <header className="topbar">
             <div className="od-row">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="mobile-menu"
-                onClick={() => setMenuOpen(true)}
-                aria-label="Open navigation"
-              >
-                <Menu />
-              </Button>
+              {isMobile && (
+                <button
+                  className="topbar-brand"
+                  onClick={() => navigate("overview")}
+                  aria-label="Knight Frank global overview"
+                >
+                  <Brand iconOnly />
+                </button>
+              )}
+              <SidebarTrigger
+                className="portal-sidebar-trigger"
+                aria-label={
+                  (isMobile ? openMobile : open)
+                    ? isMobile
+                      ? "Close navigation"
+                      : "Collapse navigation"
+                    : isMobile
+                      ? "Open navigation"
+                      : "Expand navigation"
+                }
+                aria-expanded={isMobile ? openMobile : open}
+                aria-controls="investor-navigation"
+                title="Toggle navigation (Ctrl/Cmd+B)"
+              />
               <span className="topbar-title">Global Investment Portal</span>
               <span className="topbar-divider" />
               <span className="topbar-subtitle">Private client access</span>
             </div>
             <div className="od-row">
-              <span className="demo-pill">DEMONSTRATION</span>
               <Button
                 variant="ghost"
                 onClick={() => setChatOpen(true)}
@@ -495,7 +618,6 @@ export default function Portal({
           <footer className="app-footer">
             <Brand />
             <span>Global perspective. Personal service.</span>
-            <span>© {new Date().getFullYear()} · Design demonstration</span>
           </footer>
         </div>
         {compared.length > 0 && (
@@ -536,21 +658,12 @@ export default function Portal({
             </button>
           </div>
         )}
-        <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
-          <DialogContent className="navigation-dialog">
-            <DialogHeader>
-              <DialogTitle>Global Investment</DialogTitle>
-              <DialogDescription>Your investor workspace</DialogDescription>
-            </DialogHeader>
-            {navContent}
-          </DialogContent>
-        </Dialog>
         <Dialog open={filterOpen} onOpenChange={setFilterOpen}>
           <DialogContent className="filters-dialog">
             <DialogHeader>
               <DialogTitle>Refine opportunities</DialogTitle>
               <DialogDescription>
-                Filter the sample portfolio to match your criteria.
+                Filter opportunities to match your criteria.
               </DialogDescription>
             </DialogHeader>
             {filterOpen && filterControls}
@@ -592,10 +705,7 @@ export default function Portal({
             onClose={() => setAction(null)}
           />
         )}
-      </div>
+      </>
     </PortalContext.Provider>
   );
 }
-
-
-

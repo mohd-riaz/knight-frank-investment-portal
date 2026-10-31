@@ -9,7 +9,8 @@ export class HttpError extends Error {
   }
 }
 export function assertSameOrigin(request: Request) {
-  const expectedOrigin = new URL(process.env.BETTER_AUTH_URL || request.url).origin;
+  const expectedOrigin = new URL(process.env.BETTER_AUTH_URL || request.url)
+    .origin;
   if (request.headers.get("origin") !== expectedOrigin)
     throw new HttpError(403, "This request must come from the portal.");
 }

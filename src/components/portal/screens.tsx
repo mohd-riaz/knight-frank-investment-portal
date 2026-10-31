@@ -1,5 +1,5 @@
 "use client";
-import { PropertyDetail, SampleNotice } from "@/components/portal/parts";
+import { PropertyDetail } from "@/components/portal/parts";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -32,6 +32,7 @@ import {
   ArrowUpRight,
   Bookmark,
   Check,
+  Copy,
   LayoutGrid,
   List,
   MapPin,
@@ -60,61 +61,63 @@ export function OverviewScreen() {
     usePortal();
   return (
     <div className="overview page-content">
-      <div className="page-intro od-row">
-        <div className="od-fill">
-          <span className="eyebrow">A GLOBAL VIEW. YOUR PERSPECTIVE.</span>
-          <h1>A world of opportunity.</h1>
-          <p className="muted">
-            Discover the next chapter of your investment portfolio.
-          </p>
-        </div>
-        <Button
-          variant="outline"
-          onClick={() => {
-            setFilters({ ...emptyFilters });
-            navigate("opportunities");
-          }}
-        >
-          Explore all opportunities <ArrowUpRight />
-        </Button>
-      </div>
-      <section className="overview-hero">
-        <div className="overview-hero-content">
-          <span className="eyebrow light">CONNECTED ACROSS MARKETS</span>
-          <h2>
-            Local knowledge.
-            <br />
-            Global possibilities.
-          </h2>
-          <p>
-            Find the markets and assets that
-            <br className="desktop-break" /> match your investment ambitions.
-          </p>
-          <Button variant="secondary" onClick={() => browseRegion("Europe")}>
-            Explore Europe <ArrowUpRight />
+      <div className="overview-lead">
+        <div className="page-intro od-row">
+          <div className="od-fill">
+            <span className="eyebrow">A GLOBAL VIEW. YOUR PERSPECTIVE.</span>
+            <h1>A world of opportunity.</h1>
+            <p className="muted">
+              Discover the next chapter of your investment portfolio.
+            </p>
+          </div>
+          <Button
+            variant="outline"
+            onClick={() => {
+              setFilters({ ...emptyFilters });
+              navigate("opportunities");
+            }}
+          >
+            Explore all opportunities <ArrowUpRight />
           </Button>
-          <div className="hero-caption">
-            <MapPin size={14} /> London, United Kingdom
-          </div>
         </div>
-        <div className="hero-fact">
-          <span className="eyebrow light">YOUR SAMPLE INVESTMENT UNIVERSE</span>
-          <div className="hero-fact-grid">
-            <div className="od-stat">
-              <strong>{properties.length}</strong>
-              <span>Opportunities</span>
-            </div>
-            <div className="od-stat">
-              <strong>{regions.length}</strong>
-              <span>Global regions</span>
-            </div>
-            <div className="od-stat">
-              <strong>{assetClasses.length - 1}</strong>
-              <span>Asset classes</span>
+        <section className="overview-hero">
+          <div className="overview-hero-content">
+            <span className="eyebrow light">CONNECTED ACROSS MARKETS</span>
+            <h2>
+              Local knowledge.
+              <br />
+              Global possibilities.
+            </h2>
+            <p>
+              Find the markets and assets that
+              <br className="desktop-break" /> match your investment ambitions.
+            </p>
+            <Button variant="secondary" onClick={() => browseRegion("Europe")}>
+              Explore Europe <ArrowUpRight />
+            </Button>
+            <div className="hero-caption">
+              <MapPin size={14} /> London, United Kingdom
             </div>
           </div>
-        </div>
-      </section>
+          <div className="hero-fact">
+            <span className="eyebrow light">YOUR INVESTMENT UNIVERSE</span>
+            <div className="hero-fact-grid">
+              <div className="od-stat">
+                <strong>{properties.length}</strong>
+                <span>Opportunities</span>
+              </div>
+              <div className="od-stat">
+                <strong>{regions.length}</strong>
+                <span>Global regions</span>
+              </div>
+              <div className="od-stat">
+                <strong>{assetClasses.length - 1}</strong>
+                <span>Asset classes</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
       <section className="region-section">
         <div className="section-heading">
           <div>
@@ -134,8 +137,10 @@ export function OverviewScreen() {
               <div className="od-field od-fill">
                 <strong>{r}</strong>
                 <span>
-                  {properties.filter((p) => p.region === r).length} sample
-                  opportunities
+                  {properties.filter((p) => p.region === r).length}{" "}
+                  {properties.filter((p) => p.region === r).length === 1
+                    ? "opportunity"
+                    : "opportunities"}
                 </span>
               </div>
               <ArrowUpRight size={20} />
@@ -168,14 +173,13 @@ export function OverviewScreen() {
           </div>
           <div>
             <h2>Your criteria. A clearer starting point.</h2>
-            <p>Search the sample portfolio in your own words.</p>
+            <p>Find opportunities in your own words.</p>
           </div>
         </div>
         <Button variant="outline" onClick={() => setChatOpen(true)}>
           Start a conversation <ArrowUpRight />
         </Button>
       </section>
-      <SampleNotice />
     </div>
   );
 }
@@ -215,9 +219,9 @@ export function ListingsScreen() {
           <h1>
             {isSaved
               ? "Your shortlist."
-              : filters.region === "All regions"
-                ? "Find your next investment."
-                : `${filters.region} opportunities.`}
+              : filters.region.length === 1
+                ? `${filters.region[0]} opportunities.`
+                : "Find your next investment."}
           </h1>
           <p className="muted">
             {isSaved
@@ -258,34 +262,44 @@ export function ListingsScreen() {
       <div className="desktop-filters">{!filterOpen && filterControls}</div>
       {applied.length > 0 && (
         <div className="applied-filters od-cluster">
-          {applied.map((k) => (
-            <button
-              key={k}
-              className="filter-chip"
-              onClick={() =>
-                setFilters((f) => ({
-                  ...f,
-                  [k]: emptyFilters[k],
-                  ...(k === "region" ? { country: "All countries" } : {}),
-                  ...(k === "currency" ? { min: "", max: "" } : {}),
-                }))
-              }
-              aria-label={`Remove ${k} filter`}
-            >
-              <span>
-                {k === "min"
-                  ? "Min: "
-                  : k === "max"
-                    ? "Max: "
-                    : k === "yield"
-                      ? "Yield ≥ "
-                      : ""}
-                {k === "asset" ? shortAsset(filters[k]) : filters[k]}
-                {k === "yield" ? "%" : k === "min" || k === "max" ? "m" : ""}
-              </span>
-              <X size={13} />
-            </button>
-          ))}
+          {applied.flatMap((k) => {
+            const selected = filters[k];
+            return (Array.isArray(selected) ? selected : [selected]).map(
+              (value) => (
+                <button
+                  key={`${k}:${value}`}
+                  className="filter-chip"
+                  onClick={() =>
+                    setFilters((f) => ({
+                      ...f,
+                      [k]: Array.isArray(f[k])
+                        ? f[k].filter((item) => item !== value)
+                        : emptyFilters[k],
+                      ...(k === "currency" ? { min: "", max: "" } : {}),
+                    }))
+                  }
+                  aria-label={`Remove ${value} ${k} filter`}
+                >
+                  <span>
+                    {k === "min"
+                      ? "Min: "
+                      : k === "max"
+                        ? "Max: "
+                        : k === "yield"
+                          ? "Yield ≥ "
+                          : ""}
+                    {k === "asset" ? shortAsset(value) : value}
+                    {k === "yield"
+                      ? "%"
+                      : k === "min" || k === "max"
+                        ? "m"
+                        : ""}
+                  </span>
+                  <X size={13} />
+                </button>
+              ),
+            );
+          })}
           <Button
             variant="link"
             onClick={() => setFilters({ ...emptyFilters })}
@@ -300,7 +314,6 @@ export function ListingsScreen() {
             {results.length}{" "}
             {results.length === 1 ? "opportunity" : "opportunities"}
           </strong>
-          <span className="sample-inline">Sample portfolio</span>
         </div>
         <div className="od-row">
           <Select value={sort} onValueChange={setSort}>
@@ -432,7 +445,7 @@ export function ListingsScreen() {
           <p>
             {isSaved && !saved.length
               ? "Save properties as you explore to build a considered shortlist."
-              : "Try a different market or broaden your filters to see more of the sample portfolio."}
+              : "Try a different market or broaden your filters to see more opportunities."}
           </p>
           <Button
             onClick={() => {
@@ -447,7 +460,6 @@ export function ListingsScreen() {
           </Button>
         </div>
       )}
-      <SampleNotice />
     </div>
   );
 }
@@ -476,8 +488,14 @@ export function DetailScreen() {
   );
 }
 export function ComparisonScreen() {
-  const { properties, compared, setCompared, navigate, openProperty } =
-    usePortal();
+  const {
+    properties,
+    compared,
+    setCompared,
+    copyComparisonLink,
+    navigate,
+    openProperty,
+  } = usePortal();
   return (
     <div className="page-content compare-page">
       <Button
@@ -487,12 +505,21 @@ export function ComparisonScreen() {
       >
         <ArrowLeft /> Back to opportunities
       </Button>
-      <span className="eyebrow">A CLEARER PERSPECTIVE</span>
-      <h1>Compare your opportunities.</h1>
-      <p className="muted">
-        View the details that matter, side by side. Currencies are shown as
-        quoted.
-      </p>
+      <div className="page-intro od-row">
+        <div className="od-fill">
+          <span className="eyebrow">A CLEARER PERSPECTIVE</span>
+          <h1>Compare your opportunities.</h1>
+          <p className="muted">
+            View the details that matter, side by side. Currencies are shown as
+            quoted.
+          </p>
+        </div>
+        {compared.length >= 2 && (
+          <Button variant="outline" onClick={() => void copyComparisonLink()}>
+            <Copy /> Copy link
+          </Button>
+        )}
+      </div>
       {compared.length >= 2 ? (
         <div className="comparison-scroll">
           <div
@@ -513,7 +540,7 @@ export function ComparisonScreen() {
                       src={`/assets/images/${p.image}.jpg`}
                       width="1000"
                       height={p.image === "tower" ? 668 : 667}
-                      alt={`Illustrative architecture for ${p.name}`}
+                      alt={p.name}
                     />
                     <Button
                       className="compare-remove"
@@ -565,7 +592,6 @@ export function ComparisonScreen() {
           </Button>
         </div>
       )}
-      <SampleNotice />
     </div>
   );
 }

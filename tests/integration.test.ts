@@ -48,11 +48,36 @@ test("authenticated data, account isolation, request validation and session revo
     });
   try {
     assert.equal((await call("/api/shortlist")).status, 401);
-    const protectedPage = await call('/overview');
+    const protectedPage = await call("/overview");
     const protectedHtml = await protectedPage.text();
     // A streaming layout can send its redirect after the initial 200 headers.
-    assert.ok(protectedPage.status === 307 || (protectedPage.status === 200 && protectedHtml.includes('NEXT_REDIRECT') && protectedHtml.includes('/login')));
-    assert.ok(!protectedHtml.includes('Riverside Exchange'));
+    assert.ok(
+      protectedPage.status === 307 ||
+        (protectedPage.status === 200 &&
+          protectedHtml.includes("NEXT_REDIRECT") &&
+          protectedHtml.includes("/login")),
+    );
+    assert.ok(!protectedHtml.includes("Riverside Exchange"));
+    const sharedComparison = await call("/compare?ids=p01,p02");
+    const sharedComparisonHtml = await sharedComparison.text();
+    let destination: URL;
+    if (sharedComparison.status === 307) {
+      destination = new URL(sharedComparison.headers.get("location")!, origin);
+    } else {
+      assert.equal(sharedComparison.status, 200);
+      assert.ok(sharedComparisonHtml.includes("NEXT_REDIRECT"));
+      const returnTo = sharedComparisonHtml.match(/returnTo=([^"<>;\\\s]+)/);
+      assert.ok(returnTo);
+      destination = new URL(`/login?returnTo=${returnTo[1]}`, origin);
+    }
+    assert.equal(destination.pathname, "/login");
+    const comparisonDestination = new URL(
+      destination.searchParams.get("returnTo")!,
+      origin,
+    );
+    assert.equal(comparisonDestination.pathname, "/compare");
+    assert.equal(comparisonDestination.searchParams.get("ids"), "p01,p02");
+    assert.ok(!sharedComparisonHtml.includes("Riverside Exchange"));
     assert.equal(
       (
         await call("/api/auth/sign-in/email", "POST", {

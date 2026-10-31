@@ -42,8 +42,8 @@ test("combined filters support country, text, tenure and no results", () => {
   assert.deepEqual(
     filterProperties({
       ...emptyFilters,
-      region: "Europe",
-      country: "Germany",
+      region: ["Europe"],
+      country: ["Germany"],
       query: "Rhine",
       tenure: "Freehold",
     }).map((p) => p.id),

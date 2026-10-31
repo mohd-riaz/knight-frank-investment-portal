@@ -59,7 +59,7 @@ export const properties: Property[] = [
     image: "office",
     label: "Core plus",
     summary:
-      "A sample multi-let office investment in an established London business district. The investment case combines contracted income with a phased refurbishment opportunity.",
+      "A multi-let office investment in an established London business district. The investment case combines contracted income with a phased refurbishment opportunity.",
   },
   {
     ...base,
@@ -76,7 +76,7 @@ export const properties: Property[] = [
     image: "tower",
     label: "Income producing",
     summary:
-      "An illustrative logistics investment positioned for regional distribution. The sample underwriting assumes diversified occupational demand and modern operational accommodation.",
+      "A logistics investment positioned for regional distribution. The underwriting assumes diversified occupational demand and modern operational accommodation.",
   },
   {
     ...base,
@@ -94,7 +94,7 @@ export const properties: Property[] = [
     label: "Value add",
     confidential: true,
     summary:
-      "An illustrative hospitality opportunity with a waterfront setting. The sample investment case combines operating income and a selective improvement programme.",
+      "A hospitality opportunity with a waterfront setting. The investment case combines operating income and a selective improvement programme.",
   },
   {
     ...base,
@@ -111,7 +111,7 @@ export const properties: Property[] = [
     image: "tower",
     label: "Core plus",
     summary:
-      "A sample regional office investment with a diversified occupier base and an accessible city-centre location.",
+      "A regional office investment with a diversified occupier base and an accessible city-centre location.",
   },
   {
     ...base,
@@ -128,7 +128,7 @@ export const properties: Property[] = [
     image: "office",
     label: "Income producing",
     summary:
-      "A sample income-producing office asset with scope to improve common areas and renew leases over time.",
+      "A income-producing office asset with scope to improve common areas and renew leases over time.",
   },
   {
     ...base,
@@ -145,7 +145,7 @@ export const properties: Property[] = [
     image: "tower",
     label: "Core",
     summary:
-      "An illustrative distribution campus serving continental trade routes, with sample income from multiple occupiers.",
+      "A distribution campus serving continental trade routes, with income from multiple occupiers.",
   },
   {
     ...base,
@@ -163,7 +163,7 @@ export const properties: Property[] = [
     label: "Core plus",
     tenure: "Leasehold",
     summary:
-      "A sample industrial estate with diversified accommodation and potential for selective asset management.",
+      "A industrial estate with diversified accommodation and potential for selective asset management.",
   },
   {
     ...base,
@@ -181,7 +181,7 @@ export const properties: Property[] = [
     label: "Core",
     tenure: "Leasehold",
     summary:
-      "An illustrative retail investment in an established urban catchment, combining consumer and service-led occupiers.",
+      "A retail investment in an established urban catchment, combining consumer and service-led occupiers.",
   },
   {
     ...base,
@@ -198,7 +198,7 @@ export const properties: Property[] = [
     image: "city",
     label: "Core plus",
     summary:
-      "A sample mixed-use investment combining workplace and retail accommodation near major transport connections.",
+      "A mixed-use investment combining workplace and retail accommodation near major transport connections.",
   },
   {
     ...base,
@@ -215,7 +215,7 @@ export const properties: Property[] = [
     image: "office",
     label: "Value add",
     summary:
-      "An illustrative office opportunity with a sample repositioning strategy and diversified leasing assumptions.",
+      "An office opportunity with a repositioning strategy and diversified leasing assumptions.",
   },
   {
     ...base,
@@ -232,7 +232,7 @@ export const properties: Property[] = [
     image: "tower",
     label: "Long income",
     summary:
-      "A sample specialist education asset with campus accommodation and a long-income investment profile.",
+      "A specialist education asset with campus accommodation and a long-income investment profile.",
   },
   {
     ...base,
@@ -249,7 +249,7 @@ export const properties: Property[] = [
     image: "commercial",
     label: "Core",
     summary:
-      "An illustrative retail centre serving a metropolitan catchment with a blend of everyday services and retail accommodation.",
+      "A retail centre serving a metropolitan catchment with a blend of everyday services and retail accommodation.",
   },
   {
     ...base,
@@ -266,7 +266,7 @@ export const properties: Property[] = [
     image: "hotel",
     label: "Core plus",
     summary:
-      "A sample hotel investment with established operating facilities and a selective capital expenditure strategy.",
+      "A hotel investment with established operating facilities and a selective capital expenditure strategy.",
   },
   {
     ...base,
@@ -283,7 +283,7 @@ export const properties: Property[] = [
     image: "office",
     label: "Income producing",
     summary:
-      "An illustrative freehold logistics asset serving a broad industrial catchment, with sample contracted rental income.",
+      "A freehold logistics asset serving a broad industrial catchment, with contracted rental income.",
   },
 ];
 export const shortAsset = (a: string) =>
@@ -299,9 +299,9 @@ export const money = (p: Property) =>
 export const income = (p: Property) =>
   `${p.currency} ${((p.price * p.yield) / 100).toFixed(2)}m`;
 export type Filters = {
-  region: string;
-  country: string;
-  asset: string;
+  region: string[];
+  country: string[];
+  asset: string[];
   query: string;
   min: string;
   max: string;
@@ -310,9 +310,9 @@ export type Filters = {
   tenure: string;
 };
 export const emptyFilters: Filters = {
-  region: "All regions",
-  country: "All countries",
-  asset: "All Assets",
+  region: [],
+  country: [],
+  asset: [],
   query: "",
   min: "",
   max: "",
@@ -323,9 +323,9 @@ export const emptyFilters: Filters = {
 export function filterProperties(f: Filters, source = properties) {
   return source.filter(
     (p) =>
-      (f.region === "All regions" || p.region === f.region) &&
-      (f.country === "All countries" || p.country === f.country) &&
-      (f.asset === "All Assets" || p.asset === f.asset) &&
+      (!f.region.length || f.region.includes(p.region)) &&
+      (!f.country.length || f.country.includes(p.country)) &&
+      (!f.asset.length || f.asset.includes(p.asset)) &&
       (!f.query ||
         `${p.name} ${p.city} ${p.country} ${p.asset}`
           .toLowerCase()
@@ -351,15 +351,16 @@ export function interpret(text: string, source: Property[] = properties) {
     r === "UK" ? /\buk\b|united kingdom/.test(q) : q.includes(r.toLowerCase()),
   );
   if (region) {
-    filters.region = region;
+    filters.region = [region];
     criteria.push(region);
   }
-  if (/logistics|industrial|data cent/.test(q)) filters.asset = assetClasses[1];
-  else if (/hotel/.test(q)) filters.asset = "Hotels";
-  else if (/office/.test(q)) filters.asset = "Offices";
-  else if (/retail|mall/.test(q)) filters.asset = assetClasses[2];
-  else if (/mixed.use/.test(q)) filters.asset = "Mixed Use";
-  if (filters.asset !== "All Assets") criteria.push(shortAsset(filters.asset));
+  if (/logistics|industrial|data cent/.test(q))
+    filters.asset = [assetClasses[1]];
+  else if (/hotel/.test(q)) filters.asset = ["Hotels"];
+  else if (/office/.test(q)) filters.asset = ["Offices"];
+  else if (/retail|mall/.test(q)) filters.asset = [assetClasses[2]];
+  else if (/mixed.use/.test(q)) filters.asset = ["Mixed Use"];
+  criteria.push(...filters.asset.map(shortAsset));
   const y = q.match(
     /(?:above|over|minimum|at least|yielding)\s*(\d+(?:\.\d+)?)\s*%/,
   );
@@ -402,7 +403,7 @@ export function interpret(text: string, source: Property[] = properties) {
   if (!criteria.length)
     return {
       error:
-        "I can filter the sample opportunities by region, asset class, price, yield and tenure. Try one of the example searches below.",
+        "I can filter the opportunities by region, asset class, price, yield and tenure. Try one of the example searches below.",
     };
   let results = filterProperties(filters, source);
   const compare = /compare/.test(q);
