@@ -1,0 +1,145 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider   = "prisma-client"
+  output     = "../src/generated/prisma"
+  engineType = "client"
+}
+
+model Property {
+  id           String              @id
+  position     Int
+  name         String
+  city         String
+  country      String
+  region       String
+  asset        String
+  currency     String
+  price        Float
+  yield        Float
+  area         Int
+  tenure       String
+  image        String
+  label        String
+  summary      String
+  highlights   String[]
+  confidential Boolean             @default(false)
+  shortlist    Shortlist[]
+  requests     InvestmentRequest[]
+
+  @@index([region, asset])
+}
+
+model Shortlist {
+  userId     String   @db.Uuid
+  propertyId String
+  createdAt  DateTime @default(now())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@id([userId, propertyId])
+}
+
+enum RequestKind {
+  enquiry
+  access
+}
+
+enum RequestStatus {
+  pending
+  reviewed
+}
+
+model InvestmentRequest {
+  id         String        @id @default(uuid()) @db.Uuid
+  userId     String        @db.Uuid
+  propertyId String
+  kind       RequestKind
+  email      String
+  message    String        @default("")
+  consent    Boolean       @default(false)
+  status     RequestStatus @default(pending)
+  createdAt  DateTime      @default(now())
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  property   Property      @relation(fields: [propertyId], references: [id])
+
+  @@index([userId, createdAt])
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String              @id @default(uuid()) @db.Uuid
+  name          String
+  email         String
+  emailVerified Boolean             @default(false)
+  image         String?
+  createdAt     DateTime            @default(now())
+  updatedAt     DateTime            @default(now()) @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+  shortlist     Shortlist[]
+  requests      InvestmentRequest[]
+
+  @@unique([email])
+}
+
+model Session {
+  id        String   @id @default(uuid()) @db.Uuid
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String   @db.Uuid
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+}
+
+model Account {
+  id                    String    @id @default(uuid()) @db.Uuid
+  accountId             String
+  providerId            String
+  userId                String    @db.Uuid
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @default(now()) @updatedAt
+
+  @@index([userId])
+}
+
+model Verification {
+  id         String   @id @default(uuid()) @db.Uuid
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @default(now()) @updatedAt
+
+  @@index([identifier])
+}
+
+model RateLimit {
+  id          String @id @default(uuid()) @db.Uuid
+  key         String
+  count       Int
+  lastRequest BigInt
+
+  @@unique([key])
+}
