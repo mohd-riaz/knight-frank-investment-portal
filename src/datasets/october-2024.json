@@ -1,0 +1,2065 @@
+[
+  {
+    "id": "oct24-7-old-park-lane",
+    "name": "7 Old Park Lane",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 115.0,
+    "yield": null,
+    "area": 5074,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-03-column-1",
+    "label": "October 2024",
+    "summary": "Freehold, recently redeveloped island site of scale",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 3. Historical information; availability has not been revalidated.",
+      "Property: Freehold, recently redeveloped island site of scale",
+      "Size: 54,615 sq ft",
+      "Tenure: Freehold",
+      "Tenant: Vacant"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 3,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-88-jermyn-street",
+    "name": "88 Jermyn Street",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Mixed Use",
+    "currency": "GBP",
+    "price": 7.5,
+    "yield": 3.29,
+    "area": 353,
+    "tenure": "Freehold",
+    "annualIncome": 263560.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-03-column-2",
+    "label": "October 2024",
+    "summary": "Rare residential, office and retail opportunity in St James’s let to John Lobb (retail) and Crockett & Jones (offices) who are both renowned for premium footwear",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 3. Historical information; availability has not been revalidated.",
+      "Property: Rare residential, office and retail opportunity in St James’s let to John Lobb (retail) and Crockett & Jones (offices) who are both renowned for premium footwear",
+      "Size: 3,797 sq ft",
+      "Tenure: Freehold",
+      "Tenant: John Lobb (guaranteed by Hermes) and Crocket & Jones (5A1 D&B)",
+      "Term / WAULT: 4.34 years",
+      "Rent: £263,560 pa (£69.41 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 3,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-14-cavendish-square",
+    "name": "14 Cavendish Square",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 25.0,
+    "yield": null,
+    "area": 774,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-03-column-3",
+    "label": "October 2024",
+    "summary": "Grade II*listed property built by the Earl of Oxford with period detailing throughout",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 3. Historical information; availability has not been revalidated.",
+      "Asset class is unspecified in the source; mapped to Other / Miscellaneous.",
+      "Property:Grade II*listed property built by the Earl of Oxford with period detailing throughout",
+      "Size: 8,333 sq ft",
+      "Tenure: Freehold",
+      "Tenant: Vacant"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 3,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-10-throgmorton-avenue",
+    "name": "10 Throgmorton Avenue",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 18.75,
+    "yield": 6.25,
+    "area": 2327,
+    "tenure": "Leasehold",
+    "annualIncome": 1390913.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-04-column-1",
+    "label": "October 2024",
+    "summary": "Attractive period property, recently part-refurbished, situated on a prestigious gated thoroughfare approximately 250 metres from the Bank of England",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 4. Historical information; availability has not been revalidated.",
+      "Property: Attractive period property, recently part-refurbished, situated on a prestigious gated thoroughfare approximately 250 metres from the Bank of England",
+      "Size: 25,052 sq ft",
+      "Tenure: Long Leasehold",
+      "WAULT: 3.80 years",
+      "Rent: £1,390,913 pa / £55.52 psf",
+      "Comments: 149 year Long Leasehold interest from The Carpenters’ Company, with a ground rent equivalent to 10% of Gross Rental Income (rents received), subject to a Base Rent of £104,200 per annum"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 4,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-mansell-court-69-mansell-street",
+    "name": "Mansell Court, 69 Mansell Street",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 10.75,
+    "yield": null,
+    "area": 3843,
+    "tenure": "Freehold",
+    "annualIncome": 1600000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-04-column-2",
+    "label": "October 2024",
+    "summary": "A prominent office building fronting Mansell Street in the lively Aldgate submarket, close to Spitalfields and the heart of London’s insurance district",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 4. Historical information; availability has not been revalidated.",
+      "Property: A prominent office building fronting Mansell Street in the lively Aldgate submarket, close to Spitalfields and the heart of London’s insurance district",
+      "Size:41,367 sq ft",
+      "Tenure: Freehold",
+      "WAULT: 0.9 years",
+      "Rent: £1,600,000 pa/£37.20 psf",
+      "Comments: Potential to enhance value through a refurbishment and extension of the offices or by exploring alternative uses such as hotel, student and residential, subject to the necessary planning consents"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 4,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-77-bastwick-street",
+    "name": "77 Bastwick Street",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 12.52,
+    "yield": 7.0,
+    "area": 1564,
+    "tenure": "Freehold",
+    "annualIncome": 933633.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-04-column-3",
+    "label": "October 2024",
+    "summary": "Attractive warehouse-style building, fully-let to four office occupiers in a Prime Clerkenwell location",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 4. Historical information; availability has not been revalidated.",
+      "Property:Attractive warehouse-style building, fully-let to four office occupiers in a Prime Clerkenwell location",
+      "Size: 16,837 sqft",
+      "Tenure:Freehold",
+      "WAULT: 3.9 years",
+      "Rent: £933,633 pa / £55.45",
+      "Comments: Consistent income profile with only one lease expiry in the next three years. Strong rental growth forecasted offering the opportunity to capitalise on the reversionary at lease expiries"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 4,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-sovereign-house",
+    "name": "Sovereign House",
+    "city": "Brighton",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": null,
+    "yield": null,
+    "area": 7236,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "On application",
+    "image": "october-2024/page-05-column-1",
+    "label": "October 2024",
+    "summary": "Rare repositioning opportunity in Brighton city centre. Opportunity to create a best-in-class, ESG-led office scheme and command premium rents in one of the South East's most sought-after office markets.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 5. Historical information; availability has not been revalidated.",
+      "Property: Rare repositioning opportunity in Brighton city centre. Opportunity to create a best-in-class, ESG-led office scheme and command premium rents in one of the South East's most sought-after office markets.",
+      "Size:77,890 sq ft",
+      "Tenure: Freehold",
+      "Tenant: VP Q1 2025"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 5,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-meadowside-house",
+    "name": "Meadowside House",
+    "city": "Hemel Hempstead",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": null,
+    "yield": 8.58,
+    "area": 4044,
+    "tenure": "Freehold",
+    "annualIncome": 825000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Price to be confirmed",
+    "image": "october-2024/page-05-column-2",
+    "label": "October 2024",
+    "summary": "Single-let to Hertfordshire County Council (occupiedsince 2005). The building has undergone an extensive refurbishment in 2020",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 5. Historical information; availability has not been revalidated.",
+      "Source price is printed as £9,00,000 and conflicts with the quoted £204 psf; normalized price is withheld pending clarification.",
+      "Property:Single-let to Hertfordshire County Council (occupiedsince 2005). The building has undergone an extensive refurbishment in 2020",
+      "Size:43,530sq ft",
+      "Tenure:Freehold",
+      "Tenant: Hertfordshire County Council",
+      "Term / WAULT: 6.05 years to expiry",
+      "Rent: £825,000 pa (£18.95 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 5,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-jellicoe-house",
+    "name": "Jellicoe House",
+    "city": "Southampton",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 5.0,
+    "yield": 11.88,
+    "area": 2833,
+    "tenure": "Freehold",
+    "annualIncome": 632664.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-05-column-3",
+    "label": "October 2024",
+    "summary": "Contemporary freehold office investments in Botleigh Grange Business park, a prominent working environment, with immediate access to the M27 via the A334",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 5. Historical information; availability has not been revalidated.",
+      "Separately priced component of the joint Jellicoe House and Vanbrugh House panel. Term: 2.4 years.",
+      "Properties:Contemporary freehold office investments in Botleigh Grange Business park, a prominent working environment, with immediate access to the M27 via the A334",
+      "Tenure: Freehold",
+      "Tenant: Multi-Let"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 5,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-vanbrugh-house",
+    "name": "Vanbrugh House",
+    "city": "Southampton",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 4.0,
+    "yield": 11.21,
+    "area": 2245,
+    "tenure": "Freehold",
+    "annualIncome": 477930.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-05-column-3",
+    "label": "October 2024",
+    "summary": "Contemporary freehold office investments in Botleigh Grange Business park, a prominent working environment, with immediate access to the M27 via the A334",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 5. Historical information; availability has not been revalidated.",
+      "Separately priced component of the joint Jellicoe House and Vanbrugh House panel. Term: 5.3 years.",
+      "Properties:Contemporary freehold office investments in Botleigh Grange Business park, a prominent working environment, with immediate access to the M27 via the A334",
+      "Tenure: Freehold",
+      "Tenant: Multi-Let"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 5,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-eq",
+    "name": "EQ",
+    "city": "Bristol",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 120.0,
+    "yield": 6.3,
+    "area": 16351,
+    "tenure": "Freehold",
+    "annualIncome": 8000000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-06-column-1",
+    "label": "October 2024",
+    "summary": "Office",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 6. Historical information; availability has not been revalidated.",
+      "Property: Office",
+      "Tenure: Freehold",
+      "Size: 176,000 sq ft",
+      "Tenant: Multi let",
+      "Term / WAULT: 8 years",
+      "Rent: £8,000,000 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 6,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-chancel-close",
+    "name": "Chancel Close",
+    "city": "Gloucester",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Industrial, Logistics & Data Centres",
+    "currency": "GBP",
+    "price": 9.325,
+    "yield": 7.0,
+    "area": 9691,
+    "tenure": "Freehold",
+    "annualIncome": 696000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-06-column-2",
+    "label": "October 2024",
+    "summary": "Industrial",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 6. Historical information; availability has not been revalidated.",
+      "Property: Industrial",
+      "Tenure: FH",
+      "Size:104,313 sq ft",
+      "Tenant: Multi let",
+      "Term / WAULT: 7.7 years / 3.00 years (break)",
+      "Rent: £696,000 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 6,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-premier-inn-1-3-hind-street",
+    "name": "Premier Inn, 1-3 Hind Street",
+    "city": "Sunderland",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 6.8,
+    "yield": 7.5,
+    "area": 5145,
+    "tenure": "Freehold",
+    "annualIncome": 544411.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-07-column-1",
+    "label": "October 2024",
+    "summary": "Hotel",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 7. Historical information; availability has not been revalidated.",
+      "Property: Hotel",
+      "Size:55,380sqft",
+      "Tenure:Freehold",
+      "Tenant:Premier Inn",
+      "Term / WAULT:16 years to expiry",
+      "Rent: £544,411pa",
+      "Comments: 5 yearly CPI linked rent reviews and tenant break option at year 20"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 7,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-tracerco-measurement-technology-cen",
+    "name": "Tracerco, Measurement Technology Centre",
+    "city": "Billingham",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Mixed Use",
+    "currency": "GBP",
+    "price": 7.45,
+    "yield": 8.25,
+    "area": 5750,
+    "tenure": "Leasehold",
+    "annualIncome": 655000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-07-column-2",
+    "label": "October 2024",
+    "summary": "Headquarters and Reasearch and Development Centre",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 7. Historical information; availability has not been revalidated.",
+      "Mapped to Mixed Use because the source describes offices, laboratories and industrial testing facilities.",
+      "Property: Headquarters and Reasearch and Development Centre",
+      "Tenure: Long Leasehold, Peppercorn (c240 years remaining)",
+      "Size: 61,888 sq ft (GIA)",
+      "Tenant: Tracerco Limited (Guaranteed by Tracerco Global (Topco) Limited and Tracerco UK LLC)",
+      "Term / WAULT: 25 years",
+      "Rent: £655,000 pa",
+      "Comments: A modern high specification campus, with Office, Lab and Industrial testing facilities on a 5.55acre (2.25 ha) site"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 7,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-hadrian-s-tower",
+    "name": "Hadrian's Tower",
+    "city": "Newcastle upon Tyne",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 14.6,
+    "yield": 6.52,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 1327626.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-07-column-3",
+    "label": "October 2024",
+    "summary": "Residential Tower",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 7. Historical information; availability has not been revalidated.",
+      "Property: Residential Tower",
+      "Size:27 stories, 159 apartments, rooftop bar",
+      "Tenure:Freehold",
+      "Tenant:Multiple ASTs and ground leases",
+      "Term / WAULT: Multiple ASTs",
+      "Rent:£1,327,626 pa",
+      "Comments: Landmark city centre property, located close to St James Park football stadium and the Newcastle Helix development"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 7,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-victoria-buildings",
+    "name": "Victoria Buildings",
+    "city": "Manchester",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Mixed Use",
+    "currency": "GBP",
+    "price": 5.9,
+    "yield": 7.92,
+    "area": 1752,
+    "tenure": "Freehold",
+    "annualIncome": 499625.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-08-column-1",
+    "label": "October 2024",
+    "summary": "Grade II listed, mixed use, commercial building overlooking Albert Square in Manchester City Centre",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 8. Historical information; availability has not been revalidated.",
+      "Property: Grade II listed, mixed use, commercial building overlooking Albert Square in Manchester City Centre",
+      "Size: 18,856 sq ft",
+      "Tenure: Freehold",
+      "Tenant: Multi tenanted across ground floor leisure / retail and upper floor offices. 72.5% let to 5 tenants with a WAULT of 7 years (6.4 to break)",
+      "Rent:Current passing rent of £499,625"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 8,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-7-9-piccadilly",
+    "name": "7-9 Piccadilly",
+    "city": "Manchester",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 9.1,
+    "yield": 6.5,
+    "area": 2357,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-08-column-2",
+    "label": "October 2024",
+    "summary": "Prime city centre retail investment with planning for redevelopment",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 8. Historical information; availability has not been revalidated.",
+      "Property: Prime city centre retail investment with planning for redevelopment",
+      "Size: 25,367 sq ft",
+      "Tenure:Freehold",
+      "Tenant: Let to Superdrug Stores Plc and Zambrero",
+      "Comments:Prime position on Manchester's main shopping street.",
+      "Planning granted for partial demolition of upper floors to provide a six-storey office scheme and roof terrace"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 8,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-11-portland-street",
+    "name": "11 Portland Street",
+    "city": "Manchester",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 35.0,
+    "yield": 10.0,
+    "area": 14813,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-08-column-3",
+    "label": "October 2024",
+    "summary": "Grade A, multi let office building in close proximity to Piccadilly Train Station. Comprising 159,448 sq ft across ground and 8 upper floors",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 8. Historical information; availability has not been revalidated.",
+      "Property: Grade A, multi let office building in close proximity to Piccadilly Train Station. Comprising 159,448 sq ft across ground and 8 upper floors",
+      "Tenure: Freehold",
+      "Tenant: 60% of income secured against Bank of Scotland's (Lloyds Banking Group's) undoubted covenant. Remainder is let to Stonegate Pub, ARM, ETV Venues amongst others",
+      "Comments:Comprehensively refurbished by the Landlord (and Lloyds have refurbished some of their own accommodation) since2015",
+      "All 'on floor' M&E is fully electric"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 8,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-durr-hq-broxell-close",
+    "name": "Durr HQ, Broxell Close",
+    "city": "Warwick",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 2.825,
+    "yield": 14.0,
+    "area": 2765,
+    "tenure": "Freehold",
+    "annualIncome": 421000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-09-column-1",
+    "label": "October 2024",
+    "summary": "Freehold office building with strong underlying development potential",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 9. Historical information; availability has not been revalidated.",
+      "Property: Freehold office building with strong underlying development potential",
+      "Size:29,763 sq ft",
+      "Tenant:Derr Ltd",
+      "Term / WAULT: 2.5 yearsto expiry",
+      "Rent: £421,000 per annum"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 9,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-18-glebe-road",
+    "name": "18 Glebe Road",
+    "city": "Huntingdon",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Industrial, Logistics & Data Centres",
+    "currency": "GBP",
+    "price": 4.75,
+    "yield": 6.57,
+    "area": 3977,
+    "tenure": "Freehold",
+    "annualIncome": 332852.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-09-column-2",
+    "label": "October 2024",
+    "summary": "Newly refurbished multi-let industrial estate arranged to provide 7 workshop units over ground and mezzanine floor. Fully let to 2 tenants",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, pages 9, 11. Historical information; availability has not been revalidated.",
+      "Also listed on page 11. Page 9 gives 9.1 years to expiry and 6.6 years to break; page 11 gives 6.6 years WAULT. Quoted price per sq ft differs (£65 on page 9; £111 on page 11).",
+      "Property: Newly refurbished multi-let industrial estate arranged to provide 7 workshop units over ground and mezzanine floor. Fully let to 2 tenants",
+      "Size: 42,804 sq ft",
+      "Tenure:Freehold",
+      "Tenant:Multi-let",
+      "Term / WAULT: 9.1 years (6.6 years to break)",
+      "Rent: £332,852per annum (£7.78 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 9,
+        "column": 2
+      },
+      {
+        "page": 11,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-two-devon-way",
+    "name": "Two Devon Way",
+    "city": "Longbridge",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": 3.75,
+    "yield": 10.06,
+    "area": 2739,
+    "tenure": "Freehold",
+    "annualIncome": 402035.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-09-column-3",
+    "label": "October 2024",
+    "summary": "A modern former HQ with good ESG credentials and strong internal specification fit out",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 9. Historical information; availability has not been revalidated.",
+      "Property: A modern former HQ with good ESG credentials and strong internal specification fit out",
+      "Size:29,479 sq ft",
+      "Tenure:Freehold",
+      "Tenant: St Mowden Homes and Wardell Armstrong",
+      "Rent: £402,035 per annum"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 9,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-johnnie-walker-experience",
+    "name": "Johnnie Walker Experience",
+    "city": "Edinburgh",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 31.58,
+    "yield": 5.5,
+    "area": 6958,
+    "tenure": "Freehold",
+    "annualIncome": 1854183.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-10-column-1",
+    "label": "October 2024",
+    "summary": "Johnnie Walker Visitor Centre",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 10. Historical information; availability has not been revalidated.",
+      "Property:Johnnie Walker Visitor Centre",
+      "Size:74,895 sqft",
+      "Tenure:Freehold",
+      "Tenant:Single let",
+      "Term / WAULT: 20 years",
+      "Rent:£1,854,183",
+      "Comments:Unique opportunity to acquire the multi award-winning, flagship visitor experience for the world’s largest selling Scotch Whisky brand"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 10,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-atrium-court-waterloo-street",
+    "name": "Atrium Court, Waterloo Street",
+    "city": "Glasgow",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Offices",
+    "currency": "GBP",
+    "price": null,
+    "yield": 10.87,
+    "area": 9663,
+    "tenure": "Freehold",
+    "annualIncome": 1507576.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Price to be confirmed",
+    "image": "october-2024/page-10-column-2",
+    "label": "October 2024",
+    "summary": "Multi-let GradeBoffice within Glasgow's CBD",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 10. Historical information; availability has not been revalidated.",
+      "Source price is printed as £13,000,00 and conflicts with the quoted £125 psf; normalized price is withheld pending clarification.",
+      "Property: Multi-let GradeBoffice within Glasgow's CBD",
+      "Size: 104,015 sqft",
+      "Tenure: Freehold",
+      "Tenant: Multi-let",
+      "Term / WAULT: 1.9 years to expiry",
+      "Rent: £1,507,576 pa (£17.45 psf)",
+      "Comments: Best in class refurbishment opportunity with short term lease restructuring opportunities"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 10,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-20-26-buchanan-street",
+    "name": "20-26 Buchanan Street",
+    "city": "Glasgow",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 12.5,
+    "yield": 6.5,
+    "area": 2549,
+    "tenure": "Freehold",
+    "annualIncome": 875000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-10-column-3",
+    "label": "October 2024",
+    "summary": "100% prime retail investment opportunity",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 10. Historical information; availability has not been revalidated.",
+      "Property:100% prime retail investment opportunity",
+      "Size:27,437 sqft",
+      "Tenure:Freehold",
+      "Tenant: Nike",
+      "Term: 5 years",
+      "Rent: £875,000 pa",
+      "Comments: Flagship Nike store which is currently undergoing £5m refurbishment (due to PC December 2024). Strong medium term rental growth prospects"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 10,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-units-c1-c5-imperial-business-estat",
+    "name": "Units C1-C5, Imperial Business Estate",
+    "city": "Gravesend",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Industrial, Logistics & Data Centres",
+    "currency": "GBP",
+    "price": 6.25,
+    "yield": 5.0,
+    "area": 2985,
+    "tenure": "Freehold",
+    "annualIncome": 332810.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-11-column-1",
+    "label": "October 2024",
+    "summary": "Prime southeast reversionary multi let investment",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 11. Historical information; availability has not been revalidated.",
+      "Property: Prime southeast reversionary multi let investment",
+      "Size: 32,127 sq ft",
+      "Tenure: Freehold",
+      "Tenant: Multi Let",
+      "Term / WAULT: 3.36 years",
+      "Rent: £332,810 pa (£10.36 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 11,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-units-1-4-deacon-industrial-estate",
+    "name": "Units 1-4, Deacon Industrial Estate",
+    "city": "Tunbridge Wells",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Industrial, Logistics & Data Centres",
+    "currency": "GBP",
+    "price": 3.14,
+    "yield": 5.5,
+    "area": 2073,
+    "tenure": "Freehold",
+    "annualIncome": 183645.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-11-column-2",
+    "label": "October 2024",
+    "summary": "Reversionary, southeast multi let trade estate",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 11. Historical information; availability has not been revalidated.",
+      "Property: Reversionary, southeast multi let trade estate",
+      "Size:22,318 sq ft",
+      "Tenure: Freehold and part Virtual Freehold",
+      "Tenant: Multi Let",
+      "Term / WAULT: 3.0 years",
+      "Rent: £183,645 pa (£8.23 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 11,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-beaumont-shopping-centre",
+    "name": "Beaumont Shopping Centre",
+    "city": "Leicester",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 18.6,
+    "yield": 9.4,
+    "area": 10966,
+    "tenure": "Freehold",
+    "annualIncome": 1867258.0,
+    "incomeType": "Net operating income",
+    "priceQualifier": "",
+    "image": "october-2024/page-12-column-1",
+    "label": "October 2024",
+    "summary": "Beaumont Shopping Centre is a successful, open-air community shopping centre in Leicester’s fastest growing district",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 12. Historical information; availability has not been revalidated.",
+      "Property: Beaumont Shopping Centre is a successful, open-air community shopping centre in Leicester’s fastest growing district",
+      "Size:118,035 sqft",
+      "Tenure:Freehold",
+      "Tenant:Multi-let",
+      "Term / WAULT: 6.11 years to expiry (5.16 years tobreak)",
+      "Net Operating Income:£1,867,258 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 12,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-festival-place",
+    "name": "Festival Place",
+    "city": "Basingstoke",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 100.0,
+    "yield": 11.0,
+    "area": 104760,
+    "tenure": "Leasehold",
+    "annualIncome": 11665221.0,
+    "incomeType": "Net operating income",
+    "priceQualifier": "",
+    "image": "october-2024/page-12-column-2",
+    "label": "October 2024",
+    "summary": "Festival Place dominates the commercial core of the town centre. It offers essential and convenience goods and high street fashion brands town",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 12. Historical information; availability has not been revalidated.",
+      "Property: Festival Place dominates the commercial core of the town centre. It offers essential and convenience goods and high street fashion brands town",
+      "Size: 1,127,629 sqft",
+      "Tenure: Long Leasehold",
+      "Tenant:Multi-let",
+      "Term / WAULT: 5.79 years toexpiry (4.36 years to break)",
+      "Net Operating Income:£11,665,221pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 12,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-vicar-lane",
+    "name": "Vicar Lane",
+    "city": "Chesterfield",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 15.7,
+    "yield": 10.0,
+    "area": 18766,
+    "tenure": "Leasehold",
+    "annualIncome": 1675667.0,
+    "incomeType": "Net operating income",
+    "priceQualifier": "",
+    "image": "october-2024/page-12-column-3",
+    "label": "October 2024",
+    "summary": "Modern open air streetscape shopping centre investment opportunity. Dominant in-town retail provision. Strong community and convenience focus",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 12. Historical information; availability has not been revalidated.",
+      "Property: Modern open air streetscape shopping centre investment opportunity. Dominant in-town retail provision. Strong community and convenience focus",
+      "Size: 202,000 sq ft",
+      "Tenure: Long Leasehold",
+      "Tenant: Multi-let",
+      "Term / WAULT: 3.70 years to expiry (1.80 years to break)",
+      "Net Operating Income: £1,675,667 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 12,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-1-3-castle-street",
+    "name": "1-3 Castle Street",
+    "city": "Norwich",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 1.33,
+    "yield": 8.5,
+    "area": 243,
+    "tenure": "Freehold",
+    "annualIncome": 120000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-13-column-1",
+    "label": "October 2024",
+    "summary": "Prime two storey building situated in the heart of Norwich",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 13. Historical information; availability has not been revalidated.",
+      "Property: Prime two storey building situated in the heart of Norwich",
+      "Size:2,611 sqft",
+      "Tenure:Freehold",
+      "Tenants: Seasalt",
+      "Term / WAULT: 5.4 years",
+      "Rent:£120,000 pa (£46.00 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 13,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-42-42a-buttermarket",
+    "name": "42 & 42A Buttermarket",
+    "city": "Bury St Edmunds",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 1.625,
+    "yield": 7.25,
+    "area": 698,
+    "tenure": "Freehold",
+    "annualIncome": 125000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-13-column-2",
+    "label": "October 2024",
+    "summary": "Prime retail investment opportunity entirely let to the robust covenant of McDonald's",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 13. Historical information; availability has not been revalidated.",
+      "Property: Prime retail investment opportunity entirely let to the robust covenant of McDonald's",
+      "Size:7,512 sq ft",
+      "Tenure:Freehold",
+      "Tenant:McDonald's",
+      "Term / WAULT: 8.90years to expiry(3..90 yearsto break)",
+      "Rent: £125,000 (£16.60psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 13,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-19-20-union-street-6-7-union-passag",
+    "name": "19-20 Union Street & 6-7 Union Passage",
+    "city": "Bath",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 2.9,
+    "yield": 6.8,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 209500.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-13-column-3",
+    "label": "October 2024",
+    "summary": "Freehold prime retail investment block on Union Street, one of Baths principal retail thoroughfares",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 13. Historical information; availability has not been revalidated.",
+      "Property: Freehold prime retail investment block on Union Street, one of Baths principal retail thoroughfares",
+      "Tenure:Freehold",
+      "Tenants: Dr Martens, Timpsons & Amorino",
+      "Term:8.5 years (3.8 years to break)",
+      "Rent:£209,500 pa (£22.20 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 13,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-colney-fields-shopping-park",
+    "name": "Colney Fields Shopping Park",
+    "city": "St Albans",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 35.6,
+    "yield": 6.0,
+    "area": 6331,
+    "tenure": "Leasehold",
+    "annualIncome": 2280000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-14-column-1",
+    "label": "October 2024",
+    "summary": "Prime, regionally dominant scheme, adjacent owner occupied Sainsbury's",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 14. Historical information; availability has not been revalidated.",
+      "Property: Prime, regionally dominant scheme, adjacent owner occupied Sainsbury's",
+      "Size: 68,144 sq ft",
+      "Tenure: LLH (154 years)",
+      "Tenant: TK Maxx, Next, Boots, JD Sports, PureGym, Burger King, Greggs, Card Factory",
+      "Term / WAULT: 6.0 years to expiry",
+      "Rent: £2.280m pa (£33 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 14,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-st-georges-retail-park",
+    "name": "St Georges Retail Park",
+    "city": "Leeds",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 18.0,
+    "yield": 6.35,
+    "area": 5975,
+    "tenure": "Freehold",
+    "annualIncome": 1220000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-14-column-2",
+    "label": "October 2024",
+    "summary": "Prime, new build foodstore anchored retail park",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 14. Historical information; availability has not been revalidated.",
+      "Property:Prime, new build foodstore anchored retail park",
+      "Size:64,311 sqft",
+      "Tenure: Freehold",
+      "Key Tenants:Aldi, B&M, McDonald's, Greggs, Costa, Subway, Card Factory",
+      "Term / WAULT:15 years to expiry",
+      "Rent: £1.22m pa (£19 psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 14,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-b-q",
+    "name": "B&Q",
+    "city": "Sunderland",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 7.6,
+    "yield": 7.0,
+    "area": 4522,
+    "tenure": "Freehold",
+    "annualIncome": 566000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-14-column-3",
+    "label": "October 2024",
+    "summary": "Dominant, strong trading SOLUS DIY investment",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 14. Historical information; availability has not been revalidated.",
+      "Property: Dominant, strong trading SOLUS DIY investment",
+      "Size:48,670 sqft",
+      "Tenure:Freehold",
+      "Tenant:B&Q",
+      "Term / WAULT: 8.3 years to expiry",
+      "Rent: £566k pa (£12psf)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 14,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-skoda-seat-99-101-feeder-road",
+    "name": "Skoda & Seat, 99-101 Feeder Road",
+    "city": "Bristol",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 3.2,
+    "yield": 7.0,
+    "area": 1582,
+    "tenure": "Freehold",
+    "annualIncome": 238655.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-15-column-1",
+    "label": "October 2024",
+    "summary": "Well-located car showroombased in a highly affluent location",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 15. Historical information; availability has not been revalidated.",
+      "Property:Well-located car showroombased in a highly affluent location",
+      "Size:17,031 sq ft",
+      "Tenure:Freehold",
+      "Tenant:VW Group UK Limited",
+      "Term / WAULT: c.8.5 years",
+      "Rent: £238,655 pa(£14.01 psf) subject to five yearly, upward only rent reviews to RPI with a collar and cap of 2%and2.5%, per annum compounded"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 15,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-audi-prospect-park",
+    "name": "Audi, Prospect Park",
+    "city": "Bedford",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 4.4,
+    "yield": 6.0,
+    "area": 2435,
+    "tenure": "Freehold",
+    "annualIncome": 280000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-15-column-2",
+    "label": "October 2024",
+    "summary": "Purpose-built Audi car dealership, significantly extended in 2016 andsituated in a strategic location",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 15. Historical information; availability has not been revalidated.",
+      "Property:Purpose-built Audi car dealership, significantly extended in 2016 andsituated in a strategic location",
+      "Size:26,209 sq ft",
+      "Tenure:Freehold",
+      "Tenant:Vindis Group Limited",
+      "Term / WAULT:c.17.7 years",
+      "Rent: £280,000 pa (£10.68 psf) subject to five yearly, upward only rent reviews to CPIH with a collar and cap of 1%and3%, per annum compounded"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 15,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-vw-vans-145-bath-road",
+    "name": "VW Vans, 145 Bath Road",
+    "city": "Reading",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 2.61,
+    "yield": 7.0,
+    "area": 1006,
+    "tenure": "Freehold",
+    "annualIncome": 194460.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-15-column-3",
+    "label": "October 2024",
+    "summary": "Prominent car dealership along one of Reading's key arterial routes",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 15. Historical information; availability has not been revalidated.",
+      "Property:Prominent car dealership along one of Reading's key arterial routes",
+      "Size:10,824 sq ft",
+      "Tenure:Freehold",
+      "Tenant:VW Group UK Limited",
+      "Term / WAULT: c.8.5 years",
+      "Rent: £194,460 pa (£17.97 psf) subject to five yearly, upward only rent reviews to RPI with a collar and cap of 2%and2.5%, per annum compounded"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 15,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-27-27a-garlick-hill",
+    "name": "27-27A Garlick Hill",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Mixed Use",
+    "currency": "GBP",
+    "price": 1.9,
+    "yield": null,
+    "area": null,
+    "tenure": "Leasehold",
+    "annualIncome": 140000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Sold at auction",
+    "image": "october-2024/page-16-column-1",
+    "label": "Sold at auction",
+    "summary": "A prominentShop/Cafe withServicedApartmentsabove. Close to Mansion House Station",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 16. Historical information; availability has not been revalidated.",
+      "Annual rent totals £40,000 for the shop and £100,000 for the upper floors.",
+      "Property: A prominentShop/Cafe withServicedApartmentsabove. Close to Mansion House Station",
+      "Tenure: Long Leasehold",
+      "Tenancy:Tenanted - Shopleton anew 10-year lease at £40,000 pa.Upperfloorsletto SACO ServiceApartments at£100,000 pawithminimumupliftsevery5 yearsuntil2132(with break options – 1st in 2051)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 16,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-deiniol-shopping-centre",
+    "name": "Deiniol Shopping Centre",
+    "city": "Bangor",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Retail — Units, Malls & Retail Parks",
+    "currency": "GBP",
+    "price": 1.155,
+    "yield": null,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Sold at auction",
+    "image": "october-2024/page-16-column-2",
+    "label": "Sold at auction",
+    "summary": "Shoppingcentre with 26 Retail units and a car park 100 + spaces",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 16. Historical information; availability has not been revalidated.",
+      "Property: Shoppingcentre with 26 Retail units and a car park 100 + spaces",
+      "Tenure: Freehold",
+      "Tenancy:Tenanted"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 16,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-4-union-road-stockwell",
+    "name": "4 Union Road, Stockwell",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Other / Miscellaneous",
+    "currency": "GBP",
+    "price": 0.46,
+    "yield": null,
+    "area": 159,
+    "tenure": "Leasehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide from",
+    "image": "october-2024/page-16-column-3",
+    "label": "October 2024",
+    "summary": "A studio of 1,712 sq ft over 3 floors in Stockwell, with prior approval for residential use. EPC Rating A",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 16. Historical information; availability has not been revalidated.",
+      "Property:A studio of 1,712 sq ft over 3 floors in Stockwell, with prior approval for residential use. EPC Rating A",
+      "Tenure: Long Leasehold",
+      "Tenancy:Vacant"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 16,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-travelodge-edinburgh-rose-street",
+    "name": "Travelodge Edinburgh Rose Street",
+    "city": "Edinburgh",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 6.93,
+    "yield": 6.2,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 458479.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-17-column-1",
+    "label": "October 2024",
+    "summary": "Long-let hotel in the heart of Edinburgh city centre, subject to 5 yearly uncapped RPI reviews",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 17. Historical information; availability has not been revalidated.",
+      "Property: Long-let hotel in the heart of Edinburgh city centre, subject to 5 yearly uncapped RPI reviews",
+      "Size: 43 beds & one retail unit",
+      "Tenure: Heritable Interest (Freehold)",
+      "Tenant: Travelodge Hotels Ltd",
+      "Term / WAULT: 20.1 years",
+      "Rent: £458,479 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 17,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-140-minories-8-india-street",
+    "name": "140 Minories & 8 India Street",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 19.25,
+    "yield": 6.06,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 1245000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-17-column-2",
+    "label": "October 2024",
+    "summary": "Rare aparthotel and restaurant opportunity located inthe City of London withthe apartments operating under theKula brand",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 17. Historical information; availability has not been revalidated.",
+      "Property:Rare aparthotel and restaurant opportunity located inthe City of London withthe apartments operating under theKula brand",
+      "Size:33 apartments",
+      "Tenure:Freehold",
+      "Tenant:Stay&CoUK Ltd(guarantee byGold Tree Accommodation Limited)",
+      "Term / WAULT: 4.7 years",
+      "Rent:£1,245,000 pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 17,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-premier-inn-west-thurrock",
+    "name": "Premier Inn West Thurrock",
+    "city": "West Thurrock",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 14.98,
+    "yield": 6.5,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 1040020.0,
+    "incomeType": "Topped-up annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-17-column-3",
+    "label": "October 2024",
+    "summary": "A strategic London M25 orbital hotel with attractive 5 yearly RPI reviews and significant tenant investment into the building",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 17. Historical information; availability has not been revalidated.",
+      "Property: A strategic London M25 orbital hotel with attractive 5 yearly RPI reviews and significant tenant investment into the building",
+      "Size: 193 beds",
+      "Tenure: Freehold",
+      "Tenant: Premier Inn Hotels Ltd",
+      "Term / WAULT: 10 years",
+      "Rent: £1,040,020 (topped-up) pa"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 17,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-theobalds-park-estate",
+    "name": "Theobalds Park Estate",
+    "city": "Near London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 12.5,
+    "yield": null,
+    "area": 9937,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-18-column-1",
+    "label": "October 2024",
+    "summary": "A Georgian mansion house set in 55 acres of grounds with 140 en-suite bedrooms, free of any management.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 18. Historical information; availability has not been revalidated.",
+      "Size:A Georgian mansion house set in 55 acres of grounds with 140 en-suite bedrooms, free of any management.",
+      "Tenure: Freehold",
+      "Sale Type: Vacant Possession",
+      "Comments:",
+      "Traded successfully as a business under two different operators and received approx £8m of CapEx in 2020",
+      "Close proximity to (Junc 25) M25 (1.6 miles) and central London (15 miles) to the south.",
+      "Built area comprising approx. 106,960 sq. ft (GIA)",
+      "Two restaurant offerings and substantial meeting and events facilities comprising 16 function rooms",
+      "Gym, dry spa and outdoor pool (lido)",
+      "Considerable future development in the vicinity of the hotel ($1bn Google data centre, Sunset Studios & Theobalds Enterprise Park)"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 18,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-leonardo-heathrow-hotel",
+    "name": "Leonardo Heathrow Hotel",
+    "city": "London Heathrow",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 30.0,
+    "yield": null,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": 1700000.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-18-column-2",
+    "label": "October 2024",
+    "summary": "A purpose built hotel with 230 en-suite bedrooms, fully refurbished in 2019/2020 on a 2.42 acre site",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 18. Historical information; availability has not been revalidated.",
+      "Size:A purpose built hotel with 230 en-suite bedrooms, fully refurbished in 2019/2020 on a 2.42 acre site",
+      "Tenure:Freehold",
+      "Sale Type: Sale subject to RPI indexed linked lease to Leonardo with just over 15 years remaining. Option to secure vacant possession by exercising a Landlord Only break clause",
+      "Comments:",
+      "Strategically located on the Bath Road within a 5 minute shuttle bus ride from Terminals 2 & 3 of Heathrow Airport",
+      "Bar lounge with seating for approx. 50 people and restaurant with approx. 140 covers",
+      "14 meeting and conference rooms",
+      "A well-equipped fitness area",
+      "Passing rent of £1,700,000, expected to increase to over £2 million at the next rent review in March 2025"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 18,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-duchally-country-estate",
+    "name": "Duchally Country Estate",
+    "city": "Gleneagles",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Hotels",
+    "currency": "GBP",
+    "price": 5.75,
+    "yield": null,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-18-column-3",
+    "label": "October 2024",
+    "summary": "27-acre estate, 9 bedroom hotel, with 27 lodges included.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 18. Historical information; availability has not been revalidated.",
+      "Size: 27-acre estate, 9 bedroom hotel, with 27 lodges included.",
+      "Tenure: Freehold",
+      "Sale Type: We are selling the shares in the Special Purchase Vehicle that holds the property",
+      "Comments: An elegant estate at the foot of the Scottish Highlands in Gleneagles, approx. 40 miles from both Edinburgh and Glasgow.",
+      "27 lodges included with the sale, a further 24 within a leaseback programme providing income for the business. Planning permission for 40 apartments.",
+      "A well-equipped leisure complex including a gym, steam room, sauna, pool and hot tub",
+      "A gatehouse converted into a Gin Distillery",
+      "Potential for future growth including lodge refurbishment, purchase further lodges on site and implement of additional bedrooms in the main hotel."
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 18,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-beach-house-estate-beach-lane",
+    "name": "Beach House Estate, Beach Lane",
+    "city": "Beach, near Bath",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 13.95,
+    "yield": null,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-19-column-1",
+    "label": "October 2024",
+    "summary": "An exceptional Grade-II listed country house with land, a Dower House and 5 superb cottages in an elevated position overlooking the Golden Valley ‘area of outstanding natural beauty’ north of Bath",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 19. Historical information; availability has not been revalidated.",
+      "Source floor area is a range, 10,505-25,195 sq ft; no single floor area is assumed. Land: 56.71 acres.",
+      "An exceptional Grade-II listed country house with land, a Dower House and 5 superb cottages in an elevated position overlooking the Golden Valley ‘area of outstanding natural beauty’ north of Bath",
+      "The Beach House Estate comprises approximately 57 acres of grounds, park and farmland with ample guest and secondary accommodation. Beach House is a very rare and unique estate only minutes away from the city of Bath and the M4 Junction 18",
+      "Freehold"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 19,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-hamilton-terrace-st-john-s-wood",
+    "name": "Hamilton Terrace, St John's Wood",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 15.495,
+    "yield": null,
+    "area": null,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-19-column-2",
+    "label": "October 2024",
+    "summary": "An exceptional opportunity to purchase a magnificent Grade II listed house situated on the East Side of this prestigious tree- lined boulevard",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 19. Historical information; availability has not been revalidated.",
+      "Source headline area is 8,662 sq ft, while the description states 8,229 sq ft; normalized area is withheld pending clarification.",
+      "An exceptional opportunity to purchase a magnificent Grade II listed house situated on the East Side of this prestigious tree- lined boulevard",
+      "An ambassadorial home, this Victorian semi-detached period residence boasts seven bedrooms and exudes elegance and sophistication. Spanning an impressive 8,229 sq. ft. and incorporating the original coach house, this home is spacious yet offers comfortable and inviting living spaces, including magnificent reception rooms",
+      "Freehold"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 19,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-hyde-park-gate-kensington",
+    "name": "Hyde Park Gate, Kensington",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 19.5,
+    "yield": null,
+    "area": 523,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "",
+    "image": "october-2024/page-19-column-3",
+    "label": "October 2024",
+    "summary": "The house was formerly connected to the home of Sir Winston Churchill. A charming Grade II listed, low built six/seven bedroom family house situated in this quiet and prestigious cul de sac. The house is wide and arranged over only four floors, offering exceptional entertaining space, with a special and rare double height reception room which leads onto a truly beautiful and tranquil west facing garden. The principal bedroom suite opens onto a west facing terrace, with views of the garden",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 19. Historical information; availability has not been revalidated.",
+      "The house was formerly connected to the home of Sir Winston Churchill. A charming Grade II listed, low built six/seven bedroom family house situated in this quiet and prestigious cul de sac. The house is wide and arranged over only four floors, offering exceptional entertaining space, with a special and rare double height reception room which leads onto a truly beautiful and tranquil west facing garden. The principal bedroom suite opens onto a west facing terrace, with views of the garden",
+      "Freehold"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 19,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-allen-house-kensington",
+    "name": "Allen House, Kensington",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 1.29,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-20-column-1",
+    "label": "October 2024",
+    "summary": "Allen House is a rare and unique opportunity. The comprehensive return to splendour of this iconic Edwardian building will create 45 beautifully appointed studio, 1-, 2-, and 3-bedroom lateral apartments, and two spectacular penthouses with skyline views across one of the world’s greatest capitals",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 20. Historical information; availability has not been revalidated.",
+      "Service Charge: £11psf pa",
+      "Completion: Q3 2024",
+      "Prices from: £1,290,000",
+      "Details: Allen House is a rare and unique opportunity. The comprehensive return to splendour of this iconic Edwardian building will create 45 beautifully appointed studio, 1-, 2-, and 3-bedroom lateral apartments, and two spectacular penthouses with skyline views across one of the world’s greatest capitals",
+      "Amenities:",
+      "24-hour concierge and security",
+      "A number of apartments benefit from their own private balcony or terrace",
+      "State-of-the-art gymnasium",
+      "Fully-connected meeting room",
+      "RBKC residents' parking permits for apartments"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 20,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-chelsea-barracks-belgravia",
+    "name": "Chelsea Barracks, Belgravia",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 3.3,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-20-column-2",
+    "label": "October 2024",
+    "summary": "Ranging from spacious apartments and penthouses to magnificent townhouses, the residences at Chelsea Barracks weave seamlessly into the fabric of Belgravia. Set around seven beautiful garden squares and master-planned landscapes, this award- winning development creates enchanting new vistas that delight the senses and breathe life into the city, completing London’s most esteemed enclave",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 20. Historical information; availability has not been revalidated.",
+      "Service Charge: £14.50 psfpa",
+      "Prices from: £3,300,000",
+      "Completion: April 2024",
+      "Details: Ranging from spacious apartments and penthouses to magnificent townhouses, the residences at Chelsea Barracks weave seamlessly into the fabric of Belgravia. Set around seven beautiful garden squares and master-planned landscapes, this award- winning development creates enchanting new vistas that delight the senses and breathe life into the city, completing London’s most esteemed enclave"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 20,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-the-owo-whitehall",
+    "name": "The OWO, Whitehall",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 4.0,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-20-column-3",
+    "label": "October 2024",
+    "summary": "The OWO is a landmark Grade II*- listed Edwardian baroque building situated in the heart of London on Whitehall and opposite Horse Guards",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 20. Historical information; availability has not been revalidated.",
+      "Service Charge: £16psf pa",
+      "Completion: Complete",
+      "Prices from: £4,000,000",
+      "Details: The OWO is a landmark Grade II*- listed Edwardian baroque building situated in the heart of London on Whitehall and opposite Horse Guards",
+      "Amenities:",
+      "120-key Raffles Hotel – the first in the UK",
+      "Collection of 11 restaurants and bars",
+      "85 Raffles Branded Residences (up to 5 bedrooms)",
+      "Unique features to each residence including ceiling heights from 3m-4.4m"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 20,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-the-ariel-television-centre",
+    "name": "The Ariel, Television Centre",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 0.595,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-21-column-1",
+    "label": "October 2024",
+    "summary": "A standout collection of studio, 1, 2 and 3-bedroom apartments and penthouses offering uninterrupted views of the City and beyond, from the only tower at the iconic landmark Television Centre.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 21. Historical information; availability has not been revalidated.",
+      "Service Charge: £10.15 psf pa",
+      "Completion: Q2 2027",
+      "Prices from: £595,000",
+      "Details: A standout collection of studio, 1, 2 and 3-bedroom apartments and penthouses offering uninterrupted views of the City and beyond, from the only tower at the iconic landmark Television Centre.",
+      "Amenities: o 24/7 concierge and security o Co-working space, wellness suite, residents lounge bar and terrace o Residents gym managed by Soho House with pool, hammam, sauna and steam rooms o 10 cafes and restaurants including Michelin-star restaurant Endo at Rotunda"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 21,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-the-edit-south-bank",
+    "name": "The Edit, South Bank",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 0.65,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-21-column-2",
+    "label": "October 2024",
+    "summary": "22 storeys high along the Low Line, overlooking Bankside, London Bridge and Bermondsey, The Edit adds a contemporary landmark to South Bank's already thriving location. 95 artfully crafted apartments with all featuring a private balcony with views towards the River Thames and across the London city skyline, Swiss V-Zug appliances as standard and interiors by Pandora Taylor.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 21. Historical information; availability has not been revalidated.",
+      "Service Charge: £8.60 psfpa",
+      "Completion: Q2/ Q3 2028",
+      "Prices from: £650,000",
+      "Details: 22 storeys high along the Low Line, overlooking Bankside, London Bridge and Bermondsey, The Edit adds a contemporary landmark to South Bank's already thriving location. 95 artfully crafted apartments with all featuring a private balcony with views towards the River Thames and across the London city skyline, Swiss V-Zug appliances as standard and interiors by Pandora Taylor.",
+      "Amenities: Residents will have access to the exclusive No.9 Club, a destination for wellness, fitness and work, with amenities including a dedicated 24-hour concierge team, fitness centre powered by Peloton, sauna and ice bath, co-working lounge and a private terrace."
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 21,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-canary-wharf-estate",
+    "name": "Canary Wharf Estate",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 0.69,
+    "yield": null,
+    "area": null,
+    "tenure": "Not stated",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "From",
+    "image": "october-2024/page-21-column-3",
+    "label": "October 2024",
+    "summary": "Canary Wharf’s new neighbourhood, Wood Wharf, will provide up to 3,600 new homes, 2 million sq ft of office space, 350,000 sq ft of retail space and over nine acres of public spaces, squares and parks.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 21. Historical information; availability has not been revalidated.",
+      "Service Charge: £5.92 - £9.42 psf pa + estate charge",
+      "Prices from: £690,000",
+      "Details: Canary Wharf’s new neighbourhood, Wood Wharf, will provide up to 3,600 new homes, 2 million sq ft of office space, 350,000 sq ft of retail space and over nine acres of public spaces, squares and parks.",
+      "Amenities: At One Park Drive, residents joy a full suite of amenities spread over two floors, including a lounge, library, cinema and anteroom, gym, 20m swimming pool, steam / sauna room and dedicated concierge service. Residents at 10 Park Drive also benefit from access to concierge service, lounge and roof terrace and access to the new Thirdspace fitness centre located on the Estate."
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 21,
+        "column": 3
+      }
+    ]
+  },
+  {
+    "id": "oct24-upper-grosvenor-street-mayfair",
+    "name": "Upper Grosvenor Street, Mayfair",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 36.0,
+    "yield": null,
+    "area": 1243,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-22-column-1",
+    "label": "October 2024",
+    "summary": "Magnificent stone-fronted residential building, originally constructed in 1911-12",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 22. Historical information; availability has not been revalidated.",
+      "Floor area uses 13,381 sq ft NSA; the source also reports 15,804 sq ft GIA.",
+      "Size:5 residential units (4 flats and 1 town house)",
+      "Tenure:Freehold",
+      "Comments:Magnificent stone-fronted residential building, originally constructed in 1911-12",
+      "Corner plot on the junction of Upper Grosvenor Street and Park Street in super prime Mayfair",
+      "Currently arranged as five substantial apartments extending to 1,243.1 sq m (13,381 sq ft) NSA",
+      "Significant refurbishment / redevelopment opportunity with potential for subdivision of apartments and the creation of a roof terrace 1,468.2 sq m (15,804 sq ft) GIA, including common areas"
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 22,
+        "column": 1
+      }
+    ]
+  },
+  {
+    "id": "oct24-strathmore-court-regent-park",
+    "name": "Strathmore Court, Regent Park",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Mixed Use",
+    "currency": "GBP",
+    "price": 60.0,
+    "yield": null,
+    "area": 3627,
+    "tenure": "Freehold",
+    "annualIncome": null,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-22-column-2",
+    "label": "October 2024",
+    "summary": "GIA of the existing building totals 50,375 sq ft.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 22. Historical information; availability has not been revalidated.",
+      "Floor area uses 39,039 sq ft NSA; the source also reports 50,375 sq ft GIA. ERV is estimated rental value, not passing income.",
+      "Size: 21 residential units and 10 retail totalling 39,039 sq ft NSA.",
+      "Tenure: Freehold",
+      "Comments: GIA of the existing building totals 50,375 sq ft.",
+      "10 retail units totalling 5,020 sq ft, let on commercial tenancies.",
+      "An ERV* of £41,981 per week or £2,183,024 p.a. (including commercial) in current condition.",
+      "Refurbishing the existing apartments would give an estimated residential ERV* of £2.6m. A full refurbishment and redevelopment of the building would provide an ERV* of between £4.1m to £4.7m, depending on specification."
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 22,
+        "column": 2
+      }
+    ]
+  },
+  {
+    "id": "oct24-38-heath-drive-west-hampstead",
+    "name": "38 Heath Drive, West Hampstead",
+    "city": "London",
+    "country": "United Kingdom",
+    "region": "UK",
+    "asset": "Residential",
+    "currency": "GBP",
+    "price": 20.0,
+    "yield": null,
+    "area": 2054,
+    "tenure": "Freehold",
+    "annualIncome": 943541.0,
+    "incomeType": "Reported annual rent",
+    "priceQualifier": "Guide",
+    "image": "october-2024/page-22-column-3",
+    "label": "October 2024",
+    "summary": "Comprising: 3 × one bedroom, 13 × two-bedroom, 5 × three-bedroom units.",
+    "highlights": [
+      "Source: Private Office Commercial Opportunity Tracker, October 2024, page 22. Historical information; availability has not been revalidated.",
+      "Floor area uses 22,112 sq ft NSA; the source also reports 27,002 sq ft GIA.",
+      "Size: 21 residential units totalling 22,112 sq ft NSA ) and 27,002 square feet (GIA)",
+      "Tenure: Freehold",
+      "Comments: Comprising: 3 × one bedroom, 13 × two-bedroom, 5 × three-bedroom units.",
+      "The Property practically completed in 2017",
+      "The building comprises apartments from the lower ground to the fourth floor.",
+      "Nine apartments benefit from terraces, balconies or access to the garden and there is an elevator to provide access to every level.",
+      "Fully occupied producing £943,541 per annum with an Estimated Rental Pricing (ERP) of c.£1,000,000 per annum."
+    ],
+    "confidential": false,
+    "sourcePanels": [
+      {
+        "page": 22,
+        "column": 3
+      }
+    ]
+  }
+]

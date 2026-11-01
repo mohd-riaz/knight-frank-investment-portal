@@ -21,6 +21,8 @@ import {
   assetClasses,
   emptyFilters,
   income,
+  yieldText,
+  areaText,
   money,
   regions,
   shortAsset,
@@ -44,6 +46,7 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
+import { propertyImage } from "@/lib/property-images";
 import React from "react";
 const regionCode: Record<string, string> = {
   Asia: "01",
@@ -55,7 +58,6 @@ const regionCode: Record<string, string> = {
   "Middle East": "07",
   "Rest of the World": "08",
 };
-const formatNumber = (n: number) => n.toLocaleString("en-GB");
 export function OverviewScreen() {
   const { properties, setFilters, setChatOpen, navigate, browseRegion, card } =
     usePortal();
@@ -389,9 +391,7 @@ export function ListingsScreen() {
                     </TableCell>
                     <TableCell>{shortAsset(p.asset)}</TableCell>
                     <TableCell className="od-nowrap">{money(p)}</TableCell>
-                    <TableCell className="od-nowrap">
-                      {p.yield.toFixed(1)}%
-                    </TableCell>
+                    <TableCell className="od-nowrap">{yieldText(p)}</TableCell>
                     <TableCell>{p.tenure}</TableCell>
                     <TableCell>
                       <div className="od-row">
@@ -537,9 +537,7 @@ export function ComparisonScreen() {
                   <div className="compare-image">
                     <Image
                       className="od-media"
-                      src={`/assets/images/${p.image}.jpg`}
-                      width="1000"
-                      height={p.image === "tower" ? 668 : 667}
+                      {...propertyImage(p)}
                       alt={p.name}
                     />
                     <Button
@@ -562,9 +560,9 @@ export function ComparisonScreen() {
                     {[
                       ["Asset class", shortAsset(p.asset)],
                       ["Asking price", money(p)],
-                      ["Net yield", p.yield.toFixed(1) + "%"],
-                      ["Net annual income", income(p)],
-                      ["Net lettable area", formatNumber(p.area) + " m²"],
+                      ["Net yield", yieldText(p)],
+                      [p.incomeType || "Reported annual income", income(p)],
+                      ["Floor area", areaText(p)],
                       ["Tenure", p.tenure],
                       ["Region", p.region],
                     ].map(([k, v]) => (

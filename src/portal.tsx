@@ -1,5 +1,6 @@
 "use client";
 
+import { highestYieldFirst } from "@/data";
 import {
   ActionDialog,
   Assistant,
@@ -367,8 +368,7 @@ export default function Portal({
     filters,
     isSaved ? properties.filter((p) => saved.includes(p.id)) : properties,
   );
-  if (sort === "Highest yield")
-    results = [...results].sort((a, b) => b.yield - a.yield);
+  if (sort === "Highest yield") results = [...results].sort(highestYieldFirst);
   if (sort === "Name A–Z")
     results = [...results].sort((a, b) => a.name.localeCompare(b.name));
   const card = (p: Property) => (

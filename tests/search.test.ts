@@ -2,11 +2,21 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   emptyFilters,
-  examplePrompts,
-  filterProperties,
-  interpret,
-  properties,
+  filterProperties as filterCatalog,
+  interpret as interpretCatalog,
 } from "../src/data";
+
+import { properties } from "./fixtures/properties";
+const interpret = (query: string, source = properties) =>
+  interpretCatalog(query, source);
+const filterProperties = (filters: Parameters<typeof filterCatalog>[0]) =>
+  filterCatalog(filters, properties);
+const examplePrompts = [
+  "Show me all logistics assets in Europe yielding above 6.5%.",
+  "What hotels are available in the Middle East below AED 500 million?",
+  "Compare the three highest-yielding office assets in the UK.",
+  "Show me income-producing logistics investments in Europe between �50m and �150m, above 6%, excluding leasehold.",
+];
 
 test("all four design prompts return the expected property sets", () => {
   const expected = [

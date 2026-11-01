@@ -1,3 +1,7 @@
+import tracker from "./datasets/october-2024.json";
+import { presentProperty } from "./lib/property-presentation";
+import { regionalLocations } from "./lib/regional-locations";
+
 export const regions = [
   "Asia",
   "Australia",
@@ -16,6 +20,7 @@ export const assetClasses = [
   "Hotels",
   "Mixed Use",
   "Other / Miscellaneous",
+  "Residential",
 ];
 export type Property = {
   id: string;
@@ -25,9 +30,12 @@ export type Property = {
   region: string;
   asset: string;
   currency: string;
-  price: number;
-  yield: number;
-  area: number;
+  price: number | null;
+  yield: number | null;
+  area: number | null;
+  priceQualifier?: string;
+  annualIncome?: number | null;
+  incomeType?: string;
   tenure: string;
   image: string;
   label: string;
@@ -35,257 +43,26 @@ export type Property = {
   highlights: string[];
   confidential?: boolean;
 };
-const base = {
-  tenure: "Freehold",
-  highlights: [
-    "Established location with access to regional transport links",
-    "Income-producing asset with an active management opportunity",
-    "Further information available through your Knight Frank advisor",
-  ],
-};
+// Both the portal and database seed consume this reviewed, historical catalog.
+export const sourceProperties: Property[] = tracker.map((entry) => {
+  const { sourcePanels, ...property } = entry;
+  // Source panel references are retained in the reviewed JSON.
+  void sourcePanels;
+  return property;
+});
 export const properties: Property[] = [
-  {
-    ...base,
-    id: "p01",
-    name: "Riverside Exchange",
-    city: "London",
-    country: "United Kingdom",
-    region: "UK",
-    asset: "Offices",
-    currency: "GBP",
-    price: 82,
-    yield: 6.8,
-    area: 18400,
-    image: "office",
-    label: "Core plus",
-    summary:
-      "A multi-let office investment in an established London business district. The investment case combines contracted income with a phased refurbishment opportunity.",
-  },
-  {
-    ...base,
-    id: "p02",
-    name: "Gateway Logistics Park",
-    city: "Rotterdam",
-    country: "Netherlands",
-    region: "Europe",
-    asset: assetClasses[1],
-    currency: "EUR",
-    price: 96,
-    yield: 7.2,
-    area: 62400,
-    image: "tower",
-    label: "Income producing",
-    summary:
-      "A logistics investment positioned for regional distribution. The underwriting assumes diversified occupational demand and modern operational accommodation.",
-  },
-  {
-    ...base,
-    id: "p03",
-    name: "Marina Hotel Collection",
-    city: "Dubai",
-    country: "United Arab Emirates",
-    region: "Middle East",
-    asset: "Hotels",
-    currency: "AED",
-    price: 385,
-    yield: 6.4,
-    area: 32600,
-    image: "hotel",
-    label: "Value add",
-    confidential: true,
-    summary:
-      "A hospitality opportunity with a waterfront setting. The investment case combines operating income and a selective improvement programme.",
-  },
-  {
-    ...base,
-    id: "p04",
-    name: "Central Square",
-    city: "Manchester",
-    country: "United Kingdom",
-    region: "UK",
-    asset: "Offices",
-    currency: "GBP",
-    price: 48,
-    yield: 7.4,
-    area: 16100,
-    image: "tower",
-    label: "Core plus",
-    summary:
-      "A regional office investment with a diversified occupier base and an accessible city-centre location.",
-  },
-  {
-    ...base,
-    id: "p05",
-    name: "West End House",
-    city: "Birmingham",
-    country: "United Kingdom",
-    region: "UK",
-    asset: "Offices",
-    currency: "GBP",
-    price: 31,
-    yield: 7.1,
-    area: 11200,
-    image: "office",
-    label: "Income producing",
-    summary:
-      "A income-producing office asset with scope to improve common areas and renew leases over time.",
-  },
-  {
-    ...base,
-    id: "p06",
-    name: "Continental Distribution",
-    city: "Hamburg",
-    country: "Germany",
-    region: "Europe",
-    asset: assetClasses[1],
-    currency: "EUR",
-    price: 124,
-    yield: 6.9,
-    area: 78900,
-    image: "tower",
-    label: "Core",
-    summary:
-      "A distribution campus serving continental trade routes, with income from multiple occupiers.",
-  },
-  {
-    ...base,
-    id: "p07",
-    name: "Eastport Industrial",
-    city: "Lyon",
-    country: "France",
-    region: "Europe",
-    asset: assetClasses[1],
-    currency: "EUR",
-    price: 68,
-    yield: 6.3,
-    area: 44600,
-    image: "office",
-    label: "Core plus",
-    tenure: "Leasehold",
-    summary:
-      "A industrial estate with diversified accommodation and potential for selective asset management.",
-  },
-  {
-    ...base,
-    id: "p08",
-    name: "Orchard Commercial",
-    city: "Singapore",
-    country: "Singapore",
-    region: "Asia",
-    asset: assetClasses[2],
-    currency: "SGD",
-    price: 165,
-    yield: 4.8,
-    area: 14600,
-    image: "commercial",
-    label: "Core",
-    tenure: "Leasehold",
-    summary:
-      "A retail investment in an established urban catchment, combining consumer and service-led occupiers.",
-  },
-  {
-    ...base,
-    id: "p09",
-    name: "Harbour Quarter",
-    city: "Sydney",
-    country: "Australia",
-    region: "Australia",
-    asset: "Mixed Use",
-    currency: "AUD",
-    price: 112,
-    yield: 5.8,
-    area: 28100,
-    image: "city",
-    label: "Core plus",
-    summary:
-      "A mixed-use investment combining workplace and retail accommodation near major transport connections.",
-  },
-  {
-    ...base,
-    id: "p10",
-    name: "Hudson Business Centre",
-    city: "New York",
-    country: "United States",
-    region: "USA",
-    asset: "Offices",
-    currency: "USD",
-    price: 140,
-    yield: 6.1,
-    area: 24100,
-    image: "office",
-    label: "Value add",
-    summary:
-      "An office opportunity with a repositioning strategy and diversified leasing assumptions.",
-  },
-  {
-    ...base,
-    id: "p11",
-    name: "Cape Learning Campus",
-    city: "Cape Town",
-    country: "South Africa",
-    region: "Africa",
-    asset: assetClasses[6],
-    currency: "ZAR",
-    price: 245,
-    yield: 8.1,
-    area: 19800,
-    image: "tower",
-    label: "Long income",
-    summary:
-      "A specialist education asset with campus accommodation and a long-income investment profile.",
-  },
-  {
-    ...base,
-    id: "p12",
-    name: "Pacific Retail Centre",
-    city: "Vancouver",
-    country: "Canada",
-    region: "Rest of the World",
-    asset: assetClasses[2],
-    currency: "CAD",
-    price: 74,
-    yield: 5.9,
-    area: 21300,
-    image: "commercial",
-    label: "Core",
-    summary:
-      "A retail centre serving a metropolitan catchment with a blend of everyday services and retail accommodation.",
-  },
-  {
-    ...base,
-    id: "p13",
-    name: "Gulf Hospitality House",
-    city: "Abu Dhabi",
-    country: "United Arab Emirates",
-    region: "Middle East",
-    asset: "Hotels",
-    currency: "AED",
-    price: 460,
-    yield: 6.7,
-    area: 38500,
-    image: "hotel",
-    label: "Core plus",
-    summary:
-      "A hotel investment with established operating facilities and a selective capital expenditure strategy.",
-  },
-  {
-    ...base,
-    id: "p14",
-    name: "Rhine Logistics Hub",
-    city: "Düsseldorf",
-    country: "Germany",
-    region: "Europe",
-    asset: assetClasses[1],
-    currency: "EUR",
-    price: 79,
-    yield: 6.6,
-    area: 51900,
-    image: "office",
-    label: "Income producing",
-    summary:
-      "A freehold logistics asset serving a broad industrial catchment, with contracted rental income.",
-  },
-];
+  ...sourceProperties,
+  ...regions
+    .filter((region) => !sourceProperties.some((p) => p.region === region))
+    .flatMap((region) =>
+      sourceProperties.map((property, index) => ({
+        ...property,
+        id: `${property.id}-demo-${region.toLowerCase().replaceAll(" ", "-")}`,
+        region,
+        ...regionalLocations[region][index % regionalLocations[region].length],
+      })),
+    ),
+].map(presentProperty);
 export const shortAsset = (a: string) =>
   a === assetClasses[1]
     ? "Industrial & logistics"
@@ -295,9 +72,25 @@ export const shortAsset = (a: string) =>
         ? "Specialist assets"
         : a;
 export const money = (p: Property) =>
-  `${p.currency} ${p.price.toLocaleString("en-GB")}m`;
+  p.price === null
+    ? "On application"
+    : `${p.currency} ${p.price.toLocaleString("en-GB")}m`;
 export const income = (p: Property) =>
-  `${p.currency} ${((p.price * p.yield) / 100).toFixed(2)}m`;
+  p.annualIncome == null
+    ? "Not stated"
+    : `${p.currency} ${p.annualIncome.toLocaleString("en-GB")}`;
+export const yieldText = (p: Property) =>
+  p.yield === null
+    ? "Not stated"
+    : `${p.yield.toLocaleString("en-GB", { maximumFractionDigits: 2 })}%`;
+export const areaText = (p: Property) =>
+  p.area === null ? "Not stated" : `${p.area.toLocaleString("en-GB")} m²`;
+export const pricePerArea = (p: Property) =>
+  p.price === null || !p.area
+    ? "Not stated"
+    : `${p.currency} ${Math.round((p.price * 1e6) / p.area).toLocaleString("en-GB")}`;
+export const highestYieldFirst = (a: Property, b: Property) =>
+  (b.yield ?? -1) - (a.yield ?? -1);
 export type Filters = {
   region: string[];
   country: string[];
@@ -331,17 +124,17 @@ export function filterProperties(f: Filters, source = properties) {
           .toLowerCase()
           .includes(f.query.toLowerCase())) &&
       (f.currency === "All currencies" || p.currency === f.currency) &&
-      (!f.min || p.price >= Number(f.min)) &&
-      (!f.max || p.price <= Number(f.max)) &&
-      (!f.yield || p.yield >= Number(f.yield)) &&
+      (!f.min || (p.price !== null && p.price >= Number(f.min))) &&
+      (!f.max || (p.price !== null && p.price <= Number(f.max))) &&
+      (!f.yield || (p.yield !== null && p.yield >= Number(f.yield))) &&
       (f.tenure === "Any tenure" || p.tenure === f.tenure),
   );
 }
 export const examplePrompts = [
-  "Show me all logistics assets in Europe yielding above 6.5%.",
-  "What hotels are available in the Middle East below AED 500 million?",
+  "Show me all logistics assets in the UK yielding above 6.5%.",
+  "What hotels are available in the Middle East below GBP 20 million?",
   "Compare the three highest-yielding office assets in the UK.",
-  "Show me income-producing logistics investments in Europe between €50m and €150m, above 6%, excluding leasehold.",
+  "Show me retail investments in the UK between GBP 1m and GBP 20m, above 7%, excluding leasehold.",
 ];
 export function interpret(text: string, source: Property[] = properties) {
   const q = text.toLowerCase();
@@ -360,6 +153,7 @@ export function interpret(text: string, source: Property[] = properties) {
   else if (/office/.test(q)) filters.asset = ["Offices"];
   else if (/retail|mall/.test(q)) filters.asset = [assetClasses[2]];
   else if (/mixed.use/.test(q)) filters.asset = ["Mixed Use"];
+  else if (/residential|apartment/.test(q)) filters.asset = ["Residential"];
   criteria.push(...filters.asset.map(shortAsset));
   const y = q.match(
     /(?:above|over|minimum|at least|yielding)\s*(\d+(?:\.\d+)?)\s*%/,
@@ -408,6 +202,6 @@ export function interpret(text: string, source: Property[] = properties) {
   let results = filterProperties(filters, source);
   const compare = /compare/.test(q);
   if (/highest|compare/.test(q))
-    results = [...results].sort((a, b) => b.yield - a.yield).slice(0, 3);
+    results = [...results].sort(highestYieldFirst).slice(0, 3);
   return { filters, criteria, results, compare };
 }

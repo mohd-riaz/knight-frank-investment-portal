@@ -11,25 +11,28 @@ generator client {
 }
 
 model Property {
-  id           String              @id
-  position     Int
-  name         String
-  city         String
-  country      String
-  region       String
-  asset        String
-  currency     String
-  price        Float
-  yield        Float
-  area         Int
-  tenure       String
-  image        String
-  label        String
-  summary      String
-  highlights   String[]
-  confidential Boolean             @default(false)
-  shortlist    Shortlist[]
-  requests     InvestmentRequest[]
+  id             String              @id
+  position       Int
+  name           String
+  city           String
+  country        String
+  region         String
+  asset          String
+  currency       String
+  price          Float?
+  yield          Float?
+  area           Int?
+  priceQualifier String              @default("")
+  annualIncome   Float?
+  incomeType     String              @default("Reported annual income")
+  tenure         String
+  image          String
+  label          String
+  summary        String
+  highlights     String[]
+  confidential   Boolean             @default(false)
+  shortlist      Shortlist[]
+  requests       InvestmentRequest[]
 
   @@index([region, asset])
 }

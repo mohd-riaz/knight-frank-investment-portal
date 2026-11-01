@@ -30,6 +30,9 @@ import {
 import {
   examplePrompts,
   income,
+  yieldText,
+  areaText,
+  pricePerArea,
   interpret,
   money,
   shortAsset,
@@ -57,9 +60,9 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
+import { propertyImage } from "@/lib/property-images";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
-const formatNumber = (n: number) => n.toLocaleString("en-GB");
 export function Brand({ iconOnly = false }: { iconOnly?: boolean }) {
   return (
     <Image
@@ -335,6 +338,12 @@ export function PropertyCard({
   onSave: () => void;
   onCompare: () => void;
 }) {
+  const metadata = [
+    p.area === null ? "" : areaText(p),
+    p.tenure === "Not stated" ? "" : p.tenure,
+  ]
+    .filter(Boolean)
+    .join(" · ");
   return (
     <article className="property-card od-tile">
       <div className="property-image">
@@ -344,17 +353,17 @@ export function PropertyCard({
           aria-label={`View ${p.name}`}
         >
           <Image
-            className="od-media"
-            src={`/assets/images/${p.image}.jpg`}
-            width="1000"
-            height={p.image === "tower" ? 668 : 667}
-            alt={`${shortAsset(p.asset)} property`}
+            className="od-media od-media-cover"
+            {...propertyImage(p)}
+            alt={p.name}
             loading="lazy"
           />
         </button>
-        <Badge variant="secondary" className="image-badge">
-          {p.label}
-        </Badge>
+        {p.label && (
+          <Badge variant="secondary" className="image-badge">
+            {p.label}
+          </Badge>
+        )}
         <Button
           variant="secondary"
           size="icon"
@@ -388,13 +397,13 @@ export function PropertyCard({
         </p>
         <div className="card-metrics">
           <Metric label="Asking price" value={money(p)} />
-          <Metric label="Net yield" value={p.yield.toFixed(1) + "%"} />
+          <Metric
+            label="Net yield"
+            value={p.yield === null ? "—" : yieldText(p)}
+          />
         </div>
         <div className="property-footer">
-          <span>
-            {formatNumber(p.area)} m² <span aria-hidden="true">·</span>{" "}
-            {p.tenure}
-          </span>
+          <span>{metadata}</span>
           <label className="compare-checkbox">
             <Checkbox
               checked={compared}
@@ -465,13 +474,7 @@ export function PropertyDetail({
       <div className="detail-grid">
         <div className="detail-main">
           <figure className="detail-photo">
-            <Image
-              className="od-media"
-              src={`/assets/images/${p.image}.jpg`}
-              width="1000"
-              height={p.image === "tower" ? 668 : 667}
-              alt={p.name}
-            />
+            <Image className="od-media" {...propertyImage(p)} alt={p.name} />
           </figure>
           <Tabs defaultValue="overview">
             <TabsList className="detail-tabs">
@@ -492,12 +495,12 @@ export function PropertyDetail({
                 ))}
               </ul>
               <div className="detail-data-grid">
-                <Metric
-                  label="Net lettable area"
-                  value={formatNumber(p.area) + " m²"}
-                />
+                <Metric label="Floor area" value={areaText(p)} />
                 <Metric label="Tenure" value={p.tenure} />
-                <Metric label="Investment profile" value={p.label} />
+                <Metric
+                  label="Investment profile"
+                  value={p.label || shortAsset(p.asset)}
+                />
               </div>
             </TabsContent>
             <TabsContent value="financials">
@@ -505,13 +508,10 @@ export function PropertyDetail({
               <dl className="financial-list">
                 {[
                   ["Asking price", money(p)],
-                  ["Net annual income", income(p)],
-                  ["Net yield", p.yield.toFixed(1) + "%"],
-                  ["Net lettable area", formatNumber(p.area) + " m²"],
-                  [
-                    "Price per m²",
-                    `${p.currency} ${formatNumber(Math.round((p.price * 1e6) / p.area))}`,
-                  ],
+                  [p.incomeType || "Reported annual income", income(p)],
+                  ["Net yield", yieldText(p)],
+                  ["Floor area", areaText(p)],
+                  ["Price per m²", pricePerArea(p)],
                   ["Land tenure", p.tenure],
                 ].map(([k, v]) => (
                   <div key={k}>
@@ -521,7 +521,10 @@ export function PropertyDetail({
                 ))}
               </dl>
               <p className="muted">
-                Net annual income is calculated from asking price × net yield.
+                Income is the annual rent or net operating income reported in
+                the source, without inferring income from yield. Floor areas are
+                converted from square feet and may use different measurement
+                bases; see the source notes.
               </p>
             </TabsContent>
             <TabsContent value="documents">
@@ -551,8 +554,8 @@ export function PropertyDetail({
             <strong>{money(p)}</strong>
           </div>
           <div className="investment-metrics">
-            <Metric label="Net yield" value={p.yield.toFixed(1) + "%"} />
-            <Metric label="Annual net income" value={income(p)} />
+            <Metric label="Net yield" value={yieldText(p)} />
+            <Metric label="Reported annual income" value={income(p)} />
           </div>
           <div className="investment-tenure">
             <span>{p.tenure}</span>
@@ -656,12 +659,12 @@ export function Assistant({
               <button key={q} disabled={busy} onClick={() => send(q)}>
                 <span>
                   {i === 0
-                    ? "European logistics above 6.5%"
+                    ? "UK logistics above 6.5%"
                     : i === 1
-                      ? "Middle East hotels below AED 500m"
+                      ? "Middle East hotel demos below GBP 20m"
                       : i === 2
                         ? "Compare the top-yielding UK offices"
-                        : "Freehold European logistics, €50–150m"}
+                        : "Freehold UK retail, GBP 1–20m"}
                 </span>
                 <ArrowUpRight size={16} />
               </button>
@@ -693,7 +696,7 @@ export function Assistant({
                       <div className="od-field">
                         <strong>{p.name}</strong>
                         <span>
-                          {p.city} · {money(p)} · {p.yield.toFixed(1)}%
+                          {p.city} · {money(p)} · {yieldText(p)}
                         </span>
                       </div>
                       <ArrowUpRight size={17} />

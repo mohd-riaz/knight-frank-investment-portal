@@ -2,14 +2,10 @@ import "server-only";
 import { db } from "./prisma";
 export { db } from "./prisma";
 import type { Property } from "@/data";
+import { presentProperty } from "./property-presentation";
 export async function getProperties(): Promise<Property[]> {
   const rows = await db.property.findMany({ orderBy: { position: "asc" } });
-  return rows.map((property) => ({
-    ...property,
-    summary: property.summary
-      .replace(/\b(sample|illustrative)\s+/gi, "")
-      .replace(/^An (?=[^aeiou])/i, "A "),
-  }));
+  return rows.map(presentProperty);
 }
 export async function getShortlist(userId: string): Promise<string[]> {
   const rows = await db.shortlist.findMany({

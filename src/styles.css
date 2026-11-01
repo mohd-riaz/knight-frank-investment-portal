@@ -972,13 +972,14 @@ label {
   background: var(--surface);
 }
 .image-link {
+  --od-ratio: 3 / 2;
   display: block;
   width: 100%;
+  overflow: hidden;
   border-radius: inherit;
 }
 .image-link img {
   border-radius: 8px 8px 0 0;
-  object-fit: contain;
 }
 .image-badge {
   position: absolute;
@@ -1063,10 +1064,15 @@ label {
 }
 .card-metrics {
   display: grid;
-  grid-template-columns: 1.4fr 1fr;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  align-items: start;
   gap: 16px;
   padding: 20px 0;
   border-top: 1px solid var(--line);
+}
+.card-metrics .metric strong {
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .metric {
   gap: 4px;
@@ -1386,14 +1392,22 @@ label {
   min-width: 0;
 }
 .detail-photo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: clamp(260px, 45vh, 420px);
   margin: 0 0 32px;
+  padding: 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
 }
 .detail-photo img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 420px;
-  object-fit: cover;
+  height: 100%;
+  min-height: 0;
+  object-fit: contain;
   object-position: center;
   border-radius: 4px;
 }
@@ -1606,6 +1620,16 @@ label {
 }
 .compare-image {
   position: relative;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+}
+.compare-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 .compare-remove {
   position: absolute;
@@ -2468,8 +2492,9 @@ label {
     flex-direction: column;
     align-items: flex-start;
   }
-  .detail-photo img {
-    max-height: 260px;
+  .detail-photo {
+    height: 260px;
+    padding: 12px;
   }
   .detail-heading h1 {
     font-size: 40px;

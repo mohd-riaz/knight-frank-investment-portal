@@ -2,8 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import {
   emptyFilters,
-  filterProperties,
-  properties,
+  filterProperties as filterCatalog,
   assetClasses,
 } from "../src/data";
 import {
@@ -12,7 +11,10 @@ import {
   normalizeFilters,
   readFilters,
 } from "../src/lib/filters";
+import { properties } from "./fixtures/properties";
 import { portalReturnTo } from "../src/lib/return-to";
+const filterProperties = (filters: Parameters<typeof filterCatalog>[0]) =>
+  filterCatalog(filters, properties);
 
 test("multi-select uses OR within filters and AND across filters", () => {
   const filters = {

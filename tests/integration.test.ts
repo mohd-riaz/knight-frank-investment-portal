@@ -57,8 +57,10 @@ test("authenticated data, account isolation, request validation and session revo
           protectedHtml.includes("NEXT_REDIRECT") &&
           protectedHtml.includes("/login")),
     );
-    assert.ok(!protectedHtml.includes("Riverside Exchange"));
-    const sharedComparison = await call("/compare?ids=p01,p02");
+    assert.ok(!protectedHtml.includes("7 Old Park Lane"));
+    const sharedComparison = await call(
+      "/compare?ids=oct24-7-old-park-lane,oct24-88-jermyn-street",
+    );
     const sharedComparisonHtml = await sharedComparison.text();
     let destination: URL;
     if (sharedComparison.status === 307) {
@@ -76,8 +78,11 @@ test("authenticated data, account isolation, request validation and session revo
       origin,
     );
     assert.equal(comparisonDestination.pathname, "/compare");
-    assert.equal(comparisonDestination.searchParams.get("ids"), "p01,p02");
-    assert.ok(!sharedComparisonHtml.includes("Riverside Exchange"));
+    assert.equal(
+      comparisonDestination.searchParams.get("ids"),
+      "oct24-7-old-park-lane,oct24-88-jermyn-street",
+    );
+    assert.ok(!sharedComparisonHtml.includes("7 Old Park Lane"));
     assert.equal(
       (
         await call("/api/auth/sign-in/email", "POST", {
@@ -113,22 +118,30 @@ test("authenticated data, account isolation, request validation and session revo
       "/opportunities",
       "/shortlist",
       "/compare",
-      "/property/p01",
+      "/property/oct24-7-old-park-lane",
     ]) {
       assert.equal((await call(route)).status, 200, route);
     }
     assert.equal(
-      (await call("/api/shortlist", "PUT", { propertyId: "p01", saved: true }))
-        .status,
+      (
+        await call("/api/shortlist", "PUT", {
+          propertyId: "oct24-7-old-park-lane",
+          saved: true,
+        })
+      ).status,
       200,
     );
     assert.equal(
-      (await call("/api/shortlist", "PUT", { propertyId: "p01", saved: true }))
-        .status,
+      (
+        await call("/api/shortlist", "PUT", {
+          propertyId: "oct24-7-old-park-lane",
+          saved: true,
+        })
+      ).status,
       200,
     );
     assert.deepEqual((await (await call("/api/shortlist")).json()).saved, [
-      "p01",
+      "oct24-7-old-park-lane",
     ]);
     assert.equal(await db.shortlist.count({ where: { userId: user.id } }), 1);
     assert.equal(
@@ -143,7 +156,7 @@ test("authenticated data, account isolation, request validation and session revo
     assert.equal(
       (
         await call("/api/requests", "POST", {
-          propertyId: "p01",
+          propertyId: "oct24-7-old-park-lane",
           kind: "enquiry",
           email,
           message: "short",
@@ -154,7 +167,7 @@ test("authenticated data, account isolation, request validation and session revo
     assert.equal(
       (
         await call("/api/requests", "POST", {
-          propertyId: "p03",
+          propertyId: "oct24-14-cavendish-square",
           kind: "access",
           email,
           consent: false,
@@ -163,7 +176,7 @@ test("authenticated data, account isolation, request validation and session revo
       400,
     );
     const request = await call("/api/requests", "POST", {
-      propertyId: "p01",
+      propertyId: "oct24-7-old-park-lane",
       kind: "enquiry",
       email,
       message: "Please share further investment details.",
@@ -177,7 +190,7 @@ test("authenticated data, account isolation, request validation and session revo
     assert.equal(
       (
         await call("/api/requests", "POST", {
-          propertyId: "p03",
+          propertyId: "oct24-14-cavendish-square",
           kind: "access",
           email,
           consent: true,
@@ -221,8 +234,12 @@ test("authenticated data, account isolation, request validation and session revo
       await db.user.delete({ where: { id: other.id } });
     }
     assert.equal(
-      (await call("/api/shortlist", "PUT", { propertyId: "p01", saved: false }))
-        .status,
+      (
+        await call("/api/shortlist", "PUT", {
+          propertyId: "oct24-7-old-park-lane",
+          saved: false,
+        })
+      ).status,
       200,
     );
     assert.deepEqual((await (await call("/api/shortlist")).json()).saved, []);
