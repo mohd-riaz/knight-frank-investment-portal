@@ -33,7 +33,6 @@ import {
   yieldText,
   areaText,
   pricePerArea,
-  interpret,
   money,
   shortAsset,
   type Filters,
@@ -41,6 +40,7 @@ import {
 } from "@/data";
 import { authClient } from "@/lib/auth-client";
 import { api } from "@/lib/client-api";
+import type { AssistantReply, SearchPlan } from "@/lib/assistant";
 import {
   ArrowLeft,
   ArrowRight,
@@ -583,7 +583,6 @@ export function PropertyDetail({
 }
 
 export function Assistant({
-  properties,
   open,
   onOpenChange,
   onOpenProperty,
@@ -601,29 +600,56 @@ export function Assistant({
     [text, setText] = useState(""),
     [busy, setBusy] = useState(false);
   const end = useRef<HTMLDivElement>(null);
+  const sending = useRef(false);
+  const [previous, setPrevious] = useState<SearchPlan | null>(null);
+  const [previousIds, setPreviousIds] = useState<string[]>([]);
   useEffect(() => {
     if (open)
       end.current?.scrollIntoView({ behavior: "auto", block: "nearest" });
   }, [messages, busy, open]);
-  const send = (q: string) => {
-    if (!q.trim() || busy) return;
+  const send = async (q: string) => {
+    if (!q.trim() || sending.current) return;
+    sending.current = true;
     setMessages((m) => [...m, { role: "user", text: q }]);
     setText("");
     setBusy(true);
-    setTimeout(() => {
-      const result = interpret(q, properties);
+    try {
+      const reply = await api<AssistantReply>("/api/assistant", {
+        message: q.trim(),
+        history: messages
+          .filter((m) => !m.failed)
+          .slice(-10)
+          .map((m) => ({ role: m.role, content: m.text.slice(0, 3000) })),
+        previous,
+        previousIds,
+      });
+      setPrevious(reply.plan);
+      if (reply.result) setPreviousIds(reply.result.results.map((p) => p.id));
+      setMessages((m) => [
+        ...m,
+        {
+          role: "assistant",
+          text: reply.text,
+          result: reply.result,
+        },
+      ]);
+    } catch (error) {
       setMessages((m) => [
         ...m,
         {
           role: "assistant",
           text:
-            result.error ||
-            `${result.results?.length || 0} matching ${result.results?.length === 1 ? "opportunity" : "opportunities"}.`,
-          result,
+            error instanceof Error
+              ? error.message
+              : "Unable to search. Please try again.",
+          failed: true,
         },
       ]);
+      setText(q);
+    } finally {
       setBusy(false);
-    }, 500);
+      sending.current = false;
+    }
   };
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
@@ -641,7 +667,7 @@ export function Assistant({
             </div>
           </div>
         </SheetHeader>
-        <div className="assistant-body">
+        <div className="assistant-body" aria-live="polite" aria-busy={busy}>
           <div className="assistant-intro">
             <span className="eyebrow">A MORE PERSONAL SEARCH</span>
             <h2>
@@ -654,6 +680,20 @@ export function Assistant({
               criteria.
             </p>
           </div>
+          {messages.length > 0 && (
+            <Button
+              variant="ghost"
+              disabled={busy}
+              onClick={() => {
+                setMessages([]);
+                setPrevious(null);
+                setPreviousIds([]);
+                setText("");
+              }}
+            >
+              Start a new conversation
+            </Button>
+          )}
           <div className="example-prompts">
             {examplePrompts.map((q, i) => (
               <button key={q} disabled={busy} onClick={() => send(q)}>
@@ -678,7 +718,7 @@ export function Assistant({
                 </div>
               )}
               <p>{m.text}</p>
-              {m.result && !m.result.error && (
+              {m.result && (
                 <>
                   <div className="chat-criteria od-cluster">
                     {m.result.criteria?.map((c) => (
@@ -697,6 +737,7 @@ export function Assistant({
                         <strong>{p.name}</strong>
                         <span>
                           {p.city} · {money(p)} · {yieldText(p)}
+                          {p.id.includes("-demo-") ? " · Sample location" : ""}
                         </span>
                       </div>
                       <ArrowUpRight size={17} />
@@ -711,6 +752,7 @@ export function Assistant({
                   <div className="chat-actions">
                     <Button
                       variant="outline"
+                      disabled={m.result.total === 0}
                       onClick={() => onApply(m.result!.filters!)}
                     >
                       Apply search to portal <ArrowRight />
@@ -754,6 +796,7 @@ export function Assistant({
               onChange={(e) => setText(e.target.value)}
               placeholder="e.g. Freehold offices in the UK"
               disabled={busy}
+              maxLength={2000}
             />
             <Button
               type="submit"
@@ -764,6 +807,10 @@ export function Assistant({
               <Send />
             </Button>
           </div>
+          <p>
+            Searches use a historical sample catalogue. Availability is
+            unverified.
+          </p>
         </form>
       </SheetContent>
     </Sheet>
@@ -956,5 +1003,6 @@ export function ActionDialog({
 type ChatMessage = {
   role: "user" | "assistant";
   text: string;
-  result?: ReturnType<typeof interpret>;
+  result?: AssistantReply["result"];
+  failed?: boolean;
 };
