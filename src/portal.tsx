@@ -81,6 +81,7 @@ import { cn } from "./lib/utils";
 
 type PortalContextValue = {
   properties: Property[];
+  pendingAccess: string[];
   filters: Filters;
   setFilters: React.Dispatch<React.SetStateAction<Filters>>;
   saved: string[];
@@ -124,11 +125,13 @@ export function usePortal() {
 export default function Portal({
   properties,
   initialSaved,
+  initialPendingAccess,
   user,
   children,
 }: {
   properties: Property[];
   initialSaved: string[];
+  initialPendingAccess: string[];
   user: Investor;
   children: React.ReactNode;
 }) {
@@ -141,6 +144,8 @@ export default function Portal({
   const [compared, setCompared] = useComparison(user.id, properties);
   const [filters, setFilters, listingHref] = useFilters(properties);
   const [saved, setSaved] = useState<string[]>(initialSaved),
+    [pendingAccess, setPendingAccess] =
+      useState<string[]>(initialPendingAccess),
     [view, setView] = useState("grid"),
     [sort, setSort] = useState("Recommended"),
     [chatOpen, setChatOpen] = useState(false),
@@ -505,6 +510,7 @@ export default function Portal({
     <PortalContext.Provider
       value={{
         properties,
+        pendingAccess,
         filters,
         setFilters,
         saved,
@@ -702,6 +708,11 @@ export default function Portal({
           <ActionDialog
             initialEmail={user.email}
             action={action}
+            onAccessRequested={() =>
+              setPendingAccess((ids) =>
+                Array.from(new Set([...ids, action.property.id])),
+              )
+            }
             onClose={() => setAction(null)}
           />
         )}

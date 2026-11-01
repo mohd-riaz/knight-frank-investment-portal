@@ -1604,6 +1604,10 @@ label {
 .document-row > button {
   font-size: var(--t-xs);
 }
+.memorandum-note {
+  font-size: var(--t-xs);
+  text-align: center;
+}
 /* Shortlist and comparison */
 .comparison-scroll {
   overflow-x: auto;
@@ -1980,6 +1984,20 @@ label {
 }
 .action-form > p {
   font-size: var(--t-sm);
+}
+.request-contact {
+  display: grid;
+  gap: 8px;
+}
+.request-contact > p {
+  font-size: var(--t-sm);
+  color: var(--subtle);
+  overflow-wrap: anywhere;
+}
+.request-contact > button {
+  justify-self: start;
+  height: auto;
+  padding: 0;
 }
 .consent-row {
   display: flex;

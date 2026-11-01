@@ -1,5 +1,5 @@
 import { requireUser } from "@/lib/session";
-import { getProperties, getShortlist } from "@/lib/db";
+import { getPendingAccess, getProperties, getShortlist } from "@/lib/db";
 import Portal from "@/portal";
 import { cookies } from "next/headers";
 import { SidebarProvider } from "@/components/ui/sidebar";
@@ -11,9 +11,10 @@ export default async function PortalLayout({
 }) {
   const user = await requireUser();
   const sidebarOpen = (await cookies()).get("sidebar_state")?.value !== "false";
-  const [properties, saved] = await Promise.all([
+  const [properties, saved, pendingAccess] = await Promise.all([
     getProperties(),
     getShortlist(user.id),
+    getPendingAccess(user.id),
   ]);
   return (
     <SidebarProvider
@@ -27,7 +28,12 @@ export default async function PortalLayout({
         } as CSSProperties
       }
     >
-      <Portal properties={properties} initialSaved={saved} user={user}>
+      <Portal
+        properties={properties}
+        initialSaved={saved}
+        initialPendingAccess={pendingAccess}
+        user={user}
+      >
         {children}
       </Portal>
     </SidebarProvider>

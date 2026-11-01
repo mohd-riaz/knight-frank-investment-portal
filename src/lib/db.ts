@@ -15,3 +15,11 @@ export async function getShortlist(userId: string): Promise<string[]> {
   });
   return rows.map((row) => row.propertyId);
 }
+export async function getPendingAccess(userId: string): Promise<string[]> {
+  const rows = await db.investmentRequest.findMany({
+    where: { userId, kind: "access", status: "pending" },
+    distinct: ["propertyId"],
+    select: { propertyId: true },
+  });
+  return rows.map((row) => row.propertyId);
+}

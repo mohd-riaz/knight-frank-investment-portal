@@ -49,8 +49,10 @@ import {
   Building2,
   Check,
   CheckCircle2,
+  Download,
   Eye,
   EyeOff,
+  FileText,
   Globe2,
   LockKeyhole,
   MapPin,
@@ -426,6 +428,7 @@ export function PropertyDetail({
   onSave,
   onCompare,
   onAction,
+  accessPending,
 }: {
   p: Property;
   onBack: () => void;
@@ -434,7 +437,69 @@ export function PropertyDetail({
   onSave: () => void;
   onCompare: () => void;
   onAction: (kind: "access" | "enquiry") => void;
+  accessPending: boolean;
 }) {
+  const [downloading, setDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState("");
+  const download = async () => {
+    setDownloading(true);
+    setDownloadError("");
+    try {
+      const response = await fetch(
+        `/api/properties/${encodeURIComponent(p.id)}/memorandum`,
+      );
+      if (!response.ok) {
+        const result = await response.json();
+        throw new Error(
+          result.error ||
+            "Unable to download the memorandum. Please try again.",
+        );
+      }
+      const url = URL.createObjectURL(await response.blob());
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "sample-investment-memorandum.pdf";
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      // Allow the browser to start reading the file before releasing it.
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) {
+      setDownloadError(
+        error instanceof Error
+          ? error.message
+          : "Unable to download the memorandum. Please try again.",
+      );
+    } finally {
+      setDownloading(false);
+    }
+  };
+  const memorandumButton = (compact = false) => (
+    <Button
+      variant="outline"
+      disabled={downloading || (!!p.confidential && accessPending)}
+      onClick={() => (p.confidential ? onAction("access") : void download())}
+    >
+      {p.confidential ? (
+        accessPending ? (
+          <CheckCircle2 />
+        ) : (
+          <LockKeyhole />
+        )
+      ) : (
+        <Download />
+      )}
+      {p.confidential
+        ? accessPending
+          ? "Access request pending"
+          : "Request access"
+        : downloading
+          ? "Downloading…"
+          : compact
+            ? "Download IM"
+            : "Download investment memorandum"}
+    </Button>
+  );
   return (
     <div className="page-content detail-page">
       <div className="detail-heading">
@@ -530,20 +595,37 @@ export function PropertyDetail({
             <TabsContent value="documents">
               <h2>Continue your due diligence.</h2>
               <p className="muted">
-                Request access to investment materials for your due diligence.
+                {p.confidential
+                  ? accessPending
+                    ? "Your access request is pending review by the investment team."
+                    : "This memorandum is confidential. Request access from the investment team."
+                  : "Download the sample investment memorandum for your review."}
               </p>
               <div className="document-row">
                 <div className="document-icon">
-                  <LockKeyhole size={24} />
+                  {p.confidential ? (
+                    <LockKeyhole size={24} />
+                  ) : (
+                    <FileText size={24} />
+                  )}
                 </div>
                 <div className="od-field od-fill">
                   <strong>Investment memorandum</strong>
-                  <span>Access required</span>
+                  <span>
+                    {p.confidential
+                      ? accessPending
+                        ? "Pending review"
+                        : "Confidential · Approval required"
+                      : "PDF · Sample document"}
+                  </span>
                 </div>
-                <Button variant="outline" onClick={() => onAction("access")}>
-                  Request access <ArrowUpRight />
-                </Button>
+                {memorandumButton(true)}
               </div>
+              {downloadError && (
+                <p className="field-error" role="alert">
+                  {downloadError}
+                </p>
+              )}
             </TabsContent>
           </Tabs>
         </div>
@@ -564,9 +646,19 @@ export function PropertyDetail({
           <Button onClick={() => onAction("enquiry")}>
             Enquire about this opportunity <ArrowUpRight />
           </Button>
-          <Button variant="outline" onClick={() => onAction("access")}>
-            <LockKeyhole /> Request memorandum access
-          </Button>
+          {memorandumButton()}
+          <p className="memorandum-note muted">
+            {p.confidential
+              ? accessPending
+                ? "Your request is pending review."
+                : "Confidential materials require approval."
+              : "PDF · Sample document"}
+          </p>
+          {downloadError && (
+            <p className="field-error" role="alert">
+              {downloadError}
+            </p>
+          )}
           <div className="advisor-note">
             <span className="advisor-icon">
               <Building2 size={20} />
@@ -821,22 +913,27 @@ export function ActionDialog({
   action,
   onClose,
   initialEmail,
+  onAccessRequested,
 }: {
   initialEmail: string;
   action: { kind: "access" | "enquiry"; property: Property };
   onClose: () => void;
+  onAccessRequested: () => void;
 }) {
   const [email, setEmail] = useState(initialEmail),
+    [useDifferentEmail, setUseDifferentEmail] = useState(false),
     [message, setMessage] = useState(""),
     [consent, setConsent] = useState(false),
     [errors, setErrors] = useState<Record<string, string>>({}),
     [busy, setBusy] = useState(false),
     [done, setDone] = useState(false);
   const access = action.kind === "access";
+  const contactEmail = useDifferentEmail ? email.trim() : initialEmail;
   const checkEmail = () => {
-    const error = /^\S+@\S+\.\S+$/.test(email)
-      ? ""
-      : "Enter a complete email address.";
+    const error =
+      !useDifferentEmail || /^\S+@\S+\.\S+$/.test(contactEmail)
+        ? ""
+        : "Enter a complete email address.";
     setErrors((e) => ({ ...e, email: error }));
     return error;
   };
@@ -863,10 +960,11 @@ export function ActionDialog({
       await api("/api/requests", {
         propertyId: action.property.id,
         kind: action.kind,
-        email,
+        ...(useDifferentEmail ? { email: contactEmail } : {}),
         message,
         consent,
       });
+      if (access) onAccessRequested();
       setDone(true);
     } catch (error) {
       setErrors({
@@ -890,7 +988,9 @@ export function ActionDialog({
         <DialogHeader>
           <DialogTitle>
             {done
-              ? "Request recorded"
+              ? access
+                ? "Access request pending"
+                : "Request recorded"
               : access
                 ? "Request document access"
                 : "Speak to the investment team"}
@@ -902,11 +1002,21 @@ export function ActionDialog({
         {done ? (
           <div className="request-success">
             <CheckCircle2 size={40} />
-            <h2>Your interest is noted.</h2>
+            <h2>
+              {access
+                ? "Your request is pending review."
+                : "Your interest is noted."}
+            </h2>
             <p>
               Your request has been saved with the contact address{" "}
-              <strong>{email}</strong>.
+              <strong>{contactEmail}</strong>.
             </p>
+            {access && (
+              <p>
+                The investment team must approve access before confidential
+                materials can be downloaded.
+              </p>
+            )}
             <Button onClick={onClose}>
               Return to the opportunity <ArrowRight />
             </Button>
@@ -924,18 +1034,6 @@ export function ActionDialog({
                 )}
               </div>
             )}
-            <div className="od-field">
-              <Label htmlFor="request-email">Email address *</Label>
-              <Input
-                id="request-email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                onBlur={checkEmail}
-                aria-invalid={!!errors.email}
-              />
-              {errors.email && <p className="field-error">{errors.email}</p>}
-            </div>
             {access ? (
               <>
                 <div className="access-explanation">
@@ -943,8 +1041,8 @@ export function ActionDialog({
                   <div>
                     <h3>Confidential information, considered access.</h3>
                     <p>
-                      Submit your interest in accessing the investment
-                      materials.
+                      The investment team will review your access request. An
+                      NDA may be required before materials are shared.
                     </p>
                   </div>
                 </div>
@@ -955,7 +1053,8 @@ export function ActionDialog({
                     onCheckedChange={(v) => setConsent(v === true)}
                   />
                   <span>
-                    I would like to request access to the investment materials.
+                    I understand that confidential materials require approval
+                    before access.
                   </span>
                 </label>
                 {errors.consent && (
@@ -970,7 +1069,6 @@ export function ActionDialog({
                   rows={4}
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
-                  onBlur={checkMessage}
                   placeholder="Tell us what you would like to know about this opportunity."
                   aria-invalid={!!errors.message}
                 />
@@ -979,6 +1077,51 @@ export function ActionDialog({
                 )}
               </div>
             )}
+            <div className="request-contact">
+              {useDifferentEmail ? (
+                <div className="od-field">
+                  <Label htmlFor="request-email">Contact email *</Label>
+                  <Input
+                    id="request-email"
+                    type="email"
+                    autoComplete="email"
+                    autoFocus
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={busy}
+                    maxLength={254}
+                    aria-invalid={!!errors.email}
+                    aria-describedby={
+                      errors.email ? "request-email-error" : undefined
+                    }
+                  />
+                  {errors.email && (
+                    <p id="request-email-error" className="field-error">
+                      {errors.email}
+                    </p>
+                  )}
+                </div>
+              ) : (
+                <p>
+                  We’ll contact you at <strong>{initialEmail}</strong>.
+                </p>
+              )}
+              <Button
+                type="button"
+                variant="link"
+                disabled={busy}
+                aria-expanded={useDifferentEmail}
+                onClick={() => {
+                  setUseDifferentEmail(!useDifferentEmail);
+                  setEmail(initialEmail);
+                  setErrors((current) => ({ ...current, email: "" }));
+                }}
+              >
+                {useDifferentEmail
+                  ? "Use account email"
+                  : "Use a different email"}
+              </Button>
+            </div>
             <Button type="submit" disabled={busy}>
               {busy
                 ? "Recording your request…"

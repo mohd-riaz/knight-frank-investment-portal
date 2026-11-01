@@ -14,6 +14,7 @@ test("authenticated data, account isolation, request validation and session revo
   const email = `qa-${randomUUID()}@example.com`;
   const password = "Local-integration-test-2026!";
   const userId = randomUUID();
+  const confidentialId = `im-test-${randomUUID()}`;
   const user = await db.user.create({
     data: {
       id: userId,
@@ -47,7 +48,22 @@ test("authenticated data, account isolation, request validation and session revo
       ...(body === undefined ? {} : { body: JSON.stringify(body) }),
     });
   try {
+    const source = await db.property.findUniqueOrThrow({
+      where: { id: "oct24-7-old-park-lane" },
+    });
+    await db.property.create({
+      data: {
+        ...source,
+        id: confidentialId,
+        name: "Confidential IM integration fixture",
+        confidential: true,
+      },
+    });
     assert.equal((await call("/api/shortlist")).status, 401);
+    assert.equal(
+      (await call("/api/properties/oct24-7-old-park-lane/memorandum")).status,
+      401,
+    );
     const protectedPage = await call("/overview");
     const protectedHtml = await protectedPage.text();
     // A streaming layout can send its redirect after the initial 200 headers.
@@ -178,7 +194,6 @@ test("authenticated data, account isolation, request validation and session revo
     const request = await call("/api/requests", "POST", {
       propertyId: "oct24-7-old-park-lane",
       kind: "enquiry",
-      email,
       message: "Please share further investment details.",
     });
     assert.equal(request.status, 201);
@@ -188,15 +203,99 @@ test("authenticated data, account isolation, request validation and session revo
       user.id,
     );
     assert.equal(
+      (await db.investmentRequest.findUniqueOrThrow({ where: { id } })).email,
+      email,
+    );
+    const alternateEmail = "investment-team@example.com";
+    const alternateRequest = await call("/api/requests", "POST", {
+      propertyId: "oct24-7-old-park-lane",
+      kind: "enquiry",
+      email: alternateEmail,
+      message: "Please contact our investment team about this opportunity.",
+    });
+    assert.equal(alternateRequest.status, 201);
+    const alternateResult = await alternateRequest.json();
+    assert.equal(
+      (
+        await db.investmentRequest.findUniqueOrThrow({
+          where: { id: alternateResult.id },
+        })
+      ).email,
+      alternateEmail,
+    );
+    for (const invalidEmail of ["", "invalid-email"]) {
+      assert.equal(
+        (
+          await call("/api/requests", "POST", {
+            propertyId: "oct24-7-old-park-lane",
+            kind: "enquiry",
+            email: invalidEmail,
+            message: "Please share further investment details.",
+          })
+        ).status,
+        400,
+      );
+    }
+    const download = await call(
+      "/api/properties/oct24-7-old-park-lane/memorandum",
+    );
+    assert.equal(download.status, 200);
+    assert.equal(download.headers.get("content-type"), "application/pdf");
+    assert.match(
+      download.headers.get("content-disposition")!,
+      /^attachment;.*\.pdf/,
+    );
+    assert.equal(download.headers.get("cache-control"), "private, no-store");
+    const pdf = Buffer.from(await download.arrayBuffer());
+    assert.equal(pdf.subarray(0, 5).toString(), "%PDF-");
+    assert.ok(pdf.length > 1000);
+    assert.equal(
+      (await call("/api/properties/missing/memorandum")).status,
+      404,
+    );
+    const confidentialDownload = `/api/properties/${confidentialId}/memorandum`;
+    assert.equal((await call(confidentialDownload)).status, 403);
+    assert.equal(
       (
         await call("/api/requests", "POST", {
-          propertyId: "oct24-14-cavendish-square",
+          propertyId: "oct24-7-old-park-lane",
           kind: "access",
           email,
           consent: true,
         })
       ).status,
-      201,
+      400,
+    );
+    const accessRequest = {
+      propertyId: confidentialId,
+      kind: "access",
+      consent: true,
+    };
+    const accessResponse = await call("/api/requests", "POST", accessRequest);
+    assert.equal(accessResponse.status, 201);
+    const accessResult = await accessResponse.json();
+    assert.equal(
+      (
+        await db.investmentRequest.findUniqueOrThrow({
+          where: { id: accessResult.id },
+        })
+      ).email,
+      email,
+    );
+    const repeated = await call("/api/requests", "POST", accessRequest);
+    assert.equal(repeated.status, 200);
+    assert.equal((await repeated.json()).id, accessResult.id);
+    assert.equal(
+      await db.investmentRequest.count({
+        where: { userId, propertyId: confidentialId, kind: "access" },
+      }),
+      1,
+    );
+    assert.equal((await call(confidentialDownload)).status, 403);
+    assert.ok(
+      (await (await call(`/property/${confidentialId}`)).text()).includes(
+        "Access request pending",
+      ),
     );
     const otherEmail = `qa-${randomUUID()}@example.com`;
     const otherId = randomUUID();
@@ -230,6 +329,18 @@ test("authenticated data, account isolation, request validation and session revo
         ).saved,
         [],
       );
+      const otherDetail = await call(
+        `/property/${confidentialId}`,
+        "GET",
+        undefined,
+        otherCookie,
+      );
+      assert.ok(!(await otherDetail.text()).includes("Access request pending"));
+      assert.equal(
+        (await call(confidentialDownload, "GET", undefined, otherCookie))
+          .status,
+        403,
+      );
     } finally {
       await db.user.delete({ where: { id: other.id } });
     }
@@ -245,9 +356,14 @@ test("authenticated data, account isolation, request validation and session revo
     assert.deepEqual((await (await call("/api/shortlist")).json()).saved, []);
     assert.equal((await call("/api/auth/sign-out", "POST", {})).status, 200);
     assert.equal((await call("/api/shortlist")).status, 401);
+    assert.equal(
+      (await call("/api/properties/oct24-7-old-park-lane/memorandum")).status,
+      401,
+    );
     assert.equal(await db.session.count({ where: { userId: user.id } }), 0);
   } finally {
     await db.user.delete({ where: { id: user.id } });
+    await db.property.deleteMany({ where: { id: confidentialId } });
     await db.$disconnect();
   }
 });

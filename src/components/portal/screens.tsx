@@ -466,6 +466,7 @@ export function ListingsScreen() {
 export function DetailScreen() {
   const {
     saved,
+    pendingAccess,
     compared,
     navigate,
     current,
@@ -477,9 +478,11 @@ export function DetailScreen() {
   if (!current) return null;
   return (
     <PropertyDetail
+      key={current.id}
       p={current}
       onBack={() => navigate(priorRoute.current)}
       saved={saved.includes(current.id)}
+      accessPending={pendingAccess.includes(current.id)}
       compared={compared.includes(current.id)}
       onSave={() => toggleSaved(current)}
       onCompare={() => toggleCompare(current)}
