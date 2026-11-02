@@ -71,6 +71,20 @@ async function main() {
       .getByRole("button", { name: "Sign in to administration", exact: true })
       .click();
     await page.waitForURL(origin + "/admin");
+    const thumbnails = page.locator(".admin-thumbnail");
+    await thumbnails.first().waitFor();
+    if ((await thumbnails.count()) === 0)
+      throw Error("No admin opportunity images rendered");
+    for (const image of await thumbnails.all()) {
+      const src = await image.getAttribute("src");
+      if (!src?.startsWith("/api/properties/"))
+        throw Error("Admin thumbnail bypassed the authenticated image route");
+    }
+    await page.waitForFunction(() => {
+      const image =
+        document.querySelector<HTMLImageElement>(".admin-thumbnail");
+      return image?.complete && image.naturalWidth > 0;
+    });
     await page
       .getByRole("button", { name: "Open account menu", exact: true })
       .click();
@@ -150,16 +164,22 @@ async function main() {
     await page
       .getByRole("button", { name: "Browse photographs", exact: true })
       .click();
+    const photo = Buffer.from(
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aKWQAAAAASUVORK5CYII=",
+      "base64",
+    );
     await (
       await chooser
-    ).setFiles(process.cwd() + "/public/assets/images/office.jpg");
-    await photoInput.setInputFiles(
-      process.cwd() + "/public/assets/images/hotel.jpg",
-    );
+    ).setFiles({ name: "first.png", mimeType: "image/png", buffer: photo });
+    await photoInput.setInputFiles({
+      name: "second.png",
+      mimeType: "image/png",
+      buffer: photo,
+    });
     if ((await page.locator(".admin-upload-list li").count()) !== 2)
       throw Error("Additional image selection replaced earlier images");
     await page
-      .getByRole("button", { name: "Remove office.jpg", exact: true })
+      .getByRole("button", { name: "Remove first.png", exact: true })
       .click();
     if ((await page.locator(".admin-upload-list li").count()) !== 1)
       throw Error("Image removal failed");

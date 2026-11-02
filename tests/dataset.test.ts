@@ -1,9 +1,9 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import images from "../src/datasets/october-2024-images.json";
 import { propertyImage } from "../src/lib/property-images";
+import { catalogImageKey, contentKey } from "../src/lib/storage-references";
 import raw from "../data/october-2024-source.json";
 import reviewed from "../src/datasets/october-2024.json";
 import { presentProperty } from "../src/lib/property-presentation";
@@ -22,6 +22,7 @@ import {
   properties,
   regions,
   sourceProperties,
+  demoConfidentialSourceIds,
   yieldText,
 } from "../src/data";
 
@@ -30,6 +31,28 @@ const source = (name: string) => {
   assert.ok(property, `Missing source property: ${name}`);
   return property;
 };
+
+test("confidential demo examples cover every region without restricting the whole catalog", () => {
+  const selected = properties.filter((property) => property.confidential);
+  assert.equal(selected.length, 24);
+  for (const region of regions) {
+    const local = selected.filter((property) => property.region === region);
+    assert.equal(local.length, 3, region);
+    assert.deepEqual(
+      new Set(local.map((property) => property.id.split("-demo-")[0])),
+      demoConfidentialSourceIds,
+    );
+  }
+  assert.equal(
+    properties.find((property) => property.id === "oct24-7-old-park-lane")
+      ?.confidential,
+    false,
+  );
+  assert.ok(
+    sourceProperties.every((property) => !property.confidential),
+    "reviewed source confidentiality is not rewritten as a real-world claim",
+  );
+});
 
 test("every opportunity uses its corresponding original PDF photo, including regional copies", () => {
   assert.equal(images.sourceSha256, raw.sha256);
@@ -46,12 +69,21 @@ test("every opportunity uses its corresponding original PDF photo, including reg
     const props = propertyImage(photo);
     assert.equal(props.width, photo.width);
     assert.equal(props.height, photo.height);
-    const bytes = readFileSync(
-      new URL(`../public${props.src}`, import.meta.url),
-    );
+    assert.equal(catalogImageKey(photo.image), contentKey(photo.sha256));
+    assert.match(photo.sha256, /^[a-f0-9]{64}$/);
+    const stored = propertyImage({
+      id: "example",
+      image: `https://storage.example/opportunity-media/${contentKey(photo.sha256)}`,
+    });
+    assert.equal(stored.src, `/api/properties/example/image?v=${photo.sha256}`);
+    assert.equal(stored.unoptimized, true);
+    assert.equal(stored.width, photo.width);
+    assert.equal(stored.height, photo.height);
     assert.equal(
-      createHash("sha256").update(bytes).digest("hex"),
-      photo.sha256,
+      existsSync(
+        new URL(`../public/assets/images/${photo.image}.jpg`, import.meta.url),
+      ),
+      false,
     );
     assert.ok(photo.width > 250 && photo.height > 190);
   }

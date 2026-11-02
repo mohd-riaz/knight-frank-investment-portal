@@ -3,6 +3,8 @@ import { randomBytes, createHash } from "node:crypto";
 import { z } from "zod";
 import { db } from "@/lib/prisma";
 import { requireAdmin } from "@/lib/admin";
+import { objectUrl } from "@/lib/object-storage";
+import { placeholderKey, sampleMemorandumKey } from "@/lib/storage-references";
 import { apiError, assertSameOrigin, HttpError } from "@/lib/http";
 import {
   inviteInput,
@@ -27,7 +29,10 @@ export async function POST(request: Request) {
               ...data,
               id: crypto.randomUUID(),
               position: Date.now() % 2147483647,
-              image: "office",
+              image: objectUrl(placeholderKey),
+              memorandumKey: sampleMemorandumKey,
+              memorandumUrl: objectUrl(sampleMemorandumKey),
+              memorandumSample: true,
               label: "",
             },
           });

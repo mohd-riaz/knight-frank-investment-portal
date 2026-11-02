@@ -1,0 +1,10 @@
+{
+  "placeholder": {
+    "sha256": "853db6902d471e40a3daba98b6c16591ed4897be31e001f2bd5a63c327ae26b3",
+    "mime": "image/jpeg"
+  },
+  "sampleMemorandum": {
+    "sha256": "9262c3e78c22d3860af966c37dfe96c292bc6834f5b81cb9e66effed7bca326c",
+    "mime": "application/pdf"
+  }
+}

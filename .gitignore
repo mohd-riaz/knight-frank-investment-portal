@@ -9,3 +9,7 @@ out/
 src/generated/prisma/
 
 /src/generated/prisma
+
+# Local MCP configuration can contain credentials.
+.codex/config.toml
+.neon

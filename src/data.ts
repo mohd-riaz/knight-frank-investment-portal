@@ -23,6 +23,7 @@ export const assetClasses = [
   "Residential",
 ];
 export type Property = {
+  memorandumSample?: boolean;
   accessGranted?: boolean;
   id: string;
   name: string;
@@ -45,6 +46,12 @@ export type Property = {
   confidential?: boolean;
 };
 // Both the portal and database seed consume this reviewed, historical catalog.
+// Demonstration access settings, not confidentiality claims from the source tracker.
+export const demoConfidentialSourceIds = new Set([
+  "oct24-10-throgmorton-avenue",
+  "oct24-beaumont-shopping-centre",
+  "oct24-leonardo-heathrow-hotel",
+]);
 export const sourceProperties: Property[] = tracker.map((entry) => {
   const { sourcePanels, ...property } = entry;
   // Source panel references are retained in the reviewed JSON.
@@ -63,7 +70,14 @@ export const properties: Property[] = [
         ...regionalLocations[region][index % regionalLocations[region].length],
       })),
     ),
-].map(presentProperty);
+].map((property) =>
+  presentProperty({
+    ...property,
+    confidential:
+      property.confidential ||
+      demoConfidentialSourceIds.has(property.id.split("-demo-")[0]),
+  }),
+);
 export const shortAsset = (a: string) =>
   a === assetClasses[1]
     ? "Industrial & logistics"

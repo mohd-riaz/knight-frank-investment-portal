@@ -405,7 +405,6 @@ function Workspace({ data }: { data: Data }) {
                           <Image
                             {...propertyImage(p)}
                             alt=""
-                            unoptimized={p.image.startsWith("/api/")}
                             className="admin-thumbnail"
                           />
                           <div>

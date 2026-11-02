@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin";
 import { db } from "@/lib/prisma";
 import { apiError, assertSameOrigin, HttpError } from "@/lib/http";
+import { storeObject } from "@/lib/object-storage";
 export async function POST(request: Request) {
   try {
     assertSameOrigin(request);
@@ -38,16 +39,40 @@ export async function POST(request: Request) {
         400,
         "Use a PDF memorandum or a JPG, PNG or WebP photo.",
       );
+    if (
+      !(await db.property.findUnique({
+        where: { id: propertyId },
+        select: { id: true },
+      }))
+    )
+      throw new HttpError(404, "Opportunity not found.");
+    const { url, objectKey } = await storeObject(bytes, mime);
     const material = await db.$transaction(async (tx) => {
       if (kind === "im")
         await tx.material.deleteMany({ where: { propertyId, kind } });
       const result = await tx.material.create({
-        data: { propertyId, kind, name: file.name.slice(0, 200), mime, bytes },
+        data: {
+          propertyId,
+          kind,
+          name: file.name.slice(0, 200),
+          mime,
+          url,
+          objectKey,
+        },
       });
       if (kind === "photo")
         await tx.property.update({
           where: { id: propertyId },
-          data: { image: `/api/materials/${result.id}` },
+          data: { image: url },
+        });
+      else
+        await tx.property.update({
+          where: { id: propertyId },
+          data: {
+            memorandumUrl: url,
+            memorandumKey: objectKey,
+            memorandumSample: false,
+          },
         });
       return result;
     });

@@ -4,10 +4,30 @@ import { PrismaClient } from "../src/generated/prisma/client";
 import { properties, sourceProperties } from "../src/data";
 import { hashPassword } from "better-auth/crypto";
 import { seedAdmin } from "./seed-admin";
+import { objectUrl } from "../src/lib/object-storage";
+import {
+  catalogImageKey,
+  sampleMemorandumKey,
+} from "../src/lib/storage-references";
 const prisma = new PrismaClient({
   adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
 });
 async function main() {
+  // Credentials stay server-side; objects are inherited when a Neon branch is forked.
+  const sampleUrl = objectUrl(sampleMemorandumKey);
+  const existingProperties = new Map(
+    (
+      await prisma.property.findMany({
+        select: {
+          id: true,
+          image: true,
+          memorandumUrl: true,
+          memorandumKey: true,
+          memorandumSample: true,
+        },
+      })
+    ).map((property) => [property.id, property]),
+  );
   const passwordHash = await hashPassword(
     process.env.DEMO_PASSWORD || "KnightFrank2026!",
   );
@@ -19,10 +39,28 @@ async function main() {
         process.env.ADMIN_PASSWORD || "KnightFrankAdmin2026!",
       );
       for (const [position, property] of properties.entries()) {
+        // Confidentiality is an admin-controlled setting after the first insert.
+        const { confidential, ...catalog } = property;
+        const stored = existingProperties.get(property.id);
+        const media = {
+          image: stored?.image.startsWith("https://")
+            ? stored.image
+            : objectUrl(catalogImageKey(property.image)),
+          memorandumUrl: stored?.memorandumUrl ?? sampleUrl,
+          memorandumKey: stored?.memorandumKey ?? sampleMemorandumKey,
+          memorandumSample: stored?.memorandumKey
+            ? stored.memorandumSample
+            : true,
+        };
         await tx.property.upsert({
           where: { id: property.id },
-          create: { ...property, position },
-          update: { ...property, position },
+          create: {
+            ...catalog,
+            confidential: !!confidential,
+            position,
+            ...media,
+          },
+          update: { ...catalog, position, ...media },
         });
       }
       const email = (
@@ -46,7 +84,7 @@ async function main() {
           },
         });
     },
-    { timeout: 60_000 },
+    { timeout: 120_000 },
   );
   console.log(
     `Seeded ${sourceProperties.length} source properties and ${properties.length - sourceProperties.length} regional demo copies (${properties.length} total), plus the demo investor and admin. Existing passwords and unrelated records preserved.`,

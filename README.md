@@ -1,12 +1,12 @@
 # Knight Frank Investment Portal
 
-A real estate investment portal built with Next.js App Router, TypeScript, shadcn/ui, Better Auth, Prisma, and local PostgreSQL through Docker Compose. The interface includes Suisse/Tiempos fonts, photography, brand assets, and responsive layouts.
+A real estate investment portal built with Next.js App Router, TypeScript, shadcn/ui, Better Auth, Prisma, and PostgreSQL on Neon. Opportunity photographs and memoranda are stored in Neon Object Storage. Docker Compose remains available for local PostgreSQL. The interface includes Suisse/Tiempos fonts, photography, brand assets, and responsive layouts.
 
 ## Administration
 
 Sign in at `/admin/login` to open `/admin` as an owner or administrator. The administration area reuses the investor portal’s branded sidebar, fonts, navigation controls, tables, dialogs and form components. Investor sign-in remains at `/login`; both pages use the existing authentication service, with admin permissions checked on the server.
 
-- **Opportunities:** create and edit investment details, save drafts, preview, publish, upload photographs and an IM, mark confidentiality, archive and restore as a draft. Uploaded files are stored in PostgreSQL; each file is limited to 10 MB. The latest uploaded photograph is the cover. Existing listings retain the labelled sample IM until an actual PDF is uploaded.
+- **Opportunities:** create and edit investment details, save drafts, preview, publish, upload photographs and an IM, mark confidentiality, archive and restore as a draft. Uploaded files are stored in private Neon Object Storage; PostgreSQL stores their URLs and object keys. Each file is limited to 10 MB. Identical file contents reuse one stored object, including uploads with different filenames. The latest uploaded photograph is the cover. Existing listings retain the labelled sample IM until an actual PDF is uploaded.
 - **Requests:** review enquiries, approve document access after reviewing the NDA requirement, and decline or revoke access. Approvals apply only to the requesting investor and the selected property. This records an advisor’s review; it does not execute an electronic signature.
 - **Users (owners only):** invite clients, admins and owners, reissue pending invitations, update roles, and deactivate/reactivate accepted accounts. Role or status changes invalidate existing sessions. The last active owner cannot be removed or demoted, and owners cannot deactivate themselves.
 - **Invitations:** one-use links expire after seven days and let recipients set their own password. Only token hashes are stored. Reissuing invalidates earlier links. Email delivery is not connected: copy the generated private link and share it with its intended recipient.
@@ -16,6 +16,8 @@ The database seed creates a demo owner with **admin@example.com** / **KnightFran
 `npm run admin:setup` remains available for creating an owner through a private invitation instead of seeded credentials. Existing accounts are left unchanged by that command.
 
 Drafts and archived listings are excluded from investor browsing, AI search, shortlist additions and document downloads. Admin APIs check the database role on every request; public registration remains disabled.
+
+The demo catalog marks **10 Throgmorton Avenue**, **Beaumont Shopping Centre**, and **Leonardo Heathrow Hotel**, plus their regional copies, confidential: 24 opportunities across eight regions. These are demonstration access settings, not confidentiality claims from the source tracker. Investors can view the listings, request document access, and download after an admin approves the request. New seeds create these defaults; repeat seeds preserve both enabled and disabled confidentiality settings chosen in admin. `npm run db:confidential-demo` explicitly enables the selected examples in an existing database; running it again re-enables those examples, so it is separate from the normal seed.
 
 Run `npm run test:admin` against a running local portal for temporary-account integration coverage of role restrictions, draft/publish/archive behavior, uploads, document grants, one-use invitations and deactivation. `npm run test:integration` retains the investor checks. For optional browser verification, set `PLAYWRIGHT_PACKAGE` to an installed Playwright package and run `npx tsx scripts/admin-browser-check.ts`; `ADMIN_SCREENSHOT` controls its screenshot destination. These checks clean up their temporary accounts and records.
 
@@ -31,13 +33,35 @@ npm run db:setup
 npm run dev
 ```
 
-Open [the local portal](http://127.0.0.1:3000). The login form is prefilled with **investor@example.com** / **KnightFrank2026!**. Both fields remain editable.
+Open [the local portal](http://127.0.0.1:3000). Investor and administration login forms start with empty email and password fields. Share demonstration credentials with reviewers separately.
 
 The environment setup creates `.env` with a randomly generated Better Auth secret. Existing values are preserved. `.env` is ignored by Git; `.env.example` documents the settings. Use the same host and port as `BETTER_AUTH_URL` when opening the app.
 
 `npm run db:setup` applies committed Prisma migrations and seeds 59 properties extracted from the October 2024 Private Office Commercial Opportunity Tracker, 413 copies for the seven missing regions (472 records total), and the demo investor. Seeding is repeatable: it refreshes these catalog records by stable ID while preserving unrelated properties, investor shortlists, requests and accounts. Older fictional properties already in a database are preserved; a fresh database contains only the new catalog. If `DEMO_EMAIL` or `DEMO_PASSWORD` is customized before the first seed, use those credentials at sign-in. Changing these values later does not reset an existing account.
 
 `npm run db:down` stops the database while preserving its named volume. Next.js runs on the host; Docker Compose runs PostgreSQL only.
+
+## Neon setup
+
+The development workspace is linked to the **Riaz** organization (`org-falling-term-74282943`), project **knight-frank-investment-portal** (`dark-wind-63729095`), in **AWS Europe (Frankfurt)**. Open it in the [Neon Console](https://console.neon.tech/app/projects/dark-wind-63729095/).
+
+Neon writes the pooled `DATABASE_URL`, direct `DATABASE_URL_UNPOOLED`, and `NEON_BRANCH` to the ignored `.env`. Application queries use the pooled connection; Prisma CLI migrations use the direct connection, with `DATABASE_URL` as the fallback for local PostgreSQL. The original local environment is preserved in the ignored `.env.before-neon` on the machine where setup ran. Its Docker database is unchanged.
+
+The `opportunity-media` bucket is declared as private in `neon.ts`. Server-only `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3`, and `AWS_REGION` settings are pulled into the ignored `.env`. Set these same values in the server environment when deploying. Never prefix them with `NEXT_PUBLIC_`.
+
+Run `neon deploy` to provision the bucket and `neon env pull -s object-storage` to refresh its settings. With the Neon environment configured, run `npm run db:setup` to apply the committed migrations and seed the demonstration dataset, then `npm run dev`. The seed preserves uploaded cover images and memoranda and references the existing shared objects. New Neon branches inherit the files with their database; a completely separate project needs the files imported before using the catalog. Local PostgreSQL also needs Neon storage credentials to serve opportunity media.
+
+The 472 catalog opportunities reuse 58 unique photographs, one sample memorandum, and one shared placeholder photograph. Objects use `sha256/<file-content-hash>` keys, so regional copies and repeat uploads share the same file. URLs saved in PostgreSQL are stable private object URLs; expiring signed URLs are generated only after checking the current user's access. Images load directly from storage through a signed redirect. Both the redirect and photograph have a five-minute private browser cache; redirects vary by session cookie. Cover links include the file hash so replacing a photo immediately uses a new cache entry. Previously downloaded photos can remain cached for up to five minutes after an access change. Errors and memoranda remain uncached. Memoranda stream through the authorized download route, including confidential-document approval checks. Reads resolve the object on the active Neon branch.
+
+`npm run storage:migrate` transfers legacy PostgreSQL file bytes and local catalog images, verifies downloaded copies against their SHA-256 hashes, updates database references, and clears the migrated database bytes. The nullable legacy `Material.bytes` column is retained for migration compatibility; new uploads never write it. A private recovery copy is saved under ignored `.qa/storage-migration-backup`. The transfer is safe to repeat and also recognizes files extracted into `.qa/extracted-opportunity-images`. The migrated opportunity images and sample PDF are no longer shipped in `public/` or `documents/`. The branded London background remains a static interface asset.
+
+Seeding initializes demo accounts; it does not copy existing local users, sessions, requests, shortlists, or uploads to Neon. The original local environment remains in `.env.before-neon`.
+
+Neon agent skills are installed in `.agents/skills`. The ignored `.codex/config.toml` configures Neon's MCP server for this project using browser authentication. Restart Codex to load it and sign in when prompted. On another checkout, install the Neon CLI, sign in, and run:
+
+```powershell
+neon init -y --agent codex --org-id org-falling-term-74282943 --project-id dark-wind-63729095 --skill neon --skill neon-postgres --mcp-auth oauth --mcp-config-location project --mcp-project-scoped --no-config
+```
 
 ## Included behavior
 
@@ -48,7 +72,7 @@ The environment setup creates `.env` with a randomly generated Better Auth secre
 - Comparison selections are remembered per investor in browser localStorage. Opening `/compare` puts the selection in the URL; shared `?ids=oct24-7-old-park-lane,oct24-88-jermyn-street` links override the saved selection and survive sign-in. The comparison page includes a Copy link button. Only available property IDs are retained, with duplicates removed and a three-property limit; Clear resets the selection and URL.
 - Enquiries and document-access requests validated on the server and saved with a pending status. Each record belongs to the authenticated investor.
 - Both request dialogs use the signed-in investor's account email by default and display it in a contact note. Investors can optionally choose a different contact email for the request without changing their account.
-- Non-confidential opportunities offer an immediate sample IM PDF download through an authenticated endpoint. Confidential opportunities require an access request instead; pending requests remain visible after refresh and are scoped to the investor. Requesting access does not grant download permission. The shared PDF is clearly labelled as an illustrative sample and is stored outside public assets.
+- Non-confidential opportunities offer an immediate IM PDF download through an authenticated endpoint, using the shared illustrative sample until a real document is uploaded. Confidential opportunities require an access request instead; pending requests remain visible after refresh and are scoped to the investor. Requesting access does not grant download permission. PDFs are stored in the private Neon bucket.
 - Accessible shadcn/Radix dialogs, tabs, selects, checkboxes, loading states, form feedback, mobile navigation, and reduced-motion support.
 
 The catalog is a historical October 2024 UK dataset, including two sold auction lots. Availability has not been revalidated. Regional copies use assigned city/country pairs consistent with their region (for example, Dubai / United Arab Emirates in Middle East). These are demonstration locations, not actual listings in those markets. The original UK source records, photographs, GBP currency and financial metrics are retained. Location assignments are defined in `src/lib/regional-locations.ts` and are applied by the shared catalog and seed. The assistant uses Gemini through OpenRouter when a server API key is configured; without a key it displays a connection notice. The original deterministic interpreter remains only for legacy tests. Requests do not send email or execute an NDA. Advisors can grant document access through /admin. Password recovery and email delivery are not connected; administrators can upload investment documents.
@@ -72,10 +96,11 @@ To extract and relink the original property photos (requires `pdfplumber`, `pypd
 
 ```powershell
 python scripts/extract-opportunity-images.py "C:\path\to\Private Office Commercial Opportunity Tracker - October 2024.pdf"
+npm run storage:migrate
 npm run db:seed
 ```
 
-The script verifies the source PDF hash, matches embedded images to listing columns, and writes 58 photographs to `public/assets/images/october-2024`. Jellicoe House and Vanbrugh House share the joint panel photo. The image manifest in `src/datasets/october-2024-images.json` records page/column references, dimensions and checksums. Cards, detail pages and comparisons use each photo’s original dimensions.
+The extraction script verifies the source PDF hash, matches embedded images to listing columns, and stages 58 photographs under ignored `.qa/extracted-opportunity-images/october-2024`. The storage migration uploads each unique photograph once. Jellicoe House and Vanbrugh House share the joint panel photo. The image manifest in `src/datasets/october-2024-images.json` records page/column references, dimensions and checksums. Cards, detail pages and comparisons use each photo’s original dimensions.
 
 The reviewed JSON is deliberately maintained separately from raw extraction so source ambiguities and the split/merged listings remain explicit. The original PDF is not served publicly by the application.
 
@@ -87,7 +112,8 @@ The reviewed JSON is deliberately maintained separately from raw extraction so s
 - `src/styles.css` and `src/layout-primitives.css`: shared visual tokens and responsive styling.
 - `src/lib/auth.ts`, `auth-client.ts`, and `session.ts`: Better Auth configuration, client, and server authorization.
 - `prisma/schema.prisma`, `prisma/migrations`, and `prisma/seed.ts`: typed relational models, generated migrations, and repeatable seed.
-- `public/assets`: local fonts, logo, and photography.
+- `public/assets`: local fonts, logo, and the branded London background.
+- `neon.ts`, `src/lib/object-storage.ts`: private bucket policy, content-based file reuse, signed image links, and streamed document downloads.
 
 The scaffold was generated using `create-next-app`. Prisma was initialized with `prisma init`, and Better Auth models were generated with its `auth generate` CLI before integrating the domain relations. Webpack is explicitly selected for development/build because the installed Next.js Turbopack CSS worker failed on this Windows environment.
 

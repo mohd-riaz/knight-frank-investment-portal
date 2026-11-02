@@ -1,6 +1,7 @@
 import { currentUser } from "@/lib/session";
 import { db } from "@/lib/prisma";
 import { apiError, HttpError } from "@/lib/http";
+import { documentResponse, imageResponse } from "@/lib/object-storage";
 export async function GET(
   _: Request,
   { params }: { params: Promise<{ id: string }> },
@@ -29,17 +30,14 @@ export async function GET(
           }))))
     )
       throw new HttpError(403, "Access is restricted.");
-    return new Response(new Uint8Array(file.bytes), {
-      headers: {
-        "Content-Type": file.mime,
-        "Cache-Control": "private, no-store",
-        "Content-Disposition":
-          file.kind === "im"
-            ? `attachment; filename="investment-memorandum.pdf"`
-            : "inline",
-      },
-    });
+    if (!file.url || !file.objectKey)
+      throw new HttpError(503, "This file has not been migrated to storage.");
+    if (file.kind === "im")
+      return await documentResponse(file.objectKey, false);
+    return await imageResponse(file.url);
   } catch (error) {
-    return apiError(error);
+    const response = apiError(error);
+    response.headers.set("Cache-Control", "private, no-store");
+    return response;
   }
 }

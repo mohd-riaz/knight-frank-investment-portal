@@ -11,6 +11,7 @@ export default defineConfig({
     seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: env("DATABASE_URL"),
+    // Migrations bypass Neon's pooler; local PostgreSQL uses DATABASE_URL.
+    url: process.env.DATABASE_URL_UNPOOLED || env("DATABASE_URL"),
   },
 });

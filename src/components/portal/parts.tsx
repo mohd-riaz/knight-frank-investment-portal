@@ -135,10 +135,8 @@ export function Login({
   initialError?: string;
 }) {
   const router = useRouter();
-  const [email, setEmail] = useState(
-      adminMode ? "admin@example.com" : "investor@example.com",
-    ),
-    [password, setPassword] = useState(adminMode ? "" : "KnightFrank2026!"),
+  const [email, setEmail] = useState(""),
+    [password, setPassword] = useState(""),
     [show, setShow] = useState(false),
     [errors, setErrors] = useState<Record<string, string>>(
       initialError ? { credentials: initialError } : {},
@@ -675,7 +673,9 @@ export function PropertyDetail({
                       ? accessPending
                         ? "Pending review"
                         : "Confidential · Approval required"
-                      : "PDF · Investment memorandum"}
+                      : p.memorandumSample
+                        ? "PDF · Illustrative sample"
+                        : "PDF · Investment memorandum"}
                   </span>
                 </div>
                 {memorandumButton(true)}
@@ -711,7 +711,9 @@ export function PropertyDetail({
               ? accessPending
                 ? "Your request is pending review."
                 : "Confidential materials require approval."
-              : "PDF · Investment memorandum"}
+              : p.memorandumSample
+                ? "PDF · Illustrative sample"
+                : "PDF · Investment memorandum"}
           </p>
           {downloadError && (
             <p className="field-error" role="alert">

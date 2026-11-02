@@ -21,7 +21,7 @@ if source_hash != extraction["sha256"]:
 catalog_path = root / "src/datasets/october-2024.json"
 catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
 panels = sorted({(r["page"], r["column"]) for p in catalog for r in p["sourcePanels"][:1]})
-output = root / "public/assets/images/october-2024"
+output = root / ".qa/extracted-opportunity-images/october-2024"
 output.mkdir(parents=True, exist_ok=True)
 reader = PdfReader(source)
 manifest = []
@@ -39,7 +39,7 @@ with pdfplumber.open(source) as pdf:
         placement = candidates[0]
         embedded = reader.pages[page_number - 1].images["/" + placement["name"]]
         stem = f"october-2024/page-{page_number:02d}-column-{column}"
-        target = root / f"public/assets/images/{stem}.jpg"
+        target = root / f".qa/extracted-opportunity-images/{stem}.jpg"
         # Keep original JPEG bytes wherever possible; no screenshot or upscaling.
         if embedded.image.format == "JPEG":
             target.write_bytes(embedded.data)

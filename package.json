@@ -3,6 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "storage:migrate": "tsx scripts/migrate-opportunity-storage.ts",
+    "db:confidential-demo": "tsx scripts/setup-confidential-demo.ts",
     "db:seed:admin": "tsx scripts/seed-admin.ts",
     "admin:setup": "tsx scripts/create-admin.ts",
     "test:admin": "tsx --test tests/admin-validation.test.ts tests/admin.integration.test.ts tests/seed-admin.integration.test.ts",
@@ -10,7 +12,7 @@
     "build": "next build --webpack",
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/search.test.ts tests/comparison.test.ts tests/filters.test.ts tests/dataset.test.ts tests/assistant.test.ts",
+    "test": "tsx --test tests/search.test.ts tests/comparison.test.ts tests/filters.test.ts tests/dataset.test.ts tests/assistant.test.ts tests/object-storage.test.ts",
     "db:up": "docker compose up -d --wait",
     "db:down": "docker compose down",
     "db:setup": "prisma migrate deploy && prisma db seed",
@@ -25,6 +27,9 @@
     "env:setup": "node scripts/setup-env.mjs"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1161.0",
+    "@aws-sdk/s3-request-presigner": "^3.1161.0",
+    "@neon/config": "^1.10.0",
     "@prisma/adapter-pg": "^7.10.1",
     "@prisma/client": "^7.10.1",
     "@radix-ui/react-avatar": "^1.3.1",

@@ -11,30 +11,33 @@ generator client {
 }
 
 model Property {
-  publication    String              @default("published")
-  materials      Material[]
-  id             String              @id
-  position       Int
-  name           String
-  city           String
-  country        String
-  region         String
-  asset          String
-  currency       String
-  price          Float?
-  yield          Float?
-  area           Int?
-  priceQualifier String              @default("")
-  annualIncome   Float?
-  incomeType     String              @default("Reported annual income")
-  tenure         String
-  image          String
-  label          String
-  summary        String
-  highlights     String[]
-  confidential   Boolean             @default(false)
-  shortlist      Shortlist[]
-  requests       InvestmentRequest[]
+  publication      String              @default("published")
+  materials        Material[]
+  id               String              @id
+  position         Int
+  name             String
+  city             String
+  country          String
+  region           String
+  asset            String
+  currency         String
+  price            Float?
+  yield            Float?
+  area             Int?
+  priceQualifier   String              @default("")
+  annualIncome     Float?
+  incomeType       String              @default("Reported annual income")
+  tenure           String
+  image            String
+  memorandumUrl    String?
+  memorandumKey    String?
+  memorandumSample Boolean             @default(true)
+  label            String
+  summary          String
+  highlights       String[]
+  confidential     Boolean             @default(false)
+  shortlist        Shortlist[]
+  requests         InvestmentRequest[]
 
   @@index([region, asset])
 }
@@ -115,7 +118,10 @@ model Material {
   kind       String
   name       String
   mime       String
-  bytes      Bytes
+  // Legacy migration source only; cleared after a verified storage copy.
+  bytes      Bytes?
+  url        String?
+  objectKey  String?
   createdAt  DateTime @default(now())
   property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
 

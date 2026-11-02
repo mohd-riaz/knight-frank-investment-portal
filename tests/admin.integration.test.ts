@@ -86,6 +86,21 @@ test("admin permissions, publishing, invitations, document approval and deactiva
     assert.equal((await call("/api/admin/session", client.cookie)).status, 403);
     assert.equal((await call("/api/admin/session", owner.cookie)).status, 200);
     assert.equal((await call("/api/admin/session", admin.cookie)).status, 200);
+    const adminPage = await call("/admin", admin.cookie);
+    assert.equal(adminPage.status, 200);
+    const imageTags = [
+      ...(await adminPage.text()).matchAll(/<img\b[^>]*>/g),
+    ].map(([tag]) => tag);
+    assert.ok(
+      imageTags.some((tag) => tag.includes("/api/properties/")),
+      "admin thumbnails must use the authenticated image route directly",
+    );
+    assert.ok(
+      !imageTags.some((tag) =>
+        tag.includes("/_next/image?url=%2Fapi%2Fproperties"),
+      ),
+      "the image optimizer cannot forward the admin session cookie",
+    );
     const save = {
       action: "property",
       data: {
@@ -111,6 +126,10 @@ test("admin permissions, publishing, invitations, document approval and deactiva
     let response = await call("/api/admin", admin.cookie, save);
     assert.equal(response.status, 200, await response.clone().text());
     propertyId = (await response.json()).id;
+    const photoRoute = `/api/properties/${propertyId}/image`;
+    assert.equal((await call(photoRoute)).status, 401);
+    assert.equal((await call(photoRoute, client.cookie)).status, 403);
+    assert.equal((await call(photoRoute, admin.cookie)).status, 307);
     assert.equal(
       (await call(`/api/properties/${propertyId}/memorandum`, client.cookie))
         .status,
@@ -121,6 +140,24 @@ test("admin permissions, publishing, invitations, document approval and deactiva
       data: { ...save.data, id: propertyId, publication: "published" },
     });
     assert.equal(response.status, 200);
+    const image = await call(photoRoute, client.cookie);
+    assert.equal(image.status, 307);
+    assert.equal(image.headers.get("cache-control"), "private, max-age=300");
+    assert.equal(image.headers.get("vary"), "Cookie");
+    const signedUrl = new URL(image.headers.get("location")!);
+    assert.ok(signedUrl.searchParams.has("X-Amz-Signature"));
+    const storedImage = await fetch(signedUrl);
+    assert.equal(storedImage.status, 200);
+    assert.equal(
+      storedImage.headers.get("cache-control"),
+      "private, max-age=300",
+    );
+    signedUrl.search = "";
+    assert.equal(
+      (await fetch(signedUrl)).status,
+      403,
+      "unsigned storage reads stay private",
+    );
     assert.equal(
       (await call(`/api/properties/${propertyId}/memorandum`, client.cookie))
         .status,
@@ -176,6 +213,45 @@ test("admin permissions, publishing, invitations, document approval and deactiva
       ).text(),
       /Admin test PDF/,
     );
+    const png = Buffer.from(
+      "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+aKWQAAAAASUVORK5CYII=",
+      "base64",
+    );
+    const photoIds: string[] = [];
+    for (const name of ["photo.png", "same-photo-renamed.png"]) {
+      const form = new FormData();
+      form.set("propertyId", propertyId);
+      form.set("kind", "photo");
+      form.set("file", new Blob([png], { type: "image/png" }), name);
+      const saved = await fetch(origin + "/api/admin/materials", {
+        method: "POST",
+        headers: { Origin: origin, Cookie: admin.cookie },
+        body: form,
+      });
+      assert.equal(saved.status, 200, await saved.clone().text());
+      photoIds.push((await saved.json()).id);
+    }
+    const photos = await db.material.findMany({
+      where: { id: { in: photoIds } },
+    });
+    assert.equal(photos.length, 2);
+    assert.equal(photos[0].url, photos[1].url);
+    assert.equal(photos[0].objectKey, photos[1].objectKey);
+    assert.ok(photos.every((file) => file.bytes === null));
+    assert.equal((await call(`/api/materials/${photoIds[0]}`)).status, 401);
+    const uploaded = await call(photoRoute, client.cookie);
+    assert.equal(uploaded.status, 307);
+    assert.deepEqual(
+      Buffer.from(
+        await (await fetch(uploaded.headers.get("location")!)).arrayBuffer(),
+      ),
+      png,
+    );
+    const memorandum = await db.property.findUniqueOrThrow({
+      where: { id: propertyId },
+    });
+    assert.equal(memorandum.memorandumSample, false);
+    assert.ok(memorandum.memorandumUrl?.includes("/opportunity-media/sha256/"));
     const invite = {
       action: "invite",
       data: {
@@ -228,6 +304,11 @@ test("admin permissions, publishing, invitations, document approval and deactiva
       action: "publication",
       data: { id: propertyId, publication: "archived" },
     });
+    assert.equal((await call(photoRoute, admin.cookie)).status, 307);
+    assert.equal(
+      (await call(`/api/materials/${photoIds[0]}`, admin.cookie)).status,
+      307,
+    );
     assert.equal(
       (await call(`/api/properties/${propertyId}/memorandum`, owner.cookie))
         .status,
