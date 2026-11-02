@@ -5,7 +5,6 @@ import { db } from "./prisma";
 export const auth = betterAuth({
   appName: "Knight Frank Investment Portal",
   baseURL: process.env.BETTER_AUTH_URL,
-  trustedOrigins: ["http://localhost:3000"],
   secret: process.env.BETTER_AUTH_SECRET,
   database: prismaAdapter(db, { provider: "postgresql" }),
   emailAndPassword: { enabled: true, disableSignUp: true },

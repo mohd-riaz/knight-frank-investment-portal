@@ -12,7 +12,7 @@ export function assertSameOrigin(request: Request) {
   const expectedOrigin = new URL(process.env.BETTER_AUTH_URL || request.url)
     .origin;
   const origin = request.headers.get("origin");
-  if (origin !== expectedOrigin && origin !== "http://localhost:3000")
+  if (origin !== expectedOrigin)
     throw new HttpError(403, "This request must come from the portal.");
 }
 export function apiError(error: unknown) {
