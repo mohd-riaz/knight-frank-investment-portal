@@ -23,6 +23,7 @@ export const assetClasses = [
   "Residential",
 ];
 export type Property = {
+  accessGranted?: boolean;
   id: string;
   name: string;
   city: string;

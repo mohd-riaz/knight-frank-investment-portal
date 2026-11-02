@@ -8,7 +8,10 @@ const dimensions = new Map(
 export function propertyImage(property: Pick<Property, "image">) {
   const original = dimensions.get(property.image);
   return {
-    src: `/assets/images/${property.image}.jpg`,
+    unoptimized: property.image.startsWith("/api/materials/"),
+    src: property.image.startsWith("/api/materials/")
+      ? property.image
+      : `/assets/images/${property.image}.jpg`,
     width: original?.width ?? 1000,
     height: original?.height ?? (property.image === "tower" ? 668 : 667),
   };

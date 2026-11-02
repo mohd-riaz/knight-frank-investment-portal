@@ -12,7 +12,7 @@ export default async function PortalLayout({
   const user = await requireUser();
   const sidebarOpen = (await cookies()).get("sidebar_state")?.value !== "false";
   const [properties, saved, pendingAccess] = await Promise.all([
-    getProperties(),
+    getProperties(user.id),
     getShortlist(user.id),
     getPendingAccess(user.id),
   ]);

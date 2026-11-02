@@ -62,6 +62,7 @@ import {
   Sparkles,
 } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { propertyImage } from "@/lib/property-images";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
@@ -124,12 +125,24 @@ export function Metric({ label, value }: { label: string; value: string }) {
   );
 }
 
-export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
+export function Login({
+  returnTo = "/overview",
+  adminMode = false,
+  initialError,
+}: {
+  returnTo?: string;
+  adminMode?: boolean;
+  initialError?: string;
+}) {
   const router = useRouter();
-  const [email, setEmail] = useState("investor@example.com"),
-    [password, setPassword] = useState("KnightFrank2026!"),
+  const [email, setEmail] = useState(
+      adminMode ? "admin@example.com" : "investor@example.com",
+    ),
+    [password, setPassword] = useState(adminMode ? "" : "KnightFrank2026!"),
     [show, setShow] = useState(false),
-    [errors, setErrors] = useState<Record<string, string>>({}),
+    [errors, setErrors] = useState<Record<string, string>>(
+      initialError ? { credentials: initialError } : {},
+    ),
     [loading, setLoading] = useState(false),
     [help, setHelp] = useState(false);
   const validate = (key: string, value: string) => {
@@ -157,6 +170,19 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
       });
       if (result.error)
         throw new Error(result.error.message || "Unable to sign in.");
+      if (adminMode) {
+        const authorization = await fetch("/api/admin/session", {
+          cache: "no-store",
+        });
+        if (!authorization.ok) {
+          await authClient.signOut();
+          throw new Error(
+            authorization.status === 403
+              ? "This account does not have admin access. Use the investor sign-in page or contact your portal owner."
+              : "Unable to verify admin access. Please sign in again.",
+          );
+        }
+      }
       router.replace(returnTo);
       router.refresh();
     } catch (error) {
@@ -173,13 +199,16 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
         <Brand />
         <div className="login-wordmark">GLOBAL INVESTMENT PORTAL</div>
         <span className="login-top-note">
-          <Globe2 size={16} /> A global perspective
+          <Globe2 size={16} />{" "}
+          {adminMode ? "Knight Frank administration" : "A global perspective"}
         </span>
       </header>
       <main className="login-main">
         <section className="login-image" aria-label="London skyline">
           <div className="image-top">
-            <span className="eyebrow light">YOUR NEXT OPPORTUNITY</span>
+            <span className="eyebrow light">
+              {adminMode ? "CONNECTED ACROSS MARKETS" : "YOUR NEXT OPPORTUNITY"}
+            </span>
             <span className="image-index">01 / GLOBAL</span>
           </div>
           <div className="login-story">
@@ -187,11 +216,12 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
             <h1>
               Global perspective.
               <br />
-              Personal opportunity.
+              {adminMode ? "Local expertise." : "Personal opportunity."}
             </h1>
             <p>
-              Discover real estate investments across markets, sectors and
-              possibilities.
+              {adminMode
+                ? "Connect investors with opportunities across Knight Frank’s global network."
+                : "Discover real estate investments across markets, sectors and possibilities."}
             </p>
             <div className="story-footer">
               <span>London, United Kingdom</span>
@@ -201,16 +231,22 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
         </section>
         <section className="login-form-wrap">
           <div className="login-form-inner">
-            <div className="eyebrow">PRIVATE CLIENT ACCESS</div>
+            <div className="eyebrow">
+              {adminMode ? "KNIGHT FRANK TEAM ACCESS" : "PRIVATE CLIENT ACCESS"}
+            </div>
             <h2>
-              Welcome to your
+              {adminMode ? "Your administration" : "Welcome to your"}
               <br />
-              investment world.
+              {adminMode ? "workspace." : "investment world."}
             </h2>
             <p className="muted login-intro">
-              A considered view of global real estate.
+              {adminMode
+                ? "Manage opportunities, requests and client access."
+                : "A considered view of global real estate."}
               <br />
-              Sign in to discover your next opportunity.
+              {adminMode
+                ? "Sign in with your Knight Frank team account."
+                : "Sign in to discover your next opportunity."}
             </p>
             <form onSubmit={submit} noValidate className="od-stack login-form">
               <div className="od-field">
@@ -269,7 +305,10 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
               )}
               <div className="login-options">
                 <span>
-                  <LockKeyhole size={14} /> Private investor portal
+                  <LockKeyhole size={14} />{" "}
+                  {adminMode
+                    ? "Restricted team access"
+                    : "Private investor portal"}
                 </span>
                 <Button
                   type="button"
@@ -280,7 +319,11 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
                 </Button>
               </div>
               <Button className="login-submit" disabled={loading} type="submit">
-                {loading ? "Signing you in…" : "Sign in to the portal"}
+                {loading
+                  ? "Signing you in…"
+                  : adminMode
+                    ? "Sign in to administration"
+                    : "Sign in to the portal"}
                 {!loading && <ArrowRight size={18} />}
               </Button>
               {loading && (
@@ -292,7 +335,17 @@ export function Login({ returnTo = "/overview" }: { returnTo?: string }) {
               )}
             </form>
             <p className="login-bottom">
-              Exceptional property. Personal service.
+              {adminMode ? (
+                <Link href="/login">
+                  Investor sign in{" "}
+                  <ArrowUpRight size={14} style={{ display: "inline" }} />
+                </Link>
+              ) : (
+                <Link href="/admin/login">
+                  Knight Frank team sign in{" "}
+                  <ArrowUpRight size={14} style={{ display: "inline" }} />
+                </Link>
+              )}
             </p>
           </div>
         </section>
@@ -458,7 +511,7 @@ export function PropertyDetail({
       const url = URL.createObjectURL(await response.blob());
       const link = document.createElement("a");
       link.href = url;
-      link.download = "sample-investment-memorandum.pdf";
+      link.download = "investment-memorandum.pdf";
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -477,10 +530,16 @@ export function PropertyDetail({
   const memorandumButton = (compact = false) => (
     <Button
       variant="outline"
-      disabled={downloading || (!!p.confidential && accessPending)}
-      onClick={() => (p.confidential ? onAction("access") : void download())}
+      disabled={
+        downloading || (!!p.confidential && !p.accessGranted && accessPending)
+      }
+      onClick={() =>
+        p.confidential && !p.accessGranted
+          ? onAction("access")
+          : void download()
+      }
     >
-      {p.confidential ? (
+      {p.confidential && !p.accessGranted ? (
         accessPending ? (
           <CheckCircle2 />
         ) : (
@@ -489,7 +548,7 @@ export function PropertyDetail({
       ) : (
         <Download />
       )}
-      {p.confidential
+      {p.confidential && !p.accessGranted
         ? accessPending
           ? "Access request pending"
           : "Request access"
@@ -595,15 +654,15 @@ export function PropertyDetail({
             <TabsContent value="documents">
               <h2>Continue your due diligence.</h2>
               <p className="muted">
-                {p.confidential
+                {p.confidential && !p.accessGranted
                   ? accessPending
                     ? "Your access request is pending review by the investment team."
                     : "This memorandum is confidential. Request access from the investment team."
-                  : "Download the sample investment memorandum for your review."}
+                  : "Download the investment memorandum for your review."}
               </p>
               <div className="document-row">
                 <div className="document-icon">
-                  {p.confidential ? (
+                  {p.confidential && !p.accessGranted ? (
                     <LockKeyhole size={24} />
                   ) : (
                     <FileText size={24} />
@@ -612,11 +671,11 @@ export function PropertyDetail({
                 <div className="od-field od-fill">
                   <strong>Investment memorandum</strong>
                   <span>
-                    {p.confidential
+                    {p.confidential && !p.accessGranted
                       ? accessPending
                         ? "Pending review"
                         : "Confidential · Approval required"
-                      : "PDF · Sample document"}
+                      : "PDF · Investment memorandum"}
                   </span>
                 </div>
                 {memorandumButton(true)}
@@ -648,11 +707,11 @@ export function PropertyDetail({
           </Button>
           {memorandumButton()}
           <p className="memorandum-note muted">
-            {p.confidential
+            {p.confidential && !p.accessGranted
               ? accessPending
                 ? "Your request is pending review."
                 : "Confidential materials require approval."
-              : "PDF · Sample document"}
+              : "PDF · Investment memorandum"}
           </p>
           {downloadError && (
             <p className="field-error" role="alert">

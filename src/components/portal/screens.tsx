@@ -1,7 +1,7 @@
 "use client";
 import { PropertyDetail } from "@/components/portal/parts";
+import { SearchBar } from "@/components/portal/search-bar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -235,24 +235,12 @@ export function ListingsScreen() {
           <Sparkles /> Search with the assistant
         </Button>
       </div>
-      <div className="search-box">
-        <Search size={20} />
-        <Input
-          aria-label="Search opportunities"
-          placeholder="Search by property, city or country"
-          value={filters.query}
-          onChange={(e) => setFilter("query", e.target.value)}
-        />
-        {filters.query && (
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => setFilter("query", "")}
-            aria-label="Clear search"
-          >
-            <X />
-          </Button>
-        )}
+      <SearchBar
+        label="Search opportunities"
+        placeholder="Search by property, city or country"
+        value={filters.query}
+        onChange={(value) => setFilter("query", value)}
+      >
         <Button
           variant="outline"
           className="mobile-filter"
@@ -260,7 +248,7 @@ export function ListingsScreen() {
         >
           <SlidersHorizontal /> Filters
         </Button>
-      </div>
+      </SearchBar>
       <div className="desktop-filters">{!filterOpen && filterControls}</div>
       {applied.length > 0 && (
         <div className="applied-filters od-cluster">

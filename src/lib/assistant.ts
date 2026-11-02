@@ -78,6 +78,7 @@ export function validatePlan(plan: SearchPlan) {
 export function searchWhere(plan: SearchPlan): Prisma.PropertyWhereInput {
   const f = plan.filters;
   const visible: Prisma.PropertyWhereInput = {
+    publication: "published",
     confidential: false,
     NOT: { label: { contains: "sold", mode: "insensitive" } },
   };

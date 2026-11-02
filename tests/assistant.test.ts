@@ -265,6 +265,7 @@ test("ambiguous budgets, inverted ranges and invalid yields require clarificatio
 });
 test("details retain visibility checks and unavailable yields sort last", () => {
   assert.deepEqual(searchWhere(plan({ action: "details", ids: ["one"] })), {
+    publication: "published",
     confidential: false,
     NOT: { label: { contains: "sold", mode: "insensitive" } },
     id: { in: ["one"] },

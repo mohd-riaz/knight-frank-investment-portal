@@ -5,7 +5,9 @@ export function portalReturnTo(value: unknown) {
     const url = new URL(value, "https://portal.invalid");
     if (
       url.origin !== "https://portal.invalid" ||
-      !["/compare", "/opportunities", "/shortlist"].includes(url.pathname)
+      !["/compare", "/opportunities", "/shortlist", "/admin"].includes(
+        url.pathname,
+      )
     ) {
       return "/overview";
     }

@@ -11,6 +11,8 @@ generator client {
 }
 
 model Property {
+  publication    String              @default("published")
+  materials      Material[]
   id             String              @id
   position       Int
   name           String
@@ -53,6 +55,8 @@ enum RequestKind {
 }
 
 enum RequestStatus {
+  approved
+  declined
   pending
   reviewed
 }
@@ -78,6 +82,10 @@ datasource db {
 }
 
 model User {
+  role          String              @default("client")
+  status        String              @default("active")
+  company       String              @default("")
+  invitations   Invitation[]
   id            String              @id @default(uuid()) @db.Uuid
   name          String
   email         String
@@ -91,6 +99,27 @@ model User {
   requests      InvestmentRequest[]
 
   @@unique([email])
+}
+
+model Invitation {
+  id        String   @id @default(uuid()) @db.Uuid
+  tokenHash String   @unique
+  userId    String   @db.Uuid
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Material {
+  id         String   @id @default(uuid()) @db.Uuid
+  propertyId String
+  kind       String
+  name       String
+  mime       String
+  bytes      Bytes
+  createdAt  DateTime @default(now())
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+
+  @@index([propertyId, kind])
 }
 
 model Session {

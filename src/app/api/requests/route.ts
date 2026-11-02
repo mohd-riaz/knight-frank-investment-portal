@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     if (!user) throw new HttpError(401, "Please sign in again.");
     const data = input.parse(await request.json());
     const exists = await db.property.findUnique({
-      where: { id: data.propertyId },
+      where: { id: data.propertyId, publication:'published' },
       select: { id: true, confidential: true },
     });
     if (!exists) throw new HttpError(404, "Opportunity not found.");

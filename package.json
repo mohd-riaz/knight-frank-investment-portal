@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
+    "db:seed:admin": "tsx scripts/seed-admin.ts",
+    "admin:setup": "tsx scripts/create-admin.ts",
+    "test:admin": "tsx --test tests/admin-validation.test.ts tests/admin.integration.test.ts tests/seed-admin.integration.test.ts",
     "dev": "next dev --webpack --hostname 127.0.0.1",
     "build": "next build --webpack",
     "start": "next start --hostname 127.0.0.1",

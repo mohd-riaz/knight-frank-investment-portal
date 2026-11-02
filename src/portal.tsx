@@ -21,10 +21,8 @@ import {
   ArrowUpRight,
   Bookmark,
   Building2,
-  ChevronsUpDown,
   CheckCircle2,
   Globe2,
-  LogOut,
   Scale,
   SlidersHorizontal,
   Sparkles,
@@ -48,15 +46,7 @@ import {
 } from "./components/ui/dialog";
 import { Input } from "./components/ui/input";
 import { Label } from "./components/ui/label";
-import { Avatar, AvatarFallback } from "./components/ui/avatar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu";
+import { AccountMenu } from "./components/portal/account-menu";
 import {
   Sidebar,
   SidebarContent,
@@ -261,6 +251,18 @@ export default function Portal({
       <SidebarContent className="portal-sidebar-content">
         <nav aria-label="Main navigation">
           <SidebarMenu>
+            {["owner", "admin"].includes(user.role || "") && (
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  className="nav-item"
+                  tooltip="Administration"
+                  onClick={() => router.push("/admin")}
+                >
+                  <Building2 size={19} />
+                  <span className="nav-text">Administration</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
             {nav.map((n) => (
               <SidebarMenuItem key={n.id}>
                 <SidebarMenuButton
@@ -318,53 +320,7 @@ export default function Portal({
             </Button>
           </div>
         )}
-        <div className="sidebar-account">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <SidebarMenuButton
-                    size="lg"
-                    className="sidebar-account-button"
-                    aria-label="Open account menu"
-                  >
-                    <Avatar className="avatar">
-                      <AvatarFallback>
-                        {user.name
-                          .split(" ")
-                          .map((part) => part[0])
-                          .slice(0, 2)
-                          .join("")}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div className="od-field od-fill sidebar-account-copy">
-                      <strong>{user.name}</strong>
-                      <span>Private client</span>
-                    </div>
-                    <ChevronsUpDown className="sidebar-account-chevron" />
-                  </SidebarMenuButton>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  side={isMobile ? "top" : "right"}
-                  align="end"
-                  sideOffset={8}
-                  className="min-w-56"
-                >
-                  <DropdownMenuLabel>
-                    <div>{user.name}</div>
-                    <div className="text-xs font-normal text-muted-foreground">
-                      {user.email}
-                    </div>
-                  </DropdownMenuLabel>
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem onSelect={() => void logout()}>
-                    <LogOut className="mr-2 size-4" /> Sign out
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </div>
+        <AccountMenu user={user} onSignOut={logout} />
       </SidebarFooter>
     </>
   );

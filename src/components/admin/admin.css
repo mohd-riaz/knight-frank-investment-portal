@@ -1,0 +1,337 @@
+.admin-body {
+  min-width: 0;
+}
+.admin-content {
+  max-width: 1600px;
+  width: 100%;
+}
+.admin-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+.admin-heading h1 {
+  margin: 8px 0 12px;
+}
+.admin-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.admin-toolbar > [role="combobox"] {
+  width: 190px;
+}
+.search-box.admin-search {
+  flex: 1;
+  min-width: 200px;
+  margin-bottom: 0;
+}
+.admin-table {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.admin-table th {
+  background: var(--surface);
+  white-space: nowrap;
+}
+.admin-table td {
+  padding: 16px 12px;
+  font-size: 14px;
+}
+.admin-property {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-width: 260px;
+}
+.admin-property span {
+  display: block;
+  font-size: 12px;
+  color: var(--subtle);
+}
+.admin-thumbnail {
+  width: 64px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.admin-row-actions {
+  display: flex;
+}
+.admin-count {
+  font-size: 12px;
+  color: var(--subtle);
+  margin-top: 16px;
+}
+.admin-dialog {
+  max-width: 850px !important;
+  max-height: 90dvh;
+  overflow-y: auto;
+}
+.admin-editor-tabs > [role="tablist"] {
+  margin: 4px 0 12px;
+}
+.admin-media-panel {
+  display: grid;
+  gap: 24px;
+  padding-top: 8px;
+}
+.admin-upload-field {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+.admin-upload-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px 16px;
+  flex-wrap: wrap;
+}
+.admin-upload-heading h3 {
+  font-size: 16px;
+  font-weight: 500;
+}
+.admin-upload-heading > span,
+.admin-upload-caption {
+  font-size: 12px;
+  color: var(--subtle);
+}
+.admin-dropzone {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px 20px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  transition:
+    border-color 150ms,
+    background 150ms;
+}
+.admin-dropzone:focus-within,
+.admin-dropzone[data-dragging="true"] {
+  border-color: var(--red);
+  background: var(--white);
+}
+.admin-dropzone[data-disabled="true"] {
+  opacity: 0.6;
+}
+.admin-upload-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  color: var(--subtle);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.admin-upload-copy {
+  flex: 1;
+  min-width: 0;
+  font-size: 14px;
+}
+.admin-upload-copy p {
+  margin-top: 4px;
+  color: var(--subtle);
+  font-size: 12px;
+}
+.admin-dropzone > button {
+  flex-shrink: 0;
+  background: var(--white);
+}
+.admin-upload-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+.admin-upload-list li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+}
+.admin-file-preview {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  color: var(--subtle);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.admin-file-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.admin-file-copy {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+.admin-file-copy strong {
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+.admin-file-copy span {
+  font-size: 12px;
+  color: var(--subtle);
+}
+.admin-existing-files {
+  display: grid;
+  gap: 8px;
+}
+.admin-existing-files a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.admin-existing-files a span {
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+.admin-access-setting {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px;
+  background: var(--surface);
+  border-radius: 8px;
+}
+.admin-access-setting > svg {
+  color: var(--subtle);
+}
+.admin-access-setting label {
+  flex: 1;
+  display: grid;
+  gap: 6px;
+  cursor: pointer;
+}
+.admin-access-setting label strong {
+  font-size: 14px;
+}
+.admin-access-setting label span {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--subtle);
+}
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding-top: 20px;
+}
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.admin-wide {
+  grid-column: 1/-1;
+}
+.admin-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+  padding-top: 20px;
+  margin-top: 24px;
+}
+.admin-check {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 16px 0;
+}
+.admin-check input {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--red);
+}
+.admin-preview {
+  padding: 24px;
+  background: var(--surface);
+  margin-top: 20px;
+  border-radius: 8px;
+}
+.admin-preview p {
+  margin-top: 12px;
+}
+.admin-user-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.admin-invite-result {
+  padding: 16px;
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.admin-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--subtle);
+}
+.admin-message {
+  padding: 16px;
+  margin-bottom: 20px;
+  background: var(--surface);
+}
+@media (max-width: 700px) {
+  .admin-dropzone {
+    flex-wrap: wrap;
+    padding: 16px;
+    gap: 12px;
+  }
+  .admin-dropzone > button {
+    width: 100%;
+  }
+  .admin-upload-copy {
+    flex-basis: calc(100% - 56px);
+  }
+  .admin-access-setting {
+    padding: 14px;
+    gap: 10px;
+  }
+  .admin-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .admin-dialog [role="tablist"] {
+    height: auto;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  .admin-toolbar > [role="combobox"] {
+    width: 100%;
+  }
+  .admin-search {
+    width: 100%;
+  }
+  .admin-heading h1 {
+    font-size: 32px;
+  }
+}

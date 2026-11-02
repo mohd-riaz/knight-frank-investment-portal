@@ -2,7 +2,24 @@
 
 A real estate investment portal built with Next.js App Router, TypeScript, shadcn/ui, Better Auth, Prisma, and local PostgreSQL through Docker Compose. The interface includes Suisse/Tiempos fonts, photography, brand assets, and responsive layouts.
 
-## Run locally
+## Administration
+
+Sign in at `/admin/login` to open `/admin` as an owner or administrator. The administration area reuses the investor portal’s branded sidebar, fonts, navigation controls, tables, dialogs and form components. Investor sign-in remains at `/login`; both pages use the existing authentication service, with admin permissions checked on the server.
+
+- **Opportunities:** create and edit investment details, save drafts, preview, publish, upload photographs and an IM, mark confidentiality, archive and restore as a draft. Uploaded files are stored in PostgreSQL; each file is limited to 10 MB. The latest uploaded photograph is the cover. Existing listings retain the labelled sample IM until an actual PDF is uploaded.
+- **Requests:** review enquiries, approve document access after reviewing the NDA requirement, and decline or revoke access. Approvals apply only to the requesting investor and the selected property. This records an advisor’s review; it does not execute an electronic signature.
+- **Users (owners only):** invite clients, admins and owners, reissue pending invitations, update roles, and deactivate/reactivate accepted accounts. Role or status changes invalidate existing sessions. The last active owner cannot be removed or demoted, and owners cannot deactivate themselves.
+- **Invitations:** one-use links expire after seven days and let recipients set their own password. Only token hashes are stored. Reissuing invalidates earlier links. Email delivery is not connected: copy the generated private link and share it with its intended recipient.
+
+The database seed creates a demo owner with **admin@example.com** / **KnightFrankAdmin2026!**. Override `ADMIN_EMAIL` and `ADMIN_PASSWORD` before the first seed to use different credentials. Run `npm run db:seed` for the full dataset, or `npm run db:seed:admin` to seed only the admin account. Repeat seeds preserve existing passwords, roles and disabled accounts. A pending admin invitation without a password is activated with the seed password and its invitation links are invalidated. A client account with the same email causes the seed to stop rather than being promoted.
+
+`npm run admin:setup` remains available for creating an owner through a private invitation instead of seeded credentials. Existing accounts are left unchanged by that command.
+
+Drafts and archived listings are excluded from investor browsing, AI search, shortlist additions and document downloads. Admin APIs check the database role on every request; public registration remains disabled.
+
+Run `npm run test:admin` against a running local portal for temporary-account integration coverage of role restrictions, draft/publish/archive behavior, uploads, document grants, one-use invitations and deactivation. `npm run test:integration` retains the investor checks. For optional browser verification, set `PLAYWRIGHT_PACKAGE` to an installed Playwright package and run `npx tsx scripts/admin-browser-check.ts`; `ADMIN_SCREENSHOT` controls its screenshot destination. These checks clean up their temporary accounts and records.
+
+## Local setup
 
 Use **Node.js 24 LTS** and Docker Desktop with Linux containers. The project includes `.nvmrc`. PostgreSQL binds to **127.0.0.1:5432**; this port must be free.
 
@@ -34,7 +51,7 @@ The environment setup creates `.env` with a randomly generated Better Auth secre
 - Non-confidential opportunities offer an immediate sample IM PDF download through an authenticated endpoint. Confidential opportunities require an access request instead; pending requests remain visible after refresh and are scoped to the investor. Requesting access does not grant download permission. The shared PDF is clearly labelled as an illustrative sample and is stored outside public assets.
 - Accessible shadcn/Radix dialogs, tabs, selects, checkboxes, loading states, form feedback, mobile navigation, and reduced-motion support.
 
-The catalog is a historical October 2024 UK dataset, including two sold auction lots. Availability has not been revalidated. Regional copies use assigned city/country pairs consistent with their region (for example, Dubai / United Arab Emirates in Middle East). These are demonstration locations, not actual listings in those markets. The original UK source records, photographs, GBP currency and financial metrics are retained. Location assignments are defined in `src/lib/regional-locations.ts` and are applied by the shared catalog and seed. The assistant uses Gemini through OpenRouter when a server API key is configured; without a key it displays a connection notice. The original deterministic interpreter remains only for legacy tests. Requests do not send email, grant document access, or execute an NDA. Password recovery, real investment documents, and advisor administration are not connected.
+The catalog is a historical October 2024 UK dataset, including two sold auction lots. Availability has not been revalidated. Regional copies use assigned city/country pairs consistent with their region (for example, Dubai / United Arab Emirates in Middle East). These are demonstration locations, not actual listings in those markets. The original UK source records, photographs, GBP currency and financial metrics are retained. Location assignments are defined in `src/lib/regional-locations.ts` and are applied by the shared catalog and seed. The assistant uses Gemini through OpenRouter when a server API key is configured; without a key it displays a connection notice. The original deterministic interpreter remains only for legacy tests. Requests do not send email or execute an NDA. Advisors can grant document access through /admin. Password recovery and email delivery are not connected; administrators can upload investment documents.
 
 ## Imported dataset
 

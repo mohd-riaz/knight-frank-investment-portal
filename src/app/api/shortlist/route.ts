@@ -21,7 +21,7 @@ export async function PUT(request: Request) {
       .object({ propertyId: z.string().min(1).max(64), saved: z.boolean() })
       .parse(await request.json());
     const exists = await db.property.findUnique({
-      where: { id: propertyId },
+      where: { id: propertyId, publication:'published' },
       select: { id: true },
     });
     if (!exists) throw new HttpError(404, "Opportunity not found.");
