@@ -12,7 +12,7 @@
     "build": "next build --webpack",
     "start": "next start --hostname 127.0.0.1",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/search.test.ts tests/comparison.test.ts tests/filters.test.ts tests/dataset.test.ts tests/assistant.test.ts tests/object-storage.test.ts",
+    "test": "tsx --test tests/search.test.ts tests/comparison.test.ts tests/filters.test.ts tests/dataset.test.ts tests/assistant.test.ts tests/object-storage.test.ts tests/public-images.test.ts",
     "db:up": "docker compose up -d --wait",
     "db:down": "docker compose down",
     "db:setup": "prisma migrate deploy && prisma db seed",

@@ -75,8 +75,8 @@ test("every opportunity uses its corresponding original PDF photo, including reg
       id: "example",
       image: `https://storage.example/opportunity-media/${contentKey(photo.sha256)}`,
     });
-    assert.equal(stored.src, `/api/properties/example/image?v=${photo.sha256}`);
-    assert.equal(stored.unoptimized, true);
+    assert.equal(stored.src, `/api/property-images/${photo.sha256}`);
+    assert.equal(stored.unoptimized, false);
     assert.equal(stored.width, photo.width);
     assert.equal(stored.height, photo.height);
     assert.equal(
@@ -88,6 +88,33 @@ test("every opportunity uses its corresponding original PDF photo, including reg
     assert.ok(photo.width > 250 && photo.height > 190);
   }
   assert.equal(source("Jellicoe House").image, source("Vanbrugh House").image);
+});
+
+test("published copies share a cache URL while unpublished thumbnails stay authenticated", () => {
+  const hash = "a".repeat(64);
+  const property = {
+    id: "original",
+    image: `https://storage.example/opportunity-media/sha256/${hash}`,
+    publication: "published",
+  };
+  const published = propertyImage(property);
+  assert.equal(
+    propertyImage({ ...property, id: "regional-copy" }).src,
+    published.src,
+  );
+  for (const publication of ["draft", "archived"]) {
+    const privateImage = propertyImage({ ...property, publication });
+    assert.equal(privateImage.unoptimized, true);
+    assert.equal(privateImage.src, `/api/properties/original/image?v=${hash}`);
+  }
+  assert.notEqual(
+    propertyImage({
+      ...property,
+      image: property.image.replace(hash, "b".repeat(64)),
+    }).src,
+    published.src,
+    "replacing a cover must not reuse the old cached photo",
+  );
 });
 
 test("every PDF listing panel is represented, including the duplicate and paired buildings", () => {

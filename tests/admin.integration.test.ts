@@ -92,8 +92,10 @@ test("admin permissions, publishing, invitations, document approval and deactiva
       ...(await adminPage.text()).matchAll(/<img\b[^>]*>/g),
     ].map(([tag]) => tag);
     assert.ok(
-      imageTags.some((tag) => tag.includes("/api/properties/")),
-      "admin thumbnails must use the authenticated image route directly",
+      imageTags.some((tag) =>
+        tag.includes("/_next/image?url=%2Fapi%2Fproperty-images%2F"),
+      ),
+      "published admin thumbnails use the shared image cache",
     );
     assert.ok(
       !imageTags.some((tag) =>

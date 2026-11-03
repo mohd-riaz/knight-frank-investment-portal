@@ -529,6 +529,7 @@ export function ComparisonScreen() {
                     <Image
                       className="od-media"
                       {...propertyImage(p)}
+                      sizes="(max-width: 767px) 85vw, 33vw"
                       alt={p.name}
                     />
                     <Button

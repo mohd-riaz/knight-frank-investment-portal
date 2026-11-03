@@ -408,6 +408,7 @@ export function PropertyCard({
           <Image
             className="od-media od-media-cover"
             {...propertyImage(p)}
+            sizes="(max-width: 767px) 100vw, (max-width: 1200px) 50vw, 33vw"
             alt={p.name}
             loading="lazy"
           />
@@ -596,7 +597,12 @@ export function PropertyDetail({
       <div className="detail-grid">
         <div className="detail-main">
           <figure className="detail-photo">
-            <Image className="od-media" {...propertyImage(p)} alt={p.name} />
+            <Image
+              className="od-media"
+              {...propertyImage(p)}
+              sizes="(max-width: 767px) 100vw, 60vw"
+              alt={p.name}
+            />
           </figure>
           <Tabs defaultValue="overview">
             <TabsList className="detail-tabs">

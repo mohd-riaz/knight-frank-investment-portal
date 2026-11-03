@@ -404,6 +404,7 @@ function Workspace({ data }: { data: Data }) {
                         <div className="admin-property">
                           <Image
                             {...propertyImage(p)}
+                            sizes="48px"
                             alt=""
                             className="admin-thumbnail"
                           />

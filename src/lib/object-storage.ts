@@ -113,6 +113,29 @@ export async function imageResponse(url: string) {
   });
 }
 
+// Only call after verifying that this object is a published property cover.
+// Stream the bytes: caching a signed redirect would still download from Neon.
+export async function publicImageResponse(key: string) {
+  const result = await storage().send(
+    new GetObjectCommand({ Bucket: mediaBucket, Key: key }),
+  );
+  if (
+    !result.Body ||
+    !["image/jpeg", "image/png", "image/webp", "image/avif"].includes(
+      result.ContentType || "",
+    )
+  )
+    throw new Error("Stored cover is not a supported image.");
+  return new Response(result.Body.transformToWebStream(), {
+    headers: {
+      "Content-Type": result.ContentType!,
+      "Content-Disposition": "inline",
+      "Cache-Control": "public, max-age=2592000, s-maxage=2592000, immutable",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+}
+
 export async function documentResponse(key: string, sample: boolean) {
   const result = await storage().send(
     new GetObjectCommand({ Bucket: mediaBucket, Key: key }),
